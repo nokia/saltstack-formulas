@@ -1,0 +1,8 @@
+{
+    "profile": "default",
+    "default": {
+        "master": "zk://{{ zk_str }}/mesos",
+        "log_level": "warning",
+        "log_file": "{{ log_dir }}/mesos-cli.log"
+    }
+}

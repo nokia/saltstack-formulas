@@ -1,0 +1,16 @@
+chronos:
+  url: http://walrus.escloc57.eecloud.nsn-net.net:8773/services/Walrus/dasp
+  tarball: chronos-2.3.3.jar
+  checksum: md5=8e8261f6d4e8bef76ba7dd6fa5f2adef
+  env: {"LD_LIBRARY_PATH": "/lib:/usr/local/lib:/lib:/usr/lib", "JAVA_LIBRARY_PATH":"/usr/local/lib:/lib:/usr/lib" }
+  cpus: 0.5
+  instances: 1
+  mem: 1024
+  ports: [8031]
+  upgradeStrategy:
+    minimumHealthCapacity: 1
+  constraints: [['hostname', 'UNIQUE']]
+  healthChecks:
+    - protocol: HTTP
+      portIndex: 0
+      path: /

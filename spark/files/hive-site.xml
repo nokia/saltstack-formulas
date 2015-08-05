@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+{% set system = pillar['system'] -%}
+{% set spark = pillar['spark'] -%}
+<configuration>
+
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://{{ nameservice_names|first }}/</value>
+    </property>
+
+    <property>
+        <name>fs.default.name</name>
+        <value>hdfs://{{ nameservice_names|first }}/</value>
+    </property>
+
+    <property>
+      <name>hive.exec.local.scratchdir</name>
+      <value>{{ system['tmp'] }}/${user.name}</value>
+    </property>
+
+    <property>
+      <name>hive.querylog.location</name>
+      <value>{{ system['tmp'] }}/${user.name}</value>
+    </property>
+
+    {% if metadata_db is defined -%}
+    <property>
+      <name>javax.jdo.option.ConnectionURL</name>
+      <value>jdbc:postgresql://{{ metadata_db }}/metastore</value>
+    </property>
+
+    <property>
+      <name>javax.jdo.option.ConnectionDriverName</name>
+      <value>org.postgresql.Driver</value>
+    </property>
+
+    <property>
+      <name>javax.jdo.option.ConnectionUserName</name>
+      <value>{{ spark['hive.username'] }}</value>
+    </property>
+
+    <property>
+      <name>javax.jdo.option.ConnectionPassword</name>
+      <value>{{ spark['hive.password'] }}</value>
+    </property>
+
+    <property>
+      <name>datanucleus.autoCreateSchema</name>
+      <value>false</value>
+    </property>
+    {% endif -%}
+
+    <property>
+      <name>hive.exec.max.dynamic.partitions</name>
+      <value>{{ spark['max.dynamic.partitions'] }}</value>
+    </property>
+
+    <property>
+      <name>hive.exec.dynamic.partition</name>
+      <value>{{ spark['dynamic.partition'] }}</value>
+    </property>
+
+    <property>
+      <name>hive.exec.dynamic.partition.mode</name>
+      <value>{{ spark['dynamic.partition.mode'] }}</value>
+    </property>
+
+    <property>
+      <name>hive.support.concurrency</name>
+      <value>true</value>
+    </property>
+
+    <property>
+      <name>hive.zookeeper.quorum</name>
+      <value>{{ zk_str }}</value>
+    </property>
+
+</configuration>

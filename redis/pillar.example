@@ -1,0 +1,16 @@
+redis:
+  url: http://walrus.escloc58.eecloud.nsn-net.net:8773/services/Walrus/dasp
+  checksum: md5=a0d7e164330d4dd5b8af6f1ee8066282
+  tarball: redis-mesos-3.0.0_1.tgz
+  dirname: redis-mesos-3.0.0_1
+  cpus: 0.5
+  mem: 1024
+  disk: 1000
+  ports: [2417]
+  upgradeStrategy:
+    minimumHealthCapacity: 0
+  healthChecks:
+    - protocol: TCP
+      portIndex: 0
+  seed_ratio: 0.4
+  instances: 4

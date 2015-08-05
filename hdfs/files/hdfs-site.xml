@@ -1,0 +1,165 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+{% set hdfs = pillar['hdfs'] -%}
+{% set roles = salt['grains.get']('roles') -%}
+<configuration>
+  {% if 'hdfs.namenode' in roles %}
+  <property>
+    <name>dfs.namenode.name.dir</name>
+    <value>{{ hdfs['name_data_dir'] | join(',') }}</value>
+  </property>
+  {% elif 'hdfs.datanode' in roles %}
+  <property>
+    <name>dfs.datanode.data.dir</name>
+    <value>{{ hdfs['data_dir'] | join(',') }}</value>
+  </property>
+  {% endif %}
+  <property>
+    <name>dfs.datanode.failed.volumes.tolerated</name>
+    <value>{{ hdfs['dfs.datanode.failed.volumes.tolerated'] }}</value>
+  </property>
+  <property>
+     <name>dfs.permissions.superusergroup</name>
+     <value>{{ hdfs['superuser'] }}</value>
+  </property>
+  <property>
+    <name>dfs.datanode.http.address</name>
+    <value>0.0.0.0:{{ hdfs['datanode.ui.port'] }}</value>
+  </property>
+  <property>
+    <name>dfs.datanode.ipc.address</name>
+    <value>0.0.0.0:{{ hdfs['datanode.ipc.port'] }}</value>
+  </property>
+  <property>
+    <name>dfs.datanode.address</name>
+    <value>0.0.0.0:{{ hdfs['datanode.port'] }}</value>
+  </property>
+  <property>
+     <name>dfs.webhdfs.enabled</name>
+     <value>true</value>
+  </property>
+  <property>
+    <name>dfs.support.append</name>
+    <value>true</value>
+  </property>
+  <property>
+    <name>dfs.datanode.drop.cache.behind.reads</name>
+    <value>true</value>
+  </property>
+  <property>
+    <name>dfs.datanode.sync.behind.writes</name>
+    <value>true</value>
+  </property>
+  <property>
+    <name>dfs.datanode.drop.cache.behind.writes</name>
+    <value>true</value>
+  </property>
+  <property>
+    <!-- see https://issues.apache.org/jira/browse/HDFS-1861 -->
+    <name>dfs.datanode.max.xceivers</name>
+    <value>4096</value>
+  </property>
+
+  <property>
+    <!-- see https://issues.apache.org/jira/browse/HADOOP-5464 -->
+    <name>dfs.datanode.socket.write.timeout</name>
+    <value>3000000</value>
+  </property>
+
+  <property>
+    <name>dfs.socket.timeout</name>
+    <value>3000000</value>
+  </property>
+  <property>
+    <name>dfs.balance.bandwidthPerSec</name>
+    <value>{{ hdfs['dfs.balance.bandwidthPerSec'] }}</value>
+  </property>
+  <property>
+    <name>dfs.permissions</name>
+    <value>false</value>
+  </property>
+
+  <property>
+    <name>dfs.replication</name>
+    <value>{{ hdfs['dfs.replication'] }}</value>
+  </property>
+
+  <property>
+    <name>dfs.ha.fencing.methods</name>
+    <value>
+      sshfence
+      shell(/bin/true)
+    </value>
+  </property>
+
+  <property>
+    <name>dfs.ha.fencing.ssh.private-key-files</name>
+    <value>/root/.ssh/id_rsa</value>
+  </property>
+
+  <property>
+    <name>dfs.ha.automatic-failover.enabled</name>
+    <value>true</value>
+  </property>
+
+  <property>
+    <name>dfs.nameservices</name>
+    <value>{{ nameservice_names | join(',') }}</value>
+  </property>
+
+  {% for nameservice_def in nameservices %}
+  {% set nameservice = nameservice_def.keys()[0] -%}
+  {% set nodes = nameservice_def.values()[0] -%}
+
+  <property>
+    <name>dfs.ha.namenodes.{{ nameservice }}</name>
+    <value>{{ nodes | join(',') }}</value>
+  </property>
+
+  {% for node in nodes %}
+  <property>
+    <name>dfs.namenode.rpc-address.{{ nameservice }}.{{ node }}</name>
+    <value>{{ node }}:{{ hdfs['namenode.port'] }}</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.http-address.{{ nameservice }}.{{ node }}</name>
+    <value>{{ node }}:{{ hdfs['namenode.ui.port'] }}</value>
+  </property>
+  {% endfor %}
+
+
+  <property>
+    <name>dfs.client.failover.proxy.provider.{{ nameservice }}</name>
+    <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.shared.edits.dir.{{ nameservice }}</name>
+    <value>qjournal://{{ journal | join(':{0};'.format(hdfs['journalnode.port'])) }}:{{ hdfs['journalnode.port'] }}/{{ nameservice }}</value>
+  </property>
+  {% endfor %}
+
+  {% if 'hdfs.journalnode' in roles %}
+  <property>
+    <name>dfs.journalnode.edits.dir</name>
+    <value>{{ journal_dir }}</value>
+  </property>
+  {% endif %}
+</configuration>

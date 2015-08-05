@@ -1,0 +1,7 @@
+marathon:
+  url: http://walrus.escloc58.eecloud.nsn-net.net:8773/services/Walrus/dasp
+  checksum: md5=e8be65347d8902b6d4c578aeca2856ed
+  tarball: marathon-release-0.8.1-dist.tar.gz
+  dirname: marathon-0.8.1
+  http.port: 8773
+

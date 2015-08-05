@@ -1,0 +1,30 @@
+elasticsearch:
+  url: http://walrus.escloc58.eecloud.nsn-net.net:8773/services/Walrus/dasp
+  checksum: md5=44901be9b7af4c136bed80be1489353e
+  tarball: elasticsearch-cloud-mesos.zip
+  cpus: 0.5
+  mem: 1024
+  disk: 1000
+  ports: [9200]
+  requirePorts: True
+  constraints: [['hostname', 'UNIQUE']]
+  upgradeStrategy:
+    minimumHealthCapacity: 0.5
+  healthChecks:
+    - protocol: HTTP
+      portIndex: 0
+      path: /_cluster/health
+  shards_no: 10
+  replicas_no: 2
+  seed_ratio: 0.3
+  instances: 4
+  scheduler:
+    url: http://walrus.escloc58.eecloud.nsn-net.net:8773/services/Walrus/dasp
+    tarball: elasticsearch-mesos-scheduler.jar
+    checksum: md5=89c658ee2e76d12e53b80f939710c07e
+  executor:
+    url: http://walrus.escloc58.eecloud.nsn-net.net:8773/services/Walrus/dasp
+    tarball: elasticsearch-mesos-executor.jar
+    checksum: md5=1b71643617db9cbf3d360299480266a8
+
+

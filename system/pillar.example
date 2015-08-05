@@ -1,0 +1,11 @@
+ntp:
+  servers:
+    - ns1.nsn-net.net
+    - ns2.nsn-net.net
+
+system:
+  tmp: /mnt/tmp
+  lib: /mnt/lib
+  var: /mnt/var
+  root_device: /dev/vda1
+  client.version: 0.6.13

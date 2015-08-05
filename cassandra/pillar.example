@@ -1,0 +1,21 @@
+cassandra:
+  url: http://walrus.escloc58.eecloud.nsn-net.net:8773/services/Walrus/dasp
+  checksum: md5=20a21fdf67f491412cdfa3d187ce5f35
+  tarball: cassandra-mesos-dev.tar.gz
+  cpus: 0.5
+  mem: 4096
+  disk: 1000
+  ports: [9042,7199]
+  check_port_index: 1
+  constraints: [['hostname', 'UNIQUE']]
+  requirePorts: True
+  upgradeStrategy:
+    minimumHealthCapacity: 0.5
+  healthChecks:
+    - protocol: TCP
+      portIndex: 0
+      maxConsecutiveFailures: 10
+  num_tokens: 256
+  seed_ratio: 0.4
+  instances: 4
+  rangemovement: 'false'

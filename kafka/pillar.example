@@ -1,0 +1,33 @@
+kafka:
+  url: http://walrus.escloc58.eecloud.nsn-net.net:8773/services/Walrus/dasp
+  checksum: md5=8898d170397f37d708e765a9e68ba45d
+  tarball: kafka-mesos-0.9.0-beta.jar
+  consumer_group_id: test
+  producer_type: sync
+  compression_codec: none
+  net_threads_no: 2
+  io_threads_no: 8
+  partitions_no: 2
+  log_retention_hours: 168
+  cpus: 0.5
+  mem: 1024
+  disk: 1000
+  ports: [2416, 0]
+  check_port_index: 1
+  upgradeStrategy:
+    minimumHealthCapacity: 0.5
+  healthChecks:
+    - protocol: TCP
+      portIndex: 0
+  instances: 4
+  distribution:
+    url: http://walrus.escloc58.eecloud.nsn-net.net:8773/services/Walrus/dasp
+    checksum: md5=f3f7446788d9a06f6bfaba72912bd8cf
+    tarball: kafka_2.10-0.8.1.1.tgz
+
+kafka-manager:
+  url: http://walrus.escloc58.eecloud.nsn-net.net:8773/services/Walrus/dasp
+  checksum: md5=bac9fb71b9b9517ac08adb50ccd63d25
+  tarball: kafka-manager-1.2.0.zip
+  dirname: kafka-manager-1.2.0
+

@@ -1,0 +1,47 @@
+{
+    "id": "{{ app['id'] }}",
+    {% if app['cmd'] is defined -%}
+    "cmd": "{{ app['cmd'] }}",
+    {% else -%}
+    "args": {{ app['args'] }},
+    {% endif -%}
+    "cpus": {{ app['cpus'] }},
+    "mem": {{ app['mem'] }},
+    {% if app['backoffSeconds'] is defined -%}
+    "backoffSeconds": {{ app['backoffSeconds'] }},
+    {% endif -%}
+    {% if app['backoffFactor'] is defined -%}
+    "backoffFactor": {{ app['backoffFactor'] }},
+    {% endif -%}
+    {% if app['disk'] is defined -%}
+    "disk": {{ app['disk'] }},
+    {% endif -%}
+    {% if app['env'] is defined -%}
+    "env": {{ app['env'] | json }},
+    {% endif -%}
+    {% if app['constraints'] is defined -%}
+    "constraints": {{ app['constraints'] | json }},
+    {% endif -%}
+    {% if app['healthChecks'] is defined -%}
+    "healthChecks": {{ app['healthChecks'] | json }},
+    {% endif -%}
+    {% if app['ports'] is defined -%}
+    "ports": {{ app['ports'] | json }},
+    {% endif -%}
+    {% if app['uris'] is defined -%}
+    "uris": {{ app['uris'] | json }},
+    {% endif -%}
+    {% if app['dependencies'] is defined -%}
+    "dependencies": {{ app['dependencies']| json }},
+    {% endif -%}
+    {% if app['upgradeStrategy'] is defined -%}
+    "upgradeStrategy": {{ app['upgradeStrategy'] | json }},
+    {% endif -%}
+    {% if app['container'] is defined -%}
+    "container": {{ app['container'] | json }},
+    {% endif -%}
+    {% if app['requirePorts'] is defined -%}
+    "requirePorts": {{ app['requirePorts'] | json }},
+    {% endif -%}
+    "instances": {{ app['instances'] }}
+}

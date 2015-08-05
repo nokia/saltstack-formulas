@@ -1,0 +1,5 @@
+scala:
+  url: http://www.scala-lang.org/files/archive
+  checksum: md5=
+  tarball: scala-2.10.5.tgz
+  dirname: scala-2.10.5

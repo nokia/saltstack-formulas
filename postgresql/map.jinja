@@ -1,0 +1,40 @@
+{% set postgres = salt['grains.filter_by']({
+    'Debian': {
+        'pkg': 'postgresql-9.1',
+        'python': 'python-pygresql',
+        'service': 'postgresql',
+    },
+    'RedHat': {
+        'pkg': 'postgresql',
+        'python': 'postgresql-python',
+        'service': 'postgresql',
+    },
+    'Arch': {
+        'pkg': 'postgresql',
+        'python': 'python-psycopg2',
+        'service': 'postgresql',
+    },
+}, merge=salt['pillar.get']('postgres:lookup')) %}
+
+{% set jdbc = salt['grains.filter_by']({
+    'Debian': {
+        'postgresql': 'libpostgresql-jdbc-java',
+        'postgresql_jdbc': 'postgresql.jar',
+    },
+    'Ubuntu': {
+        'postgresql': 'libpostgresql-jdbc-java',
+        'postgresql_jdbc': 'postgresql.jar',
+    },
+    'RedHat': {
+        'postgresql': 'postgresql-jdbc',
+        'postgresql_jdbc': 'postgresql.jar',
+    },
+    'openSUSE': {
+        'postgresql': 'postgresql-jdbc',
+        'postgresql_jdbc': 'postgresql-jdbc.jar',
+    },
+    'FreeBSD': {
+        'postgresql': 'postgresql-jdbc',
+        'postgresql_jdbc': 'postgresql-jdbc.jar',
+    },
+}, merge=salt['pillar.get']('jdbc:lookup')) %}

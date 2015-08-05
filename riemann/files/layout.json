@@ -1,0 +1,1630 @@
+{
+  "server": "{{ riemann_host }}:{{ ws_port }}",
+  "server_type": "ws",
+  "workspaces": [
+    {
+      "name": "System",
+      "view": {
+        "type": "Balloon",
+        "weight": 1,
+        "id": "097e1ae41a268fc0ce7e87d1e0042b3c4793bfc1",
+        "version": 8,
+        "child": {
+          "type": "VStack",
+          "weight": 1,
+          "id": "ad8ea69df4b0f8bf83e951bb5d568fbdae5bb9e5",
+          "version": 8,
+          "children": [
+            {
+              "type": "HStack",
+              "weight": 1,
+              "id": "aee243bf1e7c9bd5049d26aee3f6c0b723f9b859",
+              "version": 8,
+              "children": [
+                {
+                  "type": "Grid",
+                  "weight": 1,
+                  "id": "845c7878fa289177621e6442559a967ff36cbbd3",
+                  "version": 2,
+                  "title": "Status",
+                  "query": "service =~ \"cpu%\" or service =~ \"memory%\" or service =~ \"fd%\" or service =~ \"load%\" or service =~ \"disk%\"",
+                  "max": "",
+                  "rows": "host",
+                  "cols": "service",
+                  "row_sort": "lexical",
+                  "col_sort": "lexical"
+                },
+                {
+                  "type": "VStack",
+                  "weight": 1,
+                  "id": "44e818f4e5d7368e968ec27450cc715560031348",
+                  "version": 6,
+                  "children": [
+                    {
+                      "type": "Flot",
+                      "weight": 1,
+                      "id": "10bf031ece5c671fc8783d962137f441ab4bdf22",
+                      "version": 2,
+                      "title": "CPU",
+                      "query": "service =~ \"cpu%\"",
+                      "max": null,
+                      "timeRange": 300,
+                      "graphType": "line",
+                      "stackMode": "true"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "id": "bef5aafe845932a16f123ede29e41ed9aa576864"
+    },
+    {
+      "name": "System2",
+      "view": {
+        "type": "Balloon",
+        "weight": 1,
+        "id": "b28ef35c7cbad9646ca1214c3b391cf88223b318",
+        "version": 2,
+        "child": {
+          "type": "VStack",
+          "weight": 1,
+          "id": "0d5c81fab6b23700597fd64677d6c84fdfd8d48b",
+          "version": 2,
+          "children": [
+            {
+              "type": "HStack",
+              "weight": 1,
+              "id": "dca6aa766ad503147f49ad098d5d2d710deb13ef",
+              "version": 1,
+              "children": [
+                {
+                  "type": "Flot",
+                  "weight": 1,
+                  "id": "4425006776eb5f01db562735031494481804934b",
+                  "version": 1,
+                  "title": "Load",
+                  "query": "service =~ \"load%\"",
+                  "max": null,
+                  "timeRange": 300,
+                  "graphType": "line",
+                  "stackMode": "true"
+                },
+                {
+                  "type": "Flot",
+                  "weight": 1,
+                  "id": "90cf2f21a76435d31dbb07642f4d71577fc274fb",
+                  "version": 1,
+                  "title": "Memory",
+                  "query": "service =~ \"memory%\"",
+                  "max": null,
+                  "timeRange": 300,
+                  "graphType": "line",
+                  "stackMode": "true"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "id": "ad83532b16972ede9c204c862a5d0d87ea151e07"
+    },
+    {
+      "name": "Net",
+      "view": {
+        "type": "Balloon",
+        "weight": 1,
+        "id": "fe64a123c579bc504a995bc187bc83fbfa9a4809",
+        "version": 17,
+        "child": {
+          "type": "VStack",
+          "weight": 1,
+          "id": "b5506c56f6829010724233f5a893c7f5bf1bb0a0",
+          "version": 17,
+          "children": [
+            {
+              "type": "HStack",
+              "weight": 1,
+              "id": "ce7c00b1871fd1ed9c50a2109d7f5ec3c6bd7aed",
+              "version": 14,
+              "children": [
+                {
+                  "type": "VStack",
+                  "weight": 1,
+                  "id": "c91435838321de222db295a7d54a74aa6d29a700",
+                  "version": 8,
+                  "children": [
+                    {
+                      "type": "HStack",
+                      "weight": 1,
+                      "id": "1cb5dd8d8e47de4547aaaf6103a693fc7ca8b731",
+                      "version": 5,
+                      "children": [
+                        {
+                          "type": "Grid",
+                          "weight": 1,
+                          "id": "7489ea876e547e5c143b4393784a3aa3e92414dc",
+                          "version": 1,
+                          "title": "Network",
+                          "query": "service =~ \"%tx err%\" or service =~ \"%rx err%\" or service =~ \"%tx drop%\" or service =~ \"%rx drop%\"",
+                          "max": "",
+                          "rows": "host",
+                          "cols": "service",
+                          "row_sort": "lexical",
+                          "col_sort": "lexical"
+                        },
+                        {
+                          "type": "Flot",
+                          "weight": 1,
+                          "id": "0a2fcac154744d3e08008ced4c797de536966a4f",
+                          "version": 2,
+                          "title": "Sent packets",
+                          "query": "service =~ \"%tx packet%\"",
+                          "max": null,
+                          "timeRange": 300,
+                          "graphType": "line",
+                          "stackMode": "true"
+                        },
+                        {
+                          "type": "Flot",
+                          "weight": 1,
+                          "id": "ec4cfd67a36b03a183b373ff2ba5831e15402884",
+                          "version": 4,
+                          "title": "Received packets",
+                          "query": "service =~ \"%rx packet%\"",
+                          "max": null,
+                          "timeRange": 300,
+                          "graphType": "line",
+                          "stackMode": "true"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "id": "e91ee9ee1782b9ad963b3718c679e089fdd9a097"
+    },
+    {
+      "name": "Net2",
+      "view": {
+        "type": "Balloon",
+        "weight": 1,
+        "id": "c98e26b59cf84c0ebc9bc7fe0efe571ddf29c89b",
+        "version": 2,
+        "child": {
+          "type": "VStack",
+          "weight": 1,
+          "id": "468987739643d271dcc57e158369ff0b6b02131c",
+          "version": 2,
+          "children": [
+            {
+              "type": "HStack",
+              "weight": 1,
+              "id": "25151af9d674d8faa4c1f826fb0b8784b8642dee",
+              "version": 1,
+              "children": [
+                {
+                  "type": "Flot",
+                  "weight": 1,
+                  "id": "e643b083ccc43a14173195033fad57879b7fa5ac",
+                  "version": 1,
+                  "title": "Received bytes",
+                  "query": "service =~ \"%rx bytes%\"",
+                  "max": null,
+                  "timeRange": 300,
+                  "graphType": "line",
+                  "stackMode": "true"
+                },
+                {
+                  "type": "Flot",
+                  "weight": 1,
+                  "id": "90b3b4ba4c051602c6484575c54771c879d61072",
+                  "version": 1,
+                  "title": "Sent bytes",
+                  "query": "service =~ \"%tx bytes%\"",
+                  "max": null,
+                  "timeRange": 300,
+                  "graphType": "line",
+                  "stackMode": "true"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "id": "110377f3f69aa1cc7b965402582ce164b8f4abf6"
+    },
+    {
+      "name": "Services",
+      "view": {
+        "type": "Balloon",
+        "weight": 1,
+        "id": "d9a5bd66e201864963b198ac17d65ce05b90556c",
+        "version": 2,
+        "child": {
+          "type": "VStack",
+          "weight": 1,
+          "id": "4ca93b561e014c2e462a211ce7b5d5a9cb6f9b38",
+          "version": 2,
+          "children": [
+            {
+              "type": "Grid",
+              "weight": 1,
+              "id": "99335081c5468cc5880876b47735022393bf4fa0",
+              "version": 2,
+              "title": "",
+              "query": "service =~ \"proc%\"",
+              "max": "",
+              "rows": "host",
+              "cols": "service",
+              "row_sort": "lexical",
+              "col_sort": "lexical"
+            }
+          ]
+        }
+      },
+      "id": "2328c155809598134a74744ccf389a7e185d2e0b"
+    },
+    {
+      "name": "Riemann",
+      "view": {
+        "type": "Balloon",
+        "weight": 1,
+        "id": "219eebfb9f8c25c843c76e2be14d3d799755e7fc",
+        "version": 37,
+        "child": {
+          "type": "VStack",
+          "weight": 1,
+          "id": "32664511d463e73c64982168e382656f4f5f34a7",
+          "version": 37,
+          "children": [
+            {
+              "type": "HStack",
+              "weight": 1,
+              "id": "977274fd03bfbe731bb39924421dc3ca22d6da1b",
+              "version": 35,
+              "children": [
+                {
+                  "type": "VStack",
+                  "weight": 1,
+                  "id": "599da1f3682e86d86d80235ea879dd8aa64bce5a",
+                  "version": 14,
+                  "children": [
+                    {
+                      "type": "HStack",
+                      "weight": 1,
+                      "id": "821f6649e962dbd9b239c390749c582877d7c1bc",
+                      "version": 8,
+                      "children": [
+                        {
+                          "type": "VStack",
+                          "weight": 1,
+                          "id": "f21bd9a48ab0c673f8734af986ac2c90cb8fad09",
+                          "version": 3,
+                          "children": [
+                            {
+                              "type": "Grid",
+                              "weight": 1,
+                              "id": "358e7ee12845c631bf2781b6e761240981f94341",
+                              "version": 1,
+                              "title": "UDP",
+                              "query": "service =~ \"riemann server%\" and service =~ \"%udp%\"",
+                              "max": "",
+                              "rows": "service",
+                              "cols": "host",
+                              "row_sort": "lexical",
+                              "col_sort": "lexical"
+                            },
+                            {
+                              "type": "Flot",
+                              "weight": 1,
+                              "id": "74aa775e2c9a3eb00e794c10056d1066f5f00c6d",
+                              "version": 3,
+                              "title": "UDP rate",
+                              "query": "service =~ \"riemann server%\" and service =~ \"%udp%\" and service =~ \"%rate%\"",
+                              "max": null,
+                              "timeRange": 300,
+                              "graphType": "line",
+                              "stackMode": "true"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "VStack",
+                          "weight": 1,
+                          "id": "98cf4ccea1db86e12d22b3c1cad88b88bda8018b",
+                          "version": 3,
+                          "children": [
+                            {
+                              "type": "Grid",
+                              "weight": 1,
+                              "id": "3ad2beed70f5ab09cb82232b350e22126062ec44",
+                              "version": 4,
+                              "title": "TCP",
+                              "query": "service =~ \"riemann server%\" and service =~ \"%tcp%\"",
+                              "max": "",
+                              "rows": "service",
+                              "cols": "host",
+                              "row_sort": "lexical",
+                              "col_sort": "lexical"
+                            },
+                            {
+                              "type": "Flot",
+                              "weight": 1,
+                              "id": "f6aafba689c6d1ebca3d1b85aaf73cf102a4ea73",
+                              "version": 3,
+                              "title": "TCP rate",
+                              "query": "service =~ \"riemann server%\" and service =~ \"%tcp%\" and service =~ \"%rate%\"",
+                              "max": null,
+                              "timeRange": 300,
+                              "graphType": "line",
+                              "stackMode": "true"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "VStack",
+                  "weight": 1,
+                  "id": "bd569ec8db2d9b1debe70e65276da85960772a31",
+                  "version": 15,
+                  "children": [
+                    {
+                      "type": "HStack",
+                      "weight": 1,
+                      "id": "afe0140be01f8c3bafdf23bdfda18e338045bba4",
+                      "version": 8,
+                      "children": [
+                        {
+                          "type": "VStack",
+                          "weight": 1,
+                          "id": "6635f068dae97d3ba2444fed872bc2836a5e1f25",
+                          "version": 2,
+                          "children": [
+                            {
+                              "type": "Grid",
+                              "weight": 1,
+                              "id": "4db9ef0b89e59955722e217b750650ab46d8cbea",
+                              "version": 3,
+                              "title": "WS",
+                              "query": "service =~ \"riemann server%\" and service =~ \"%ws%\"",
+                              "max": "",
+                              "rows": "service",
+                              "cols": "host",
+                              "row_sort": "lexical",
+                              "col_sort": "lexical"
+                            },
+                            {
+                              "type": "Flot",
+                              "weight": 1,
+                              "id": "e30dc58e4529825a1b121309afcc2592ece2226f",
+                              "version": 2,
+                              "title": "WS rate",
+                              "query": "service =~ \"riemann server%\" and service =~ \"%ws%\" and service =~ \"%rate%\"",
+                              "max": null,
+                              "timeRange": 300,
+                              "graphType": "line",
+                              "stackMode": "true"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "VStack",
+                          "weight": 1,
+                          "id": "fd7a5aea7ece37fe6ef3c6b52576bca62da47b57",
+                          "version": 4,
+                          "children": [
+                            {
+                              "type": "Grid",
+                              "weight": 1,
+                              "id": "8baf2e414adcc016687f3bdd53084fbe9747bbe1",
+                              "version": 4,
+                              "title": "Streams",
+                              "query": "service =~ \"riemann streams%\"",
+                              "max": "",
+                              "rows": "service",
+                              "cols": "host",
+                              "row_sort": "lexical",
+                              "col_sort": "lexical"
+                            },
+                            {
+                              "type": "Flot",
+                              "weight": 1,
+                              "id": "1ef772739880a39092ca260c6629a0389fd18bc9",
+                              "version": 2,
+                              "title": "Streams rate",
+                              "query": "service =~ \"riemann streams%\"  and service =~ \"%rate%\"",
+                              "max": null,
+                              "timeRange": 300,
+                              "graphType": "line",
+                              "stackMode": "true"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "id": "29f16d6e89cb740a2628d0edf2a232f9d2d76a60"
+    },
+    {
+      "name": "PostgreSQL",
+      "view": {
+        "type": "Balloon",
+        "weight": 1,
+        "id": "bc872946a46680a0cf2312184781559e1c4a2604",
+        "version": 9,
+        "child": {
+          "type": "VStack",
+          "weight": 1,
+          "id": "34c15153147959781cc89650d2c620ac4890bdaf",
+          "version": 9,
+          "children": [
+            {
+              "type": "HStack",
+              "weight": 1,
+              "id": "1c26141c6a93dbc062285395515103f5f8e2ebcb",
+              "version": 8,
+              "children": [
+                {
+                  "type": "VStack",
+                  "weight": 1,
+                  "id": "7f8928a040d3c63ccc22ba842fd947069846dd4d",
+                  "version": 1,
+                  "children": [
+                    {
+                      "type": "Grid",
+                      "weight": 1,
+                      "id": "fcf4ec22e0342d4240a19e8b03ad119f89dd0142",
+                      "version": 1,
+                      "title": "Postgres",
+                      "query": "service =~ \"DB%connection%\" or service =~ \"DB%size%\"",
+                      "max": "",
+                      "rows": "host",
+                      "cols": "service",
+                      "row_sort": "lexical",
+                      "col_sort": "lexical"
+                    },
+                    {
+                      "type": "Flot",
+                      "weight": 1,
+                      "id": "93f9e209e5b21aa4575156e84209b2aad04f815e",
+                      "version": 1,
+                      "title": "PG xact",
+                      "query": "service =~ \"DB%xact%\"",
+                      "max": null,
+                      "timeRange": 300,
+                      "graphType": "line",
+                      "stackMode": "true"
+                    }
+                  ]
+                },
+                {
+                  "type": "VStack",
+                  "weight": 1,
+                  "id": "ecf3261da79b1934e9c03676c3cb5b47c1862d32",
+                  "version": 5,
+                  "children": [
+                    {
+                      "type": "Flot",
+                      "weight": 1,
+                      "id": "8fe41ee44d79a42c01f80cdd4c0eef7917005e76",
+                      "version": 2,
+                      "title": "PG blks",
+                      "query": "service =~ \"DB%blks%\"",
+                      "max": null,
+                      "timeRange": 300,
+                      "graphType": "line",
+                      "stackMode": "true"
+                    },
+                    {
+                      "type": "Flot",
+                      "weight": 1,
+                      "id": "deb0a71536997bf9bcdbf783b89264e5ffa6fae0",
+                      "version": 2,
+                      "title": "PG tup",
+                      "query": "service =~ \"DB%tup%\"",
+                      "max": null,
+                      "timeRange": 300,
+                      "graphType": "line",
+                      "stackMode": "true"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "id": "7c7e5c4dee5fa4992bee3740fa4fa27ec462a417"
+    },
+    {
+      "name": "Hadoop",
+      "view": {
+        "type": "Balloon",
+        "weight": 1,
+        "id": "b8bd75d245c37a5195b6df1903c2dfbc75b77933",
+        "version": 68,
+        "child": {
+          "type": "VStack",
+          "weight": 1,
+          "id": "cc147c73d71658109ede3ba581b4aff4569db04c",
+          "version": 68,
+          "children": [
+            {
+              "type": "HStack",
+              "weight": 1,
+              "id": "7dc0708fc07434676bf6b7cb5f2ea608bba990f1",
+              "version": 37,
+              "children": [
+                {
+                  "type": "VStack",
+                  "weight": 1,
+                  "id": "43c49485d97c60d16ae0a298c70d119c349e5d38",
+                  "version": 37,
+                  "children": [
+                    {
+                      "type": "HStack",
+                      "weight": 1,
+                      "id": "6deeac6e6ef25f9df164c8be20a0620fada97bb5",
+                      "version": 22,
+                      "children": [
+                        {
+                          "type": "VStack",
+                          "weight": 1,
+                          "id": "efe068d0e30b0492516e9e7ca294d74691147d8f",
+                          "version": 6,
+                          "children": [
+                            {
+                              "type": "Flot",
+                              "weight": 1,
+                              "id": "4856d160714dea57795079460f1e7c1f91b6eee9",
+                              "version": 7,
+                              "title": "Connections",
+                              "query": "service =~ \"hadoop%rpcactivityforport%connections\" and service =~ \"%namenode%\"",
+                              "max": null,
+                              "timeRange": 300,
+                              "graphType": "line",
+                              "stackMode": "true"
+                            },
+                            {
+                              "type": "Flot",
+                              "weight": 1,
+                              "id": "d6be5c0e30ad8894e30e3254f810eb2d65a8f5f5",
+                              "version": 4,
+                              "title": "Bytes",
+                              "query": "service =~ \"hadoop%rpcactivityforport%bytes\" and service =~ \"%namenode%\"",
+                              "max": null,
+                              "timeRange": 300,
+                              "graphType": "line",
+                              "stackMode": "true"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "VStack",
+                          "weight": 1,
+                          "id": "3c010a43c8c1bb5b277d03854417389f2f3a2227",
+                          "version": 9,
+                          "children": [
+                            {
+                              "type": "HStack",
+                              "weight": 1,
+                              "id": "c1f26213c5a5956cc74ebf37d8dae4292df789dd",
+                              "version": 7,
+                              "children": [
+                                {
+                                  "type": "VStack",
+                                  "weight": 1,
+                                  "id": "efe584e049389073e2007f6b419592d2413203c8",
+                                  "version": 1,
+                                  "children": [
+                                    {
+                                      "type": "Gauge",
+                                      "weight": 1,
+                                      "id": "471573ce4155b1f641a3ea49f315d535ea6091e5",
+                                      "version": 1,
+                                      "title": "Live",
+                                      "query": "service =~ \"hadoop%fsnamesystem%\" and (service =~ \"%numlivedatanodes%\")"
+                                    },
+                                    {
+                                      "type": "Grid",
+                                      "weight": 1,
+                                      "id": "565e3d3e782fc7c1e407263cf8b4c79c3c7f1206",
+                                      "version": 1,
+                                      "title": "Status",
+                                      "query": "(service =~ \"hadoop%namenodeinfo%\" and (service =~ \"%totalfiles%\" or service =~ \"%totalblocks%\" or service =~ \"%threads%\"))",
+                                      "max": "",
+                                      "rows": "service",
+                                      "cols": "host",
+                                      "row_sort": "lexical",
+                                      "col_sort": "lexical"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "VStack",
+                                  "weight": 1,
+                                  "id": "3b927267aa3d3a49726bd99bd7a3c82adb244927",
+                                  "version": 1,
+                                  "children": [
+                                    {
+                                      "type": "Gauge",
+                                      "weight": 1,
+                                      "id": "17d1f8ca55ab91da62e1ad068a1d4f9a255af9ba",
+                                      "version": 1,
+                                      "title": "Dead",
+                                      "query": "service =~ \"hadoop%fsnamesystem%\" and (service =~ \"%numdeaddatanodes%\")"
+                                    },
+                                    {
+                                      "type": "Grid",
+                                      "weight": 1,
+                                      "id": "95aeae552d9cc794331ca1172125f9d1926020f7",
+                                      "version": 1,
+                                      "title": "Logs",
+                                      "query": "service =~ \"hadoop%namenode%jvmmetrics%logwarn\" or service =~ \"hadoop%namenode%jvmmetrics%logerror\" or service =~ \"hadoop%namenode%jvmmetrics%logfatal\"",
+                                      "max": "",
+                                      "rows": "service",
+                                      "cols": "host",
+                                      "row_sort": "lexical",
+                                      "col_sort": "lexical"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "HStack",
+                              "weight": 1,
+                              "id": "4f0709623480435548d9298af70a621cd14d7bfd",
+                              "version": 1,
+                              "children": [
+                                {
+                                  "type": "Grid",
+                                  "weight": 1,
+                                  "id": "52f18e18f9108ca0305e50e4493a529341064c04",
+                                  "version": 33,
+                                  "title": "HDFS",
+                                  "query": "service =~ \"hadoop%fsnamesystem%\" and (service =~ \"%m.totalload\" or service =~ \"%m.capacityused\" or service =~ \"%m.capacityremaining\" or service =~ \"%corruptblocks%\" or service =~ \"%m.underreplicatedblocks\" ) ",
+                                  "max": "",
+                                  "rows": "service",
+                                  "cols": "host",
+                                  "row_sort": "lexical",
+                                  "col_sort": "lexical"
+                                },
+                                {
+                                  "type": "Grid",
+                                  "weight": 1,
+                                  "id": "5a04f8ba58ada69ab30ab35caa6429d63ad6f84f",
+                                  "version": 1,
+                                  "title": "HDFS Ops",
+                                  "query": "service =~ \"hadoop%namenodeactivity%\" and (service =~ \"%fileinfoops\" or service =~ \"%deletefileops\" or service =~ \"%createfileops\" or service =~ \"%addblockops\")",
+                                  "max": "",
+                                  "rows": "service",
+                                  "cols": "host",
+                                  "row_sort": "lexical",
+                                  "col_sort": "lexical"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "id": "c78d0b9b4b90b18d48b5a1d69478def2823e414d"
+    },
+    {
+      "name": "HadoopDFS",
+      "view": {
+        "type": "Balloon",
+        "weight": 1,
+        "id": "b843ac11f41bff91b83eb2ecaa0ad07af064c5f8",
+        "version": 18,
+        "child": {
+          "type": "VStack",
+          "weight": 1,
+          "id": "3da1ef74c2326cebbc80b48de583641cba1ae038",
+          "version": 18,
+          "children": [
+            {
+              "type": "HStack",
+              "weight": 1,
+              "id": "8ead165db0ae57938ccdfac20889f721f96481a9",
+              "version": 17,
+              "children": [
+                {
+                  "type": "VStack",
+                  "weight": 1,
+                  "id": "f8d72e49db90caa0b217e1f52931bc05533ae97d",
+                  "version": 6,
+                  "children": [
+                    {
+                      "type": "Grid",
+                      "weight": 1,
+                      "id": "7ced9dd5c512527ccf6e5f3270989bb016101663",
+                      "version": 3,
+                      "title": "status",
+                      "query": "(service =~ \"hadoop%fsdatasetstate%\" and (service =~ \"%.dfsused%\" or service =~ \"%numfailedvolumes%\" or service =~ \"%.remaining%\") )",
+                      "max": "",
+                      "rows": "host",
+                      "cols": "service",
+                      "row_sort": "lexical",
+                      "col_sort": "lexical"
+                    },
+                    {
+                      "type": "Grid",
+                      "weight": 1,
+                      "id": "1b6a6575186d7221d5a4c583042051540929ffe2",
+                      "version": 3,
+                      "title": "logs",
+                      "query": "service =~ \"hadoop%datanode%jvmmetrics%logwarn\" or service =~ \"hadoop%datanode%jvmmetrics%logerror\" or service =~ \"hadoop%datanode%jvmmetrics%logfatal\"",
+                      "max": "",
+                      "rows": "host",
+                      "cols": "service",
+                      "row_sort": "lexical",
+                      "col_sort": "lexical"
+                    }
+                  ]
+                },
+                {
+                  "type": "VStack",
+                  "weight": 1,
+                  "id": "db4c95485995b4d76f8d58e5f979d00f6d234e82",
+                  "version": 7,
+                  "children": [
+                    {
+                      "type": "Flot",
+                      "weight": 1,
+                      "id": "c8e97b1e8d2e0d9c9c5a85ca4ca8e678e65c0b9b",
+                      "version": 1,
+                      "title": "failures",
+                      "query": "(service =~ \"hadoop%datanodeactivity%\" and (service =~ \"%volumefailures%\"  ) ) ",
+                      "max": null,
+                      "timeRange": 300,
+                      "graphType": "line",
+                      "stackMode": "true"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "id": "d52ce501832f8e59f5b7e428c9400fff2b898d3e"
+    },
+    {
+      "name": "HadoopIO",
+      "view": {
+        "type": "Balloon",
+        "weight": 1,
+        "id": "0fc2509d57922cedd1dc250a5fe4a7de329e65fe",
+        "version": 5,
+        "child": {
+          "type": "VStack",
+          "weight": 1,
+          "id": "1c362955a624c507f2f8d211dbcabdbd6c3a4eaa",
+          "version": 5,
+          "children": [
+            {
+              "type": "HStack",
+              "weight": 1,
+              "id": "203a80df67c489cbf5a6bd706ce4f6801f81b787",
+              "version": 5,
+              "children": [
+                {
+                  "type": "Flot",
+                  "weight": 1,
+                  "id": "0124919cd4091447e965a92d9f257ff94805fa2c",
+                  "version": 2,
+                  "title": "reads",
+                  "query": "(service =~ \"hadoop%datanodeactivity%\" and (service =~ \"%bytesread\" ) ) ",
+                  "max": null,
+                  "timeRange": 300,
+                  "graphType": "line",
+                  "stackMode": "true"
+                },
+                {
+                  "type": "Flot",
+                  "weight": 1,
+                  "id": "b680e40fc26720271942bd44c438f70b77a9ed6a",
+                  "version": 3,
+                  "title": "writes",
+                  "query": "service =~ \"hadoop%datanodeactivity%\" and service =~ \"%byteswritten%\"",
+                  "max": null,
+                  "timeRange": 300,
+                  "graphType": "line",
+                  "stackMode": "true"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "id": "e5e57203793219884fddb48d737fe1b113d44936"
+    },
+    {
+      "name": "HadoopOPS",
+      "view": {
+        "type": "Balloon",
+        "weight": 1,
+        "id": "9d7d8b73834e6ea9b18eb2e199d11c415b6cbeb7",
+        "version": 2,
+        "child": {
+          "type": "VStack",
+          "weight": 1,
+          "id": "08eb12d79db838b40d83e91864caa53ed3bb8724",
+          "version": 2,
+          "children": [
+            {
+              "type": "HStack",
+              "weight": 1,
+              "id": "57a834ae6da6f16804cd4e4db764bdb160538e63",
+              "version": 1,
+              "children": [
+                {
+                  "type": "Flot",
+                  "weight": 1,
+                  "id": "a730146da53022115b089f96eb1664eeefe0e031",
+                  "version": 1,
+                  "title": "writes",
+                  "query": "service =~ \"hadoop%datanodeactivity%\" and (service =~ \"%writeblockopnumops%\"  ) ) ",
+                  "max": null,
+                  "timeRange": 300,
+                  "graphType": "line",
+                  "stackMode": "true"
+                },
+                {
+                  "type": "Flot",
+                  "weight": 1,
+                  "id": "9bfcf8ce3fd21d589e7a4dfaf85ad3a37a0e42b8",
+                  "version": 1,
+                  "title": "reads",
+                  "query": "service =~ \"hadoop%datanodeactivity%\" and ( service =~ \"%readblockopnumops%\"  ) ) ",
+                  "max": null,
+                  "timeRange": 300,
+                  "graphType": "line",
+                  "stackMode": "true"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "id": "6582dae42b24009036ee459f9b29b21c6442d4b0"
+    },
+    {
+      "name": "HadoopNet",
+      "view": {
+        "type": "Balloon",
+        "weight": 1,
+        "id": "13c8944cb385ac1213cc82dbb8dfb057d97c9968",
+        "version": 3,
+        "child": {
+          "type": "VStack",
+          "weight": 1,
+          "id": "2b62840f82fe0795c367901f08e01752c7b9448a",
+          "version": 3,
+          "children": [
+            {
+              "type": "HStack",
+              "weight": 1,
+              "id": "a503f5e5b5151266e16e62b535fdf468e2ed6625",
+              "version": 2,
+              "children": [
+                {
+                  "type": "Flot",
+                  "weight": 1,
+                  "id": "21b314d5331dbcccd7d66a8ad42fe8d66005e1fa",
+                  "version": 1,
+                  "title": "received",
+                  "query": "service =~ \"hadoop%rpcactivityforport%receivedbytes\" and service =~ \"%datanode%\"",
+                  "max": null,
+                  "timeRange": 300,
+                  "graphType": "line",
+                  "stackMode": "true"
+                },
+                {
+                  "type": "Flot",
+                  "weight": 1,
+                  "id": "234cccbbebb03dafd75c6800f24d9cf518948a19",
+                  "version": 1,
+                  "title": "sent",
+                  "query": "service =~ \"hadoop%rpcactivityforport%sentbytes\" and service =~ \"%datanode%\"",
+                  "max": null,
+                  "timeRange": 300,
+                  "graphType": "line",
+                  "stackMode": "true"
+                },
+                {
+                  "type": "Flot",
+                  "weight": 1,
+                  "id": "3b12e50ed6e73cd6093728d9021447c97ccfab1a",
+                  "version": 1,
+                  "title": "connections",
+                  "query": "service =~ \"hadoop%rpcactivityforport%connections\" and service =~ \"%datanode%\"",
+                  "max": null,
+                  "timeRange": 300,
+                  "graphType": "line",
+                  "stackMode": "true"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "id": "c8205f2491289bb9a73f94b89674566aa5762540"
+    },
+    {
+      "name": "Zookeeper",
+      "view": {
+        "type": "Balloon",
+        "weight": 1,
+        "id": "58e4aad679e649839194beaab6d5a71ca8c1799b",
+        "version": 12,
+        "child": {
+          "type": "VStack",
+          "weight": 1,
+          "id": "6fbdc0c5f2d55f10387cf3bf552bffa6a005bd9a",
+          "version": 12,
+          "children": [
+            {
+              "type": "HStack",
+              "weight": 1,
+              "id": "78e61e9c89bff277145dc0adf178505337084163",
+              "version": 11,
+              "children": [
+                {
+                  "type": "VStack",
+                  "weight": 1,
+                  "id": "91795c36e939737d11ded210943e03329bc0ebfb",
+                  "version": 4,
+                  "children": [
+                    {
+                      "type": "Grid",
+                      "weight": 1,
+                      "id": "f86d2ae42ba8d3d9521ce53a29e316c00ce5d649",
+                      "version": 4,
+                      "title": "Basic info",
+                      "query": "service =~ \"%zookeeper%\" and (service =~ \"%connections%\" or service =~ \"%requests%\" or service =~ \"%data_size%\" or service =~ \"%server_state%\" or service =~ \"%version%\")",
+                      "max": "",
+                      "rows": "service",
+                      "cols": "host",
+                      "row_sort": "lexical",
+                      "col_sort": "lexical"
+                    },
+                    {
+                      "type": "Grid",
+                      "weight": 1,
+                      "id": "7aba8526f9e3da8a8b99ce9d8332f3e3b7206e60",
+                      "version": 1,
+                      "title": "",
+                      "query": "service =~ \"%zookeeper%\" and service =~ \"%count%\"",
+                      "max": "",
+                      "rows": "service",
+                      "cols": "host",
+                      "row_sort": "lexical",
+                      "col_sort": "lexical"
+                    }
+                  ]
+                },
+                {
+                  "type": "VStack",
+                  "weight": 1,
+                  "id": "a5d5b959c4ecd52df75ea913d3fdcfed8b9f394d",
+                  "version": 6,
+                  "children": [
+                    {
+                      "type": "Flot",
+                      "weight": 1,
+                      "id": "cd03dac98688280befbfb8a8d161c3cc46fe3a1d",
+                      "version": 2,
+                      "title": "Packets received",
+                      "query": "service =~ \"%zookeeper%\" and service =~ \"%packets_received%\"",
+                      "max": null,
+                      "timeRange": 300,
+                      "graphType": "line",
+                      "stackMode": "true"
+                    },
+                    {
+                      "type": "Flot",
+                      "weight": 1,
+                      "id": "ae539f17487120d1f0bd4448ec9dd6ff07f6c53a",
+                      "version": 3,
+                      "title": "Packets sent",
+                      "query": "service =~ \"%zookeeper%\" and service =~ \"%packets_sent%\"",
+                      "max": null,
+                      "timeRange": 300,
+                      "graphType": "line",
+                      "stackMode": "true"
+                    },
+                    {
+                      "type": "Flot",
+                      "weight": 1,
+                      "id": "58bec5e0885c9fb7709b8e15dfce286bdda338a0",
+                      "version": 2,
+                      "title": "Latency",
+                      "query": "service =~ \"%zookeeper%\" and service =~ \"%latency%\"",
+                      "max": null,
+                      "timeRange": 300,
+                      "graphType": "line",
+                      "stackMode": "true"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "id": "18bb95e3fde4c414f229a701d8788256f214c19e"
+    },
+    {
+      "name": "Redis",
+      "view": {
+        "type": "Balloon",
+        "weight": 1,
+        "id": "1434d702804353ccb3e62e2e8121497901bf8ed9",
+        "version": 59,
+        "child": {
+          "type": "VStack",
+          "weight": 1,
+          "id": "896317a1a636cec4a20998296132593752f2dff7",
+          "version": 59,
+          "children": [
+            {
+              "type": "HStack",
+              "weight": 1,
+              "id": "95df277e9398743b4949aeb6482e6ff35c997818",
+              "version": 15,
+              "children": [
+                {
+                  "type": "VStack",
+                  "weight": 1,
+                  "id": "1a82f0445e67242fec697ea7870f613ba0efaed4",
+                  "version": 12,
+                  "children": [
+                    {
+                      "type": "HStack",
+                      "weight": 1,
+                      "id": "4a7cb657b6cf69dce1d45eaa227e1b4c0e3b7230",
+                      "version": 2,
+                      "children": [
+                        {
+                          "type": "Grid",
+                          "weight": 1,
+                          "id": "0a89797d165bfa9034c076d591815ee66a78acb7",
+                          "version": 48,
+                          "title": "Status",
+                          "query": "(service =~ \"redis%\" and (service =~ \"%aof_last_write_status\"  or service =~ \"%rdb_last_bgsave_status\")) or (service =~ \"redis connected_clients\")",
+                          "max": "",
+                          "rows": "host",
+                          "cols": "service",
+                          "row_sort": "lexical",
+                          "col_sort": "lexical"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "HStack",
+                      "weight": 1,
+                      "id": "3c340de4d6888d54e01d0480ff6d36eb8815b1b6",
+                      "version": 2,
+                      "children": [
+                        {
+                          "type": "Grid",
+                          "weight": 1,
+                          "id": "090df08c8ed6d721bd1914b6d21835be19ebf776",
+                          "version": 2,
+                          "title": "Memory",
+                          "query": "(service =~ \"redis%\" and service =~ \"%evicted_keys\") or (service =~ \"redis%\" and service =~ \"%used_memory_human\")",
+                          "max": "",
+                          "rows": "host",
+                          "cols": "service",
+                          "row_sort": "lexical",
+                          "col_sort": "lexical"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "VStack",
+                  "weight": 1,
+                  "id": "919b67b85cdda5637d0a53ad499c7de04fd0c5f2",
+                  "version": 3,
+                  "children": [
+                    {
+                      "type": "Flot",
+                      "weight": 1,
+                      "id": "4ec56fe115d3c0394167d14a501539581814ee7b",
+                      "version": 1,
+                      "title": "ops",
+                      "query": "service =~ \"redis instantaneous_ops_per_sec\"",
+                      "max": null,
+                      "timeRange": 300,
+                      "graphType": "line",
+                      "stackMode": "true"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "id": "aa6d6e34f66d413e01a162a6f8e733068e4cfe57"
+    },
+    {
+      "name": "Kafka",
+      "view": {
+        "type": "Balloon",
+        "weight": 1,
+        "id": "1a415ff64da1d82864e98acce8af896c5d090158",
+        "version": 16,
+        "child": {
+          "type": "VStack",
+          "weight": 1,
+          "id": "d5128ad9efd338d8dae552c4cd5824db097dd714",
+          "version": 16,
+          "children": [
+            {
+              "type": "HStack",
+              "weight": 1,
+              "id": "579e5cea805c7f66e9661ef60ab4b5406157f09c",
+              "version": 15,
+              "children": [
+                {
+                  "type": "VStack",
+                  "weight": 1,
+                  "id": "19b267fdfc77e134120b97a93279dfa7b373d077",
+                  "version": 9,
+                  "children": [
+                    {
+                      "type": "HStack",
+                      "weight": 1,
+                      "id": "cb9c8dab238f32872e69cc5fd0cb5085ea27f586",
+                      "version": 4,
+                      "children": [
+                        {
+                          "type": "VStack",
+                          "weight": 1,
+                          "id": "3d7d0255ec140c72f3eb0727ea3c1fbe1754340d",
+                          "version": 2,
+                          "children": [
+                            {
+                              "type": "Grid",
+                              "weight": 1,
+                              "id": "cd893f6c72a1794da3ebf2586a04e10ff3f1beec",
+                              "version": 2,
+                              "title": "controllers",
+                              "query": " (service =~ \"%kafka%\" and service =~ \"%ActiveControllerCount%\")",
+                              "max": "",
+                              "rows": "host",
+                              "cols": "service",
+                              "row_sort": "lexical",
+                              "col_sort": "lexical"
+                            },
+                            {
+                              "type": "Grid",
+                              "weight": 1,
+                              "id": "be5db6afb1402dba3d6cd5d16c67dfc63f9d1f1d",
+                              "version": 1,
+                              "title": "partitions",
+                              "query": "(service =~ \"%kafka%\" and service =~ \"%PartitionCount%\") ",
+                              "max": "",
+                              "rows": "host",
+                              "cols": "service",
+                              "row_sort": "lexical",
+                              "col_sort": "lexical"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "Flot",
+                          "weight": 1,
+                          "id": "f4389c210b2d29c6fd53f03360251ffa95d80993",
+                          "version": 1,
+                          "title": "requests",
+                          "query": "service =~ \"%kafka%\" and service =~ \"%RequestQueueSize%\"",
+                          "max": null,
+                          "timeRange": 300,
+                          "graphType": "line",
+                          "stackMode": "true"
+                        },
+                        {
+                          "type": "Flot",
+                          "weight": 1,
+                          "id": "3308d0664f84e72dcb16c7cafb9f8c36d93c4c00",
+                          "version": 1,
+                          "title": "msgs",
+                          "query": "service =~ \"%kafka%\" and service =~ \"%AllTopicsMessagesInPerSec%\" and service =~ \"%Count%\"",
+                          "max": null,
+                          "timeRange": 300,
+                          "graphType": "line",
+                          "stackMode": "true"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "id": "953ec31f042a95762b2977ac9477aaef7cb8cdee"
+    },
+    {
+      "name": "KafkaIO",
+      "view": {
+        "type": "Balloon",
+        "weight": 1,
+        "id": "de5c3c697d50faeff38fc229cafbd826b4b1db9e",
+        "version": 4,
+        "child": {
+          "type": "VStack",
+          "weight": 1,
+          "id": "d751250f3fda50ece3e02518338ba86f2d2c24a1",
+          "version": 4,
+          "children": [
+            {
+              "type": "HStack",
+              "weight": 1,
+              "id": "1cce964a802dc97537eafd457b899740706306e9",
+              "version": 3,
+              "children": [
+                {
+                  "type": "Flot",
+                  "weight": 1,
+                  "id": "9375ed8e08aa868e6541083ba81962c941afe662",
+                  "version": 2,
+                  "title": "IN",
+                  "query": "(service =~ \"%kafka%\" and service =~ \"%AllTopicsBytesInPerSec%\" and service =~ \"%Count%\") ",
+                  "max": null,
+                  "timeRange": 300,
+                  "graphType": "line",
+                  "stackMode": "true"
+                },
+                {
+                  "type": "Flot",
+                  "weight": 1,
+                  "id": "5ef6011dc512a2b42c32087747814deea44b8814",
+                  "version": 2,
+                  "title": "OUT",
+                  "query": "(service =~ \"%kafka%\" and service =~ \"%AllTopicsBytesOutPerSec%\" and service =~ \"%Count%\")",
+                  "max": null,
+                  "timeRange": 300,
+                  "graphType": "line",
+                  "stackMode": "true"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "id": "9c51af906fd89d47c34af6ef072f915cd5219bba"
+    },
+    {
+      "name": "KafkaFailures",
+      "view": {
+        "type": "Balloon",
+        "weight": 1,
+        "id": "db955405c2b9003e2fd98480e9442230d7eea951",
+        "version": 3,
+        "child": {
+          "type": "VStack",
+          "weight": 1,
+          "id": "0c35a54f907e5e54acd03ae4b1abb66f6ada430b",
+          "version": 3,
+          "children": [
+            {
+              "type": "HStack",
+              "weight": 1,
+              "id": "fab33f4ba538384c1d01ff7683af06e4d9b1362b",
+              "version": 2,
+              "children": [
+                {
+                  "type": "Flot",
+                  "weight": 1,
+                  "id": "2086320e4dcb5650f4b5e9172149519a97405326",
+                  "version": 1,
+                  "title": "Fetch",
+                  "query": "(service =~ \"%kafka%\" and service =~ \"%AllTopicsFailedFetchRequestsPerSec%\" and service =~ \"%Count%\")",
+                  "max": null,
+                  "timeRange": 300,
+                  "graphType": "line",
+                  "stackMode": "true"
+                },
+                {
+                  "type": "Flot",
+                  "weight": 1,
+                  "id": "19615346d5ec9979a4ee443bd97af8add276457f",
+                  "version": 2,
+                  "title": "Produced",
+                  "query": "(service =~ \"%kafka%\" and service =~ \"%AllTopicsFailedProduceRequestsPerSec%\" and service =~ \"%Count%\")\r\n",
+                  "max": null,
+                  "timeRange": 300,
+                  "graphType": "line",
+                  "stackMode": "true"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "id": "c37dc8574ad683abd94dcb90b22165e89f10acc6"
+    },
+    {
+      "name": "Cassandra",
+      "view": {
+        "type": "Balloon",
+        "weight": 1,
+        "id": "bedc5484346a334d2c563d217e5de41710edcc02",
+        "version": 48,
+        "child": {
+          "type": "VStack",
+          "weight": 1,
+          "id": "b23fbc193b14b8abbea4d23fe7526fb59dcdbbd9",
+          "version": 48,
+          "children": [
+            {
+              "type": "HStack",
+              "weight": 1,
+              "id": "2b07b016babedc94a30584c9fa7844ea9e400592",
+              "version": 47,
+              "children": [
+                {
+                  "type": "VStack",
+                  "weight": 1,
+                  "id": "1981b037f0734b205d674a41b7eea7f4bac2a47d",
+                  "version": 40,
+                  "children": [
+                    {
+                      "type": "HStack",
+                      "weight": 1,
+                      "id": "29af051309eec391d40864bba34dc4616bec5f3e",
+                      "version": 22,
+                      "children": [
+                        {
+                          "type": "VStack",
+                          "weight": 1,
+                          "id": "33db2fdf60d7bccd0fc11749bfc5db7550e5d8d6",
+                          "version": 10,
+                          "children": [
+                            {
+                              "type": "HStack",
+                              "weight": 1,
+                              "id": "139e982c283c661335522b902eb01c9cdc7aa589",
+                              "version": 7,
+                              "children": [
+                                {
+                                  "type": "Grid",
+                                  "weight": 1,
+                                  "id": "d0902429723f55accf85d315802abb5860116115",
+                                  "version": 4,
+                                  "title": "Dropped reads",
+                                  "query": "service =~ \"%cassandra%\" and service =~ \"%READ%\" and service =~ \"%Dropped%\"",
+                                  "max": "",
+                                  "rows": "host",
+                                  "cols": "service",
+                                  "row_sort": "lexical",
+                                  "col_sort": "lexical"
+                                },
+                                {
+                                  "type": "Grid",
+                                  "weight": 1,
+                                  "id": "786f0ca3518766f4cc5ab02c33e41ff17b4e0871",
+                                  "version": 3,
+                                  "title": "Dropped writes",
+                                  "query": "service =~ \"%cassandra%\" and service =~ \"%MUTATION%\" and service =~ \"%Dropped%\"",
+                                  "max": "",
+                                  "rows": "host",
+                                  "cols": "service",
+                                  "row_sort": "lexical",
+                                  "col_sort": "lexical"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "VStack",
+                          "weight": 1,
+                          "id": "841e35e2813e4f7668813d3e8e7dc619e052680c",
+                          "version": 12,
+                          "children": [
+                            {
+                              "type": "HStack",
+                              "weight": 1,
+                              "id": "08c248ab2b86daf8d72211de261bfd2f907bfc4a",
+                              "version": 5,
+                              "children": [
+                                {
+                                  "type": "Grid",
+                                  "weight": 1,
+                                  "id": "0698a36682d5dd03ec157827a84ba66dec0dac6f",
+                                  "version": 4,
+                                  "title": "Exceptions",
+                                  "query": "service =~ \"%cassandra%\" and service =~ \"%Exceptions%\"",
+                                  "max": "",
+                                  "rows": "host",
+                                  "cols": "service",
+                                  "row_sort": "lexical",
+                                  "col_sort": "lexical"
+                                },
+                                {
+                                  "type": "Grid",
+                                  "weight": 1,
+                                  "id": "b4599311527a484a03a901b38117b7e19ce20b3e",
+                                  "version": 2,
+                                  "title": "Load",
+                                  "query": "service =~ \"%cassandra%\" and service =~ \"%Load%\"",
+                                  "max": "",
+                                  "rows": "host",
+                                  "cols": "service",
+                                  "row_sort": "lexical",
+                                  "col_sort": "lexical"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "id": "27dd31d631cb9dfc2296a405476d857b56bb3a36"
+    },
+    {
+      "name": "CassandraReads",
+      "view": {
+        "type": "Balloon",
+        "weight": 1,
+        "id": "ed63bd2c8775085cf6dc47ee771f672535a28cc6",
+        "version": 3,
+        "child": {
+          "type": "VStack",
+          "weight": 1,
+          "id": "cec96828f8baec533047eb638d79ee124a6bf929",
+          "version": 3,
+          "children": [
+            {
+              "type": "HStack",
+              "weight": 1,
+              "id": "bcf6209e4856e18060c96d71029d267281f87208",
+              "version": 3,
+              "children": [
+                {
+                  "type": "Flot",
+                  "weight": 1,
+                  "id": "bcb4c7960b6ea9fb40437075a638249b58cca8e4",
+                  "version": 1,
+                  "title": "active",
+                  "query": "service =~ \"%cassandra%\" and service =~ \"%ReadStage%\" and service =~ \"%Active%\"",
+                  "max": null,
+                  "timeRange": 300,
+                  "graphType": "line",
+                  "stackMode": "true"
+                },
+                {
+                  "type": "Flot",
+                  "weight": 1,
+                  "id": "2d7100bec8164ff9c56765177ce58668cf728056",
+                  "version": 1,
+                  "title": "pending",
+                  "query": "service =~ \"%cassandra%\" and service =~ \"%ReadStage%\" and service =~ \"%PendingTasks%\"",
+                  "max": null,
+                  "timeRange": 300,
+                  "graphType": "line",
+                  "stackMode": "true"
+                },
+                {
+                  "type": "Flot",
+                  "weight": 1,
+                  "id": "152b7587429e1c15d591dc49883302259e8bad28",
+                  "version": 1,
+                  "title": "latency",
+                  "query": "service =~ \"%cassandra%\" and service =~ \"%ReadLatency%\" and service =~ \"%Count%\"",
+                  "max": null,
+                  "timeRange": 300,
+                  "graphType": "line",
+                  "stackMode": "true"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "id": "e05f0004803f0de08541aadefcf492f0742bce61"
+    },
+    {
+      "name": "CassandraWrites",
+      "view": {
+        "type": "Balloon",
+        "weight": 1,
+        "id": "5686b315650e48d389a5d3090dacbcf785ac746d",
+        "version": 3,
+        "child": {
+          "type": "VStack",
+          "weight": 1,
+          "id": "651490c0355b6fb6cba5bbc646f856b5e1e4112b",
+          "version": 3,
+          "children": [
+            {
+              "type": "HStack",
+              "weight": 1,
+              "id": "a0ef3d6fa4f381c8e2f622b593262d42dace166f",
+              "version": 3,
+              "children": [
+                {
+                  "type": "Flot",
+                  "weight": 1,
+                  "id": "151e64c7972344347a49d5b15a9431d5d94e3c30",
+                  "version": 1,
+                  "title": "active",
+                  "query": "service =~ \"%cassandra%\" and service =~ \"%=MutationStage%\" and service =~ \"%Active%\"",
+                  "max": null,
+                  "timeRange": 300,
+                  "graphType": "line",
+                  "stackMode": "true"
+                },
+                {
+                  "type": "Flot",
+                  "weight": 1,
+                  "id": "86316a4f819b455cdf6ee88aad6fa023da28c5fc",
+                  "version": 1,
+                  "title": "pending",
+                  "query": "service =~ \"%cassandra%\" and service =~ \"%=MutationStage%\" and service =~ \"%Pending%\"",
+                  "max": null,
+                  "timeRange": 300,
+                  "graphType": "line",
+                  "stackMode": "true"
+                },
+                {
+                  "type": "Flot",
+                  "weight": 1,
+                  "id": "3f0dc5ae056183eb4a684d6a3000869b7e4d1c62",
+                  "version": 1,
+                  "title": "latency",
+                  "query": "service =~ \"%cassandra%\" and service =~ \"%WriteLatency%\" and service =~ \"%Count%\"",
+                  "max": null,
+                  "timeRange": 300,
+                  "graphType": "line",
+                  "stackMode": "true"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "id": "cd1513b8d3661f4df5c83cb48a7c0b1577769459"
+    }
+  ]
+}

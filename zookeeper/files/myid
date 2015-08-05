@@ -1,0 +1,5 @@
+{% for host in zookeepers -%}
+{% if salt['search.my_host']() == host -%}
+{{ loop.index }}
+{%- endif %}
+{%- endfor %}
