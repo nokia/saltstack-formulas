@@ -1,11 +1,25 @@
 
-/mnt:
+{% if grains['provider']['ephemeral']['should_mount'] %}
+mount_ephemeral:
   mount.mounted:
+    - name: /mnt
     - device: {{ grains['provider']['ephemeral']['device'] }}
     - fstype: {{ grains['provider']['ephemeral']['fstype'] }}
     - mkmnt: True
     - opts:
       - defaults
+
+{% else %}
+
+mount_ephemeral:
+  file.symlink:
+    - name: /mnt
+    - target: {{ grains['provider']['ephemeral']['mount_path'] }}
+    - user: root
+    - group: root
+    - force: True
+
+{% endif %}
 
 move_var_log_of_device:
   cmd.run:
@@ -13,8 +27,6 @@ move_var_log_of_device:
     - user: root
     - group: root
     - unless: ls /mnt/varlog
-    - require:
-      - mount: /mnt
 
 move_usr_local_of_device:
   cmd.run:
@@ -22,8 +34,6 @@ move_usr_local_of_device:
     - user: root
     - group: root
     - unless: ls /mnt/usrlocal
-    - require:
-      - mount: /mnt
 
 move_var_cache_of_device:
   cmd.run:
@@ -31,5 +41,3 @@ move_var_cache_of_device:
     - user: root
     - group: root
     - unless: ls /mnt/varcache
-    - require:
-      - mount: /mnt
