@@ -155,11 +155,3 @@ reset-slave-state:
     - watch:
       - file: /etc/mesos-slave/resources
 
-/usr/bin/mesos-init-wrapper:
-  file.managed:
-    - source: salt://mesos/files/mesos-init-wrapper.sh
-    - user: root
-    - group: root
-    - mode: 755
-    - require:
-      - pkg: mesos-pkg

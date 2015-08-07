@@ -12,4 +12,3 @@ mesos-service:
         - file: /etc/mesos/zk
         - file: /etc/default/mesos
         - file: /etc/default/mesos-master
-        - file: /usr/bin/mesos-init-wrapper

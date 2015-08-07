@@ -25,7 +25,8 @@
 
 {% macro disks_check(my_host, server, server_port, home, interval, timeout, is_tcp) -%}
 
-{% set cmd = 'riemann-diskstats --devices "{0} {1}" --tag health'.format(pillar['system']['root_device'], grains['provider']['ephemeral']['device'] ) %}
+{% set extra_disk = grains['provider'].get('ephemeral', {}).get('device', '') %}
+{% set cmd = 'riemann-diskstats --devices "{0} {1}" --tag health'.format(pillar['system']['root_device'], extra_disk ) %}
 {% from 'riemann/checks/check.sls' import check with context -%}
 {{ check('riemann-diskstats', cmd, server, server_port, home, interval, timeout, is_tcp, True) }}
 

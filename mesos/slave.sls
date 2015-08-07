@@ -14,5 +14,4 @@ mesos-service:
         - file: /etc/default/mesos
         - file: /etc/mesos-slave/work_dir
         - file: /etc/mesos-slave/port
-        - file: /usr/bin/mesos-init-wrapper
         - file: /etc/mesos-slave/resources

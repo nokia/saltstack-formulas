@@ -9,7 +9,7 @@ mount_ephemeral:
     - opts:
       - defaults
 
-{% else %}
+{% elif grains['provider']['ephemeral']['should_symlink'] %}
 
 mount_ephemeral:
   file.symlink:
@@ -19,7 +19,21 @@ mount_ephemeral:
     - group: root
     - force: True
 
+{% else %}
+
+mount_ephemeral:
+  file.directory:
+    - names:
+        - /mnt
+    - user: root
+    - group: root
+    - mode: 777
+    - makedirs: True
+
 {% endif %}
+
+
+{% if grains['provider']['ephemeral']['should_mount'] or grains['provider']['ephemeral']['should_symlink']  %}
 
 move_var_log_of_device:
   cmd.run:
@@ -41,3 +55,5 @@ move_var_cache_of_device:
     - user: root
     - group: root
     - unless: ls /mnt/varcache
+
+{% endif %}

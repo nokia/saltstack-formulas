@@ -11,9 +11,10 @@ include:
 
 zookeeper:
   pkg.installed:
-  - require:
-    - pkgrepo: cloudera-repository
-    - pkg: jdk
+    - version: {{ zookeeper['version'] }}
+    - require:
+      - pkgrepo: cloudera-repository
+      - pkg: jdk
 
 zookeeper-conf:
   cmd.run:
