@@ -43,10 +43,10 @@ append-{{ name }}-etc-env:
       - file: sed-{{ name }}-etc-env
 
 sed-{{ name }}-etc-env:
-  file.sed:
+  file.replace:
     - name: /etc/environment
-    - before: '^{{ name | upper }}_HOME.*$'
-    - after: {{ name | upper }}_HOME={{ home_dir }}
+    - pattern: '^{{ name | upper }}_HOME.*$'
+    - repl: {{ name | upper }}_HOME={{ home_dir }}
     - require:
       - archive: {{ name }}-pkg
       - file: {{ name }}-pkg-link

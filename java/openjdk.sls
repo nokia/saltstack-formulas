@@ -43,10 +43,10 @@ java_alternatives_setup:
       - file: sed_etc_env
 
 sed_etc_env:
-  file.sed:
+  file.replace:
     - name: /etc/environment
-    - before: '^JAVA_HOME.*$'
-    - after: JAVA_HOME={{ home }}
+    - pattern: '^JAVA_HOME.*$'
+    - repl: JAVA_HOME={{ home }}
     - require:
       - pkg: jdk-pkg
 
