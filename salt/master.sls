@@ -19,9 +19,11 @@ CherryPy:
   pip.installed:
     - name: CherryPy
 
-salt-rest:
-  pkg.installed:
-    - name: salt-api
+salt_master_d_dir:
+  file.directory:
+    - name: /etc/salt/master.d
+    - mode: 755
+    - makedirs: True
 
 reactor-config:
   file.managed:
@@ -36,9 +38,9 @@ halite-service:
   service.running:
     - names:
         - salt-master
+        - salt-api
     - enable: True
     - watch:
         - pip: halite
         - pip: CherryPy
-        - pkg: salt-rest
         - file: reactor-config

@@ -6,7 +6,6 @@ postgresql:
   pkg.installed:
     - names:
       - {{ postgres.pkg }}
-      - postgresql-server-dev-9.1
 
 stop-postgres-after-install:
   cmd.wait:

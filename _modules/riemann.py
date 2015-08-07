@@ -48,7 +48,7 @@ def as_file_names(jmx_checks):
 # result = {}
 def checks(app_name, my_host):
   app = __salt__['marathon_client.apps'](app_name)
-  port_index = __pillar__[app_name].get('check_port_index', 0)
+  port_index = __pillar__.get(app_name, {}).get('check_port_index', 0)
   if app_name in app:
     tasks = [{'host':str(t.host), 'enabled':True, 'port':t.ports[port_index] } for t in app[app_name] if t.host == my_host]
   else:
