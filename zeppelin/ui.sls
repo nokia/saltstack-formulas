@@ -12,8 +12,6 @@ include:
     - template: jinja
     - context:
         zeppelin_home: {{ zeppelin_home }}
-        zeppelin_server_port: {{ pillar['zeppelin']['port'] }}
-        zeppelin_websocket_port: {{ pillar['zeppelin']['ws_port'] }}
     - require:
       - archive: zeppelin-pkg
 

@@ -19,6 +19,15 @@
     {% if app['env'] is defined -%}
     "env": {{ app['env'] | json }},
     {% endif -%}
+    {% if app['maxLaunchDelaySeconds'] is defined -%}
+    "maxLaunchDelaySeconds": {{ app['maxLaunchDelaySeconds'] | json }},
+    {% endif -%}
+    {% if app['acceptedResourceRoles'] is defined -%}
+    "acceptedResourceRoles": {{ app['acceptedResourceRoles'] | json }},
+    {% endif -%}
+    {% if app['labels'] is defined -%}
+    "labels": {{ app['labels'] | json }},
+    {% endif -%}
     {% if app['constraints'] is defined -%}
     "constraints": {{ app['constraints'] | json }},
     {% endif -%}

@@ -20,24 +20,49 @@
 <configuration>
 
 <property>
+    <name>zeppelin.server.addr</name>
+    <value>0.0.0.0</value>
+    <description>Server address</description>
+</property>
+
+<property>
   <name>zeppelin.server.port</name>
-  <value>8080</value>
+  <value>{{ zeppelin_server_port }}</value>
   <description>Server port. port+1 is used for web socket.</description>
 </property>
 
-<!-- If the port value is negative, then it'll default to the server
-     port + 1.
-  -->
-<property>
-  <name>zeppelin.websocket.port</name>
-  <value>-1</value>
-  <description>Testing websocket port</description>
-</property>
 
 <property>
   <name>zeppelin.notebook.dir</name>
   <value>notebook</value>
   <description>notebook persist</description>
+</property>
+
+<!-- If used S3 to storage the notebooks, it is necessary the following folder structure bucketname/username/notebook/ -->
+<!--
+<property>
+  <name>zeppelin.notebook.s3.user</name>
+  <value>user</value>
+  <description>user name for s3 folder structure</description>
+</property>
+
+<property>
+  <name>zeppelin.notebook.s3.bucket</name>
+  <value>zeppelin</value>
+  <description>bucket name for notebook storage</description>
+</property>
+
+<property>
+  <name>zeppelin.notebook.storage</name>
+  <value>org.apache.zeppelin.notebook.repo.S3NotebookRepo</value>
+  <description>notebook persistence layer implementation</description>
+</property>
+-->
+
+<property>
+    <name>zeppelin.notebook.storage</name>
+    <value>org.apache.zeppelin.notebook.repo.VFSNotebookRepo</value>
+    <description>notebook persistence layer implementation</description>
 </property>
 
 <property>
@@ -47,9 +72,15 @@
 </property>
 
 <property>
-  <name>zeppelin.interpreters</name>
-  <value>com.nflabs.zeppelin.spark.SparkInterpreter,com.nflabs.zeppelin.spark.SparkSqlInterpreter,com.nflabs.zeppelin.spark.DepInterpreter,com.nflabs.zeppelin.markdown.Markdown,com.nflabs.zeppelin.shell.ShellInterpreter</value>
-  <description>Comma separated interpreter configurations. First interpreter become a default</description>
+    <name>zeppelin.interpreters</name>
+    <value>org.apache.zeppelin.spark.SparkInterpreter,org.apache.zeppelin.spark.PySparkInterpreter,org.apache.zeppelin.spark.SparkSqlInterpreter,org.apache.zeppelin.spark.DepInterpreter,org.apache.zeppelin.markdown.Markdown,org.apache.zeppelin.angular.AngularInterpreter,org.apache.zeppelin.shell.ShellInterpreter,org.apache.zeppelin.hive.HiveInterpreter,org.apache.zeppelin.tajo.TajoInterpreter,org.apache.zeppelin.flink.FlinkInterpreter,org.apache.zeppelin.lens.LensInterpreter,org.apache.zeppelin.ignite.IgniteInterpreter,org.apache.zeppelin.ignite.IgniteSqlInterpreter,org.apache.zeppelin.cassandra.CassandraInterpreter</value>
+    <description>Comma separated interpreter configurations. First interpreter become a default</description>
+</property>
+
+<property>
+    <name>zeppelin.interpreter.connect.timeout</name>
+    <value>30000</value>
+    <description>Interpreter process connect timeout in msec.</description>
 </property>
 
 <property>

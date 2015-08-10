@@ -3,6 +3,7 @@ import time
 import json
 from itertools import groupby
 import marathon
+import traceback
 
 log = logging.getLogger(__name__)
 
@@ -50,7 +51,8 @@ def _is_deployed(cli, app_id):
   try:
     cli.get_app(app_id)
     return True
-  except marathon.exceptions.NotFoundError:
+  except marathon.exceptions.NotFoundError as e:
+    log.warn('Getting undeployed exception: ' + str(e))
     return False
 
 # port = 8773
@@ -65,13 +67,14 @@ def _addresses():
 # app_file = "/Users/lukaszjastrzebski/Downloads/EXTRACTED-FOR-SPLM_PROSPER-BSD_Telkomsel_Indonesia_OMS_Sumalpua1_OMS-log_collection.pl_18112014_0605/script_error.txt"
 # app_name = "redis2"
 def new_deploy(app_name, app_file):
+  marathon_addresses = _addresses()
   with open(app_file, 'r') as content_file:
     content = content_file.read()
   app_attr = json.loads(content)
-  marathon_addresses = _addresses()
   cli = marathon.MarathonClient(marathon_addresses)
   if not _is_deployed(cli, app_name):
-    app = cli.create_app(app_name, marathon.MarathonApp.from_json(app_attr))
+    mApp = marathon.MarathonApp.from_json(app_attr)
+    app = cli.create_app(app_name, mApp)
     return {'output': str(app)}
   else:
     return {}

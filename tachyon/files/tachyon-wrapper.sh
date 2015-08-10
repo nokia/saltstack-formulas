@@ -76,7 +76,12 @@ start_master() {
   if [ -z $TACHYON_MASTER_ADDRESS ] ; then
     MASTER_ADDRESS=localhost
   fi
-  $JAVA -cp $TACHYON_JAR -Dtachyon.home=$TACHYON_HOME -Dtachyon.logger.type="MASTER_LOGGER" -Dlog4j.configuration=file:$TACHYON_CONF_DIR/log4j.properties $TACHYON_MASTER_JAVA_OPTS tachyon.master.TachyonMaster
+
+  if [[ -z $TACHYON_MASTER_JAVA_OPTS ]] ; then
+    TACHYON_MASTER_JAVA_OPTS=$TACHYON_JAVA_OPTS
+  fi
+
+  $JAVA -cp $CLASSPATH -Dtachyon.home=$TACHYON_HOME -Dtachyon.logger.type="MASTER_LOGGER" -Dlog4j.configuration=file:$TACHYON_CONF_DIR/log4j.properties $TACHYON_MASTER_JAVA_OPTS tachyon.master.TachyonMaster
 }
 
 start_worker() {
@@ -85,7 +90,13 @@ start_worker() {
     echo "Mount failed, not starting worker"
     exit 1
   fi
-  $JAVA -cp $TACHYON_JAR -Dtachyon.home=$TACHYON_HOME -Dtachyon.logger.type="WORKER_LOGGER" -Dlog4j.configuration=file:$TACHYON_CONF_DIR/log4j.properties $TACHYON_WORKER_JAVA_OPTS tachyon.worker.TachyonWorker `hostname`
+
+  if [[ -z $TACHYON_WORKER_JAVA_OPTS ]] ; then
+    TACHYON_WORKER_JAVA_OPTS=$TACHYON_JAVA_OPTS
+  fi
+
+  echo "Starting worker @ `hostname -f`"
+  $JAVA -cp $CLASSPATH -Dtachyon.home=$TACHYON_HOME -Dtachyon.logger.type="WORKER_LOGGER" -Dlog4j.configuration=file:$TACHYON_CONF_DIR/log4j.properties $TACHYON_WORKER_JAVA_OPTS tachyon.worker.TachyonWorker
 }
 
 WHAT=$1
@@ -98,7 +109,7 @@ ensure_dirs
 
 case "${WHAT}" in
   master)
-    start_master
+    start_master $2
     ;;
   worker)
     check_mount_mode $2

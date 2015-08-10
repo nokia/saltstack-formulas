@@ -32,6 +32,8 @@ include:
     - group: root
     - mode: 755
     - template: jinja
+    - context:
+        zeppelin_server_port: {{ pillar['zeppelin']['port'] }}
     - require:
       - archive: zeppelin-pkg
       - file: zeppelin-pkg-link

@@ -140,7 +140,6 @@ spark:
     - concurrent: True
     - sls:
       - spark
-      - zeppelin.ui
     - require:
       - salt: tachyon-slaves
       - salt: mesos-slaves
@@ -154,6 +153,27 @@ marathon-service:
     - sls: marathon
     - require:
       - salt: mesos-slaves
+
+spark-history:
+  salt.state:
+    - tgt: 'roles:spark.history'
+    - tgt_type: grain
+    - concurrent: True
+    - sls:
+      - spark.history
+    - require:
+      - salt: spark
+      - salt: marathon-service
+
+spark-jdbc:
+  salt.state:
+    - tgt: 'roles:spark.jdbc'
+    - tgt_type: grain
+    - concurrent: True
+    - sls:
+      - spark.jdbc
+    - require:
+      - salt: spark-history
 
 haproxy-service:
   salt.state:
@@ -182,13 +202,22 @@ riemann-agents:
     - require:
       - salt: riemann-server
 
-services:
+zeppelin:
   salt.state:
-    - tgt: 'roles:marathon.services'
+    - tgt: 'roles:zeppelin'
     - tgt_type: grain
     - concurrent: True
-    - sls: marathon.services
+    - sls:
+      - zeppelin.ui
+    - require:
+      - salt: spark-history
+
+chronos:
+  salt.state:
+    - tgt: 'roles:chronos'
+    - tgt_type: grain
+    - concurrent: True
+    - sls:
+      - chronos
     - require:
       - salt: marathon-service
-      - salt: haproxy-service
-      - salt: spark

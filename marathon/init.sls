@@ -1,6 +1,6 @@
 {% set marathon = pillar['marathon'] -%}
 {% set marathon_home = salt['system.home_dir']('marathon') -%}
-{% set salt_api_port = pillar['salt']['rest.port'] -%}
+{% set salt_api_port = pillar['marathon']['callback.port'] -%}
 {% set zk_str = salt['zookeeper.ensemble_address']() -%}
 include:
   - java.openjdk
