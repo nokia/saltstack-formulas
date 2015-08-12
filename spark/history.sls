@@ -19,7 +19,7 @@ spark-event-log-hdfs-directory_{{ nameservice }}:
 {% endfor %}
 
 
-{% set history_server_command = "{0}/sbin/run-history-server.sh hdfs://{1}{2} $PORT".format(spark_home, nameservice_names[0], spark['eventlog.dir'] ) %}
+{% set history_server_command = "{0}/sbin/run-history-server.sh $PORT".format(spark_home) %}
 
 {% from 'marathon/deploy.sls' import service_deploy with context -%}
-{{ service_deploy({'id': 'spark-history', 'cmd': history_server_command}) }}
+{{ service_deploy({'id': 'sparkhistory', 'cmd': history_server_command}) }}

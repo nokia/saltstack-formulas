@@ -50,23 +50,4 @@ fi
 
 export SUBMIT_USAGE_FUNCTION=usage
 
-sbin="`dirname "$0"`"
-sbin="`cd "$sbin"; pwd`"
-
-. "$sbin/spark-config.sh"
-
-. "$SPARK_PREFIX/bin/load-spark-env.sh"
-
-if [ "$SPARK_IDENT_STRING" = "" ]; then
-  export SPARK_IDENT_STRING="$USER"
-fi
-
-export SPARK_PRINT_LAUNCH_COMMAND="1"
-
-# some variables
-export SPARK_ROOT_LOGGER="INFO,DRFA"
-
-source "$SPARK_HOME"/bin/utils.sh
-gatherSparkSubmitOpts "$@"
-
-"$FWDIR"/bin/spark-submit --class $CLASS "${SUBMISSION_OPTS[@]}" spark-internal "${APPLICATION_OPTS[@]}"
+"$FWDIR"/bin/spark-submit --class $CLASS 1 "$@"

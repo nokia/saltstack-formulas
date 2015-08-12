@@ -2,8 +2,9 @@ import logging
 import time
 import json
 from itertools import groupby
-import marathon
-import traceback
+from marathon import MarathonClient
+from marathon import models
+from marathon import exceptions
 
 log = logging.getLogger(__name__)
 
@@ -15,7 +16,7 @@ def apps(app_id=None):
   return _apps(marathon_addresses, app_id)
 
 def _apps(marathon_addresses, app_id):
-  cli = marathon.MarathonClient(marathon_addresses)
+  cli = MarathonClient(marathon_addresses)
   for t in range(0,5):
     try:
       if app_id is None:
@@ -26,7 +27,7 @@ def _apps(marathon_addresses, app_id):
       apps = {str(key):[v for v in valuesiter] for key,valuesiter in groupby(tasks, key=sortkeyfn)}
       sorted_apps = {k[1:]:sorted(v, key=lambda app: app.staged_at) for k,v in apps.iteritems()}
       return sorted_apps
-    except marathon.exceptions.MarathonError as e:
+    except exceptions.MarathonError as e:
       log.warn('Error in talking to marathon: ' + str(e))
       time.sleep(6)
   return {}
@@ -51,8 +52,7 @@ def _is_deployed(cli, app_id):
   try:
     cli.get_app(app_id)
     return True
-  except marathon.exceptions.NotFoundError as e:
-    log.warn('Getting undeployed exception: ' + str(e))
+  except exceptions.NotFoundError as e:
     return False
 
 # port = 8773
@@ -71,9 +71,9 @@ def new_deploy(app_name, app_file):
   with open(app_file, 'r') as content_file:
     content = content_file.read()
   app_attr = json.loads(content)
-  cli = marathon.MarathonClient(marathon_addresses)
+  cli = MarathonClient(marathon_addresses)
   if not _is_deployed(cli, app_name):
-    mApp = marathon.MarathonApp.from_json(app_attr)
+    mApp = models.MarathonApp.from_json(app_attr)
     app = cli.create_app(app_name, mApp)
     return {'output': str(app)}
   else:
@@ -84,9 +84,9 @@ def re_deploy(app_name, app_file):
     content = content_file.read()
   app_attr = json.loads(content)
   marathon_addresses = _addresses()
-  cli = marathon.MarathonClient(marathon_addresses)
+  cli = MarathonClient(marathon_addresses)
   if _is_deployed(cli, app_name):
-    app = cli.update_app(app_name, marathon.MarathonApp.from_json(app_attr))
+    app = cli.update_app(app_name, models.MarathonApp.from_json(app_attr))
     return {'output': str(app)}
   else:
     return {}
@@ -94,6 +94,6 @@ def re_deploy(app_name, app_file):
 
 def undeploy(app_name):
   marathon_addresses = _addresses()
-  cli = marathon.MarathonClient(marathon_addresses)
+  cli = MarathonClient(marathon_addresses)
   if _is_deployed(cli, app_name):
     cli.delete_app(app_name)

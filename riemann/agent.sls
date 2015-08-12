@@ -47,6 +47,11 @@ riemann-redis:
     - version: {{ riemann['redis.version'] }}
 
 {% if 'postgresql' in salt['grains.get']('roles') -%}
+
+postgresql-server-dev:
+  pkg.installed:
+    - name: postgresql-server-dev-9.3
+
 riemann-postgresql:
   gem.installed:
     - version: {{ riemann['postgresql.version'] }}

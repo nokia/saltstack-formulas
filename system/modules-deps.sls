@@ -7,7 +7,7 @@ jinja:
 
 marathon_client:
   pip.installed:
-    - name: marathon == {{ client_version }}
+    - name: git+https://github.com/elyast/marathon-python.git#egg=marathon
 
 minion-service-watching-marathon-client:
   service.running:
