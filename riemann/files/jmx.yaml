@@ -30,7 +30,7 @@ riemann :
 jmx :
     host : {{ my_host }}
     port : {{ jmx_port }}
-    event_host : {{ my_host }}-{{ jmx_port }}
+    event_host : {{ my_event_host }}-{{ jmx_port }}
 
 queries :
   {{ jmx_queries | yaml }}

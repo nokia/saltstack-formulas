@@ -1,11 +1,33 @@
 import logging
 import os
 import re
+import requests
+import socket
 
 log = logging.getLogger(__name__)
 
 def master():
   return __salt__['search.mine_by_host']('roles:riemann.server')[0]
+
+
+def cassandra_jmx_checks(my_host):
+  haproxy_host = __salt__['search.mine_by_host']('roles:haproxy')[0]
+  framework_port = __pillar__['cassandra-mesos']['ports'][0]
+  live_node_endpoint = 'http://' + haproxy_host + ':' + str(framework_port) + '/live-nodes'
+  r = requests.get(url=live_node_endpoint)
+  if r.status_code != 200:
+    return []
+  jmx_queries = __pillar__['riemann_checks'].get('jmx', {}).get('cassandra', [])
+  if len(jmx_queries) == 0:
+    return []
+  cassandra_meta = r.json()
+  my_ip = socket.gethostbyname(my_host)
+  jmx_port = cassandra_meta['jmxPort']
+  cassandra_servers = cassandra_meta['liveNodes']
+  if len(filter(lambda x: x == my_ip, cassandra_servers)) == 0:
+    return []
+  return [{'name': 'cassandra-{0}'.format(jmx_port), 'my_host': 'localhost', 'app_id': 'cassandra', 'port': jmx_port, 'queries': jmx_queries}]
+
 
 # jmx_map = {'cassandra': [{'obj':'x', 'attr':'x'}], 'kafka': [{'obj':'z'}, {'attr':'ww'}]}
 # my_host = 'hadoop-worker-8'

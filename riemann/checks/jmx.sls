@@ -1,8 +1,11 @@
 {% macro jmx_check(my_host, server, server_port, home, interval, timeout, is_tcp) -%}
 
-{% set jmx_checks = salt['riemann.jmx_checks'](my_host) %}
+{% set jmx_checks = salt['riemann.jmx_checks'](my_host) + salt['riemann.cassandra_jmx_checks'](my_host) %}
 
 {% for jmx_check in jmx_checks %}
+
+{% set my_jmx_host = jmx_check.get('my_host', my_host) -%}
+{% set my_event_host = jmx_check.get('event_host', my_host) -%}
 
 {{ home }}/{{ jmx_check['name'] }}.yml:
   file.managed:
@@ -15,7 +18,8 @@
         riemann_server: {{ server }}
         riemann_port: {{ server_port }}
         jmx_port: {{ jmx_check['port'] }}
-        my_host: {{ my_host }}
+        my_host: {{ my_jmx_host }}
+        my_event_host: {{ my_event_host }}
         jmx_queries:
           {{ jmx_check['queries'] | yaml }}
 
