@@ -1,18 +1,14 @@
-#{% set app_name = 'cassandra'%}
+{% set app_name = 'cassandra-mesos' -%}
+{% set cassandra = pillar[app_name] -%}
+{% set cassandra_env = cassandra['environment'] -%}
+{% set cluster_name = cassandra_env['CASSANDRA_CLUSTER_NAME'] -%}
+{% set zk_str = salt['zookeeper.ensemble_address']() -%}
+{% set env = {'MESOS_ZK': 'zk://{0}/mesos'.format(zk_str),
+              'CASSANDRA_ZK': 'zk://{0}/cassandra-mesos-{1}'.format(zk_str, cluster_name)} -%}
+{% do env.update(cassandra_env) -%}
 
-#{% set cassandra_home = salt['system.home_dir'](app_name) -%}
-#{% set cassandra = pillar[app_name] -%}
+{% set cassandra_command = '$(pwd)/jre*/bin/java $JAVA_OPTS -classpath cassandra-mesos-framework.jar io.mesosphere.mesos.frameworks.cassandra.framework.Main' %}
 
-#{% from 'system/install.sls' import install_tarball with context -%}
-#{{ install_tarball(app_name, False) }}
+{% from 'marathon/deploy.sls' import service_deploy with context -%}
+{{ service_deploy({'id': app_name, 'cmd': cassandra_command, 'env': env}) }}
 
-#{% set env = {'CASSANDRA_NUM_TOKENS': cassandra['num_tokens'],
-#               'CASSANDRA_CLUSTER_NAME': grains['cluster_name'],
-#               'CASSANDRA_STORE_PATH': cassandra_home} %}
-
-#{% set cassandra_command = 'cd {2} && launcher/configurator.py {0} {1} conf/cassandra.yaml && bin/cassandra -Dcassandra.consistent.rangemovement={3} -f'.format(app_name, cassandra['seed_ratio'], cassandra['dirname'], cassandra['rangemovement']) %}
-
-#{% from 'marathon/deploy.sls' import service_deploy with context -%}
-#{{ service_deploy({'id': app_name, 'cmd': cassandra_command, 'env': env}) }}
-
-## need rework to use dedicated scheduler ##
