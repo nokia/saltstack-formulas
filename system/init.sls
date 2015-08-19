@@ -6,3 +6,5 @@ include:
   - system.no_proxy
   - system.roots
   - system.modules-deps
+  - system.resolv
+
