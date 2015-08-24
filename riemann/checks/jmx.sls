@@ -1,6 +1,6 @@
 {% macro jmx_check(my_host, server, server_port, home, interval, timeout, is_tcp) -%}
 
-{% set jmx_checks = salt['riemann.jmx_checks'](my_host) + salt['riemann.cassandra_jmx_checks'](my_host) %}
+{% set jmx_checks = salt['riemann.jmx_checks'](my_host) + salt['riemann.cassandra_jmx_checks'](my_host) + salt['riemann.kafka_jmx_checks'](my_host) %}
 
 {% for jmx_check in jmx_checks %}
 

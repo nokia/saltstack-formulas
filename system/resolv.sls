@@ -1,4 +1,4 @@
-{% set dns_servers = salt['search.mine_by_host']('roles:mesos.dns') -%}
+{% set dns_servers = salt['search.resolve_ips'](salt['search.mine_by_host']('roles:mesos.dns')) -%}
 {% if dns_servers|length > 0 -%}
 {% set dns_servers_entries = 'nameserver ' + '\nnameserver '.join(dns_servers) -%}
 {% else -%}

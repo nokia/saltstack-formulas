@@ -1081,102 +1081,6 @@
       "id": "18bb95e3fde4c414f229a701d8788256f214c19e"
     },
     {
-      "name": "Redis",
-      "view": {
-        "type": "Balloon",
-        "weight": 1,
-        "id": "1434d702804353ccb3e62e2e8121497901bf8ed9",
-        "version": 59,
-        "child": {
-          "type": "VStack",
-          "weight": 1,
-          "id": "896317a1a636cec4a20998296132593752f2dff7",
-          "version": 59,
-          "children": [
-            {
-              "type": "HStack",
-              "weight": 1,
-              "id": "95df277e9398743b4949aeb6482e6ff35c997818",
-              "version": 15,
-              "children": [
-                {
-                  "type": "VStack",
-                  "weight": 1,
-                  "id": "1a82f0445e67242fec697ea7870f613ba0efaed4",
-                  "version": 12,
-                  "children": [
-                    {
-                      "type": "HStack",
-                      "weight": 1,
-                      "id": "4a7cb657b6cf69dce1d45eaa227e1b4c0e3b7230",
-                      "version": 2,
-                      "children": [
-                        {
-                          "type": "Grid",
-                          "weight": 1,
-                          "id": "0a89797d165bfa9034c076d591815ee66a78acb7",
-                          "version": 48,
-                          "title": "Status",
-                          "query": "(service =~ \"redis%\" and (service =~ \"%aof_last_write_status\"  or service =~ \"%rdb_last_bgsave_status\")) or (service =~ \"redis connected_clients\")",
-                          "max": "",
-                          "rows": "host",
-                          "cols": "service",
-                          "row_sort": "lexical",
-                          "col_sort": "lexical"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "HStack",
-                      "weight": 1,
-                      "id": "3c340de4d6888d54e01d0480ff6d36eb8815b1b6",
-                      "version": 2,
-                      "children": [
-                        {
-                          "type": "Grid",
-                          "weight": 1,
-                          "id": "090df08c8ed6d721bd1914b6d21835be19ebf776",
-                          "version": 2,
-                          "title": "Memory",
-                          "query": "(service =~ \"redis%\" and service =~ \"%evicted_keys\") or (service =~ \"redis%\" and service =~ \"%used_memory_human\")",
-                          "max": "",
-                          "rows": "host",
-                          "cols": "service",
-                          "row_sort": "lexical",
-                          "col_sort": "lexical"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "VStack",
-                  "weight": 1,
-                  "id": "919b67b85cdda5637d0a53ad499c7de04fd0c5f2",
-                  "version": 3,
-                  "children": [
-                    {
-                      "type": "Flot",
-                      "weight": 1,
-                      "id": "4ec56fe115d3c0394167d14a501539581814ee7b",
-                      "version": 1,
-                      "title": "ops",
-                      "query": "service =~ \"redis instantaneous_ops_per_sec\"",
-                      "max": null,
-                      "timeRange": 300,
-                      "graphType": "line",
-                      "stackMode": "true"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      },
-      "id": "aa6d6e34f66d413e01a162a6f8e733068e4cfe57"
-    },
-    {
       "name": "Kafka",
       "view": {
         "type": "Balloon",
@@ -1259,7 +1163,7 @@
                           "id": "3308d0664f84e72dcb16c7cafb9f8c36d93c4c00",
                           "version": 1,
                           "title": "msgs",
-                          "query": "service =~ \"%kafka%\" and service =~ \"%AllTopicsMessagesInPerSec%\" and service =~ \"%Count%\"",
+                          "query": "service =~ \"%kafka%\" and service =~ \"%MessagesInPerSec%\" and service =~ \"%Count%\"",
                           "max": null,
                           "timeRange": 300,
                           "graphType": "line",
@@ -1301,7 +1205,7 @@
                   "id": "9375ed8e08aa868e6541083ba81962c941afe662",
                   "version": 2,
                   "title": "IN",
-                  "query": "(service =~ \"%kafka%\" and service =~ \"%AllTopicsBytesInPerSec%\" and service =~ \"%Count%\") ",
+                  "query": "(service =~ \"%kafka%\" and service =~ \"%BytesInPerSec%\" and service =~ \"%Count%\") ",
                   "max": null,
                   "timeRange": 300,
                   "graphType": "line",
@@ -1313,7 +1217,7 @@
                   "id": "5ef6011dc512a2b42c32087747814deea44b8814",
                   "version": 2,
                   "title": "OUT",
-                  "query": "(service =~ \"%kafka%\" and service =~ \"%AllTopicsBytesOutPerSec%\" and service =~ \"%Count%\")",
+                  "query": "(service =~ \"%kafka%\" and service =~ \"%BytesOutPerSec%\" and service =~ \"%Count%\")",
                   "max": null,
                   "timeRange": 300,
                   "graphType": "line",
@@ -1351,7 +1255,7 @@
                   "id": "2086320e4dcb5650f4b5e9172149519a97405326",
                   "version": 1,
                   "title": "Fetch",
-                  "query": "(service =~ \"%kafka%\" and service =~ \"%AllTopicsFailedFetchRequestsPerSec%\" and service =~ \"%Count%\")",
+                  "query": "(service =~ \"%kafka%\" and service =~ \"%FailedFetchRequestsPerSec%\" and service =~ \"%Count%\")",
                   "max": null,
                   "timeRange": 300,
                   "graphType": "line",
@@ -1363,7 +1267,7 @@
                   "id": "19615346d5ec9979a4ee443bd97af8add276457f",
                   "version": 2,
                   "title": "Produced",
-                  "query": "(service =~ \"%kafka%\" and service =~ \"%AllTopicsFailedProduceRequestsPerSec%\" and service =~ \"%Count%\")\r\n",
+                  "query": "(service =~ \"%kafka%\" and service =~ \"%FailedProduceRequestsPerSec%\" and service =~ \"%Count%\")\r\n",
                   "max": null,
                   "timeRange": 300,
                   "graphType": "line",

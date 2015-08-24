@@ -1,22 +1,45 @@
-#{% set app_name = 'kafka'%}
-#{% set kafka_home = salt['system.home_dir'](app_name) -%}
-#{% set kafka = pillar[app_name] -%}
+{% set app_name = 'kafka-mesos'%}
+{% set kafka_home = salt['system.home_dir'](app_name) -%}
+{% set kafka = pillar[app_name] -%}
 
-#{% from 'system/install.sls' import install_tarball with context -%}
-#{{ install_tarball(app_name, False) }}
+{% set zk_str = salt['zookeeper.ensemble_address']() -%}
+{% set api_url = 'http://$HOST:$PORT0' -%}
+{% set config = {'api': api_url, 'master': 'zk://{0}/mesos'.format(zk_str), 'zk': zk_str} -%}
+{% do config.update(kafka.get('schedulerConfiguration', {})) -%}
+{% set cmd_line = salt['kafka.format_options'](config, '\"') -%}
 
-#{% set zk_str = salt['zookeeper.ensemble_address']() -%}
+{% set kafka_command = 'chmod u+x ./kafka-mesos.sh && ./kafka-mesos.sh scheduler {0}'.format(cmd_line) %}
 
-#{% set env = {'KAFKA_NET_THREADS_NO': kafka['net_threads_no'],
-#               'KAFKA_IO_THREADS_NO': kafka['io_threads_no'],
-#               'KAFKA_PARTITIONS_NO': kafka['partitions_no'],
-#               'KAFKA_LOG_RETENTION_HOURS': kafka['log_retention_hours'],
-#               'ZK_CONNECTION': zk_str ,
-#               'KAFKA_STORE_PATH': kafka_home} %}
+{% from 'marathon/deploy.sls' import service_deploy with context -%}
+{{ service_deploy({'id': app_name, 'cmd': kafka_command}) }}
 
-#{% set kafka_command = 'cd {2} && launcher/configurator.py {0} {1} config/server.properties && JMX_PORT=$PORT1 bin/kafka-server-start.sh config/server.properties'.format(app_name, 0, kafka['dirname']) %}
+{% set haproxy_hosts = salt['search.mine_by_host']('roles:haproxy') -%}
+{% set scheduler_port = kafka['ports'][0] -%}
+{% set broker_instances = kafka.get('brokerInstances', 1) -%}
+{% set broker_config = {'instances': broker_instances} -%}
+{% do broker_config.update(kafka.get('brokerConfiguration', {})) -%}
+{% set tmp_dir = pillar['system']['tmp'] -%}
 
-#{% from 'marathon/deploy.sls' import service_deploy with context -%}
-#{{ service_deploy({'id': app_name, 'cmd': kafka_command, 'env': env}) }}
 
-### need rework to use dedicated scheduler ###
+broker-configuration:
+  file.managed:
+    - name: {{ tmp_dir }}/kafka-mesos-broker-config.json
+    - source: salt://kafka/files/kafka-mesos-broker-config.json
+    - user: root
+    - group: root
+    - mode: 755
+    - template: jinja
+    - context:
+        config: {{ broker_config | yaml  }}
+
+broker-reconfigure:
+  module.wait:
+    - name: kafka.reconfigure
+    - config: {{ broker_config | yaml }}
+    - hosts: {{ haproxy_hosts | yaml }}
+    - port: {{ scheduler_port }}
+    - require:
+      - module: run-service-deploy-kafka-mesos
+      - module: run-service-redeploy-kafka-mesos
+    - watch:
+      - file: broker-configuration

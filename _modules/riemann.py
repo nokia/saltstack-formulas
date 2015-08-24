@@ -10,6 +10,23 @@ def master():
   return __salt__['search.mine_by_host']('roles:riemann.server')[0]
 
 
+def kafka_jmx_checks(my_host):
+  haproxy_host = __salt__['search.mine_by_host']('roles:haproxy')[0]
+  framework_port = __pillar__['kafka-mesos']['ports'][0]
+  status_endpoint = 'http://' + haproxy_host + ':' + str(framework_port) + '/api/brokers/status'
+  jmx_queries = __pillar__['riemann_checks'].get('jmx', {}).get('kafka_server', [])
+  if len(jmx_queries) == 0:
+    return []
+  r = requests.get(url=status_endpoint)
+  if r.status_code != 200:
+    return []
+  kafka_meta = r.json()
+  kafka_servers = map(lambda x: x['task']['hostname'], kafka_meta['brokers'])
+  jmx_port = __pillar__['kafka-mesos']['jmxPort']
+  if len(filter(lambda x: x == my_host, kafka_servers)) == 0:
+    return []
+  return [{'name': 'kafka-{0}'.format(jmx_port), 'app_id': 'kafka_server', 'port': jmx_port, 'queries': jmx_queries}]
+
 def cassandra_jmx_checks(my_host):
   haproxy_host = __salt__['search.mine_by_host']('roles:haproxy')[0]
   framework_port = __pillar__['cassandra-mesos']['ports'][0]
@@ -17,7 +34,7 @@ def cassandra_jmx_checks(my_host):
   r = requests.get(url=live_node_endpoint)
   if r.status_code != 200:
     return []
-  jmx_queries = __pillar__['riemann_checks'].get('jmx', {}).get('cassandra', [])
+  jmx_queries = __pillar__['riemann_checks'].get('jmx', {}).get('cassandra_server', [])
   if len(jmx_queries) == 0:
     return []
   cassandra_meta = r.json()
@@ -26,7 +43,7 @@ def cassandra_jmx_checks(my_host):
   cassandra_servers = cassandra_meta['liveNodes']
   if len(filter(lambda x: x == my_ip, cassandra_servers)) == 0:
     return []
-  return [{'name': 'cassandra-{0}'.format(jmx_port), 'my_host': 'localhost', 'app_id': 'cassandra', 'port': jmx_port, 'queries': jmx_queries}]
+  return [{'name': 'cassandra-{0}'.format(jmx_port), 'my_host': 'localhost', 'app_id': 'cassandra_server', 'port': jmx_port, 'queries': jmx_queries}]
 
 
 # jmx_map = {'cassandra': [{'obj':'x', 'attr':'x'}], 'kafka': [{'obj':'z'}, {'attr':'ww'}]}
