@@ -16,8 +16,9 @@
 {% set haproxy_hosts = salt['search.mine_by_host']('roles:haproxy') -%}
 {% set scheduler_port = kafka['ports'][0] -%}
 {% set broker_instances = kafka.get('brokerInstances', 1) -%}
-{% set broker_config = {'instances': broker_instances} -%}
-{% do broker_config.update(kafka.get('brokerConfiguration', {})) -%}
+{% set broker_config = kafka.get('brokerConfiguration', {}) -%}
+{% set broker_meta = {'instances': broker_instances} -%}
+{% do broker_meta.update(broker_config) -%}
 {% set tmp_dir = pillar['system']['tmp'] -%}
 
 
@@ -30,12 +31,13 @@ broker-configuration:
     - mode: 755
     - template: jinja
     - context:
-        config: {{ broker_config | yaml  }}
+        config: {{ broker_meta | yaml  }}
 
 broker-reconfigure:
   module.wait:
     - name: kafka.reconfigure
     - config: {{ broker_config | yaml }}
+    - no_of_instances: {{ broker_instances }}
     - hosts: {{ haproxy_hosts | yaml }}
     - port: {{ scheduler_port }}
     - require:
