@@ -38,10 +38,19 @@ def reconfigure(config, no_of_instances, hosts, port):
     scheduler_addr = wait_for_healthy_scheduler(addresses)
     if (scheduler_addr is None):
         raise ValueError('Scheduler is not healthy')
+    initial_no_of_instances = len(get_broker_status(scheduler_addr))
     scale_out = map(lambda x: process_broker_reconfiguration(config, scheduler_addr, x), range(0, no_of_instances))
     current_no_of_instances = len(get_broker_status(scheduler_addr))
     scale_down = map(lambda x: remove_broker(scheduler_addr, x), range(no_of_instances, current_no_of_instances))
-    return scale_out + scale_down
+    rebalancing = []
+    if initial_no_of_instances != no_of_instances:
+        rebalancing += [rebalance_brokers(scheduler_addr)]
+    no_of_errors = len(filter(lambda x: x != 200, map(lambda x: x['start'].get('code', 200), scale_out)))
+    if no_of_errors > 0:
+        raise ValueError('Some of the brokers didnt succeed to start')
+    response = scale_out + scale_down + rebalancing
+    log.warn('Output: ' + str(response))
+    return response
 
 
 def process_broker_reconfiguration(config, address, index):
@@ -57,6 +66,10 @@ def remove_broker(address, index):
     response['stop'] = stop_broker(index, address)
     response['remove'] = requests.get(url=address + '/api/brokers/remove', params={'id': index}).json()
     return response
+
+
+def rebalance_brokers(address):
+    return requests.get(url=address + '/api/brokers/rebalance', params={'id': '*'}).json()
 
 
 def stop_broker(index, address):
