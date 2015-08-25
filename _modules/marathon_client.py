@@ -74,10 +74,9 @@ def new_deploy(app_name, app_file):
   cli = MarathonClient(marathon_addresses)
   if not _is_deployed(cli, app_name):
     mApp = models.MarathonApp.from_json(app_attr)
-    app = cli.create_app(app_name, mApp)
-    return {'output': str(app)}
+    return cli.create_app(app_name, mApp)
   else:
-    return {}
+    return None
 
 def re_deploy(app_name, app_file):
   with open(app_file, 'r') as content_file:
@@ -86,14 +85,15 @@ def re_deploy(app_name, app_file):
   marathon_addresses = _addresses()
   cli = MarathonClient(marathon_addresses)
   if _is_deployed(cli, app_name):
-    app = cli.update_app(app_name, models.MarathonApp.from_json(app_attr))
-    return {'output': str(app)}
+    return cli.update_app(app_name, models.MarathonApp.from_json(app_attr))
   else:
-    return {}
+    return None
 
 
 def undeploy(app_name):
   marathon_addresses = _addresses()
   cli = MarathonClient(marathon_addresses)
   if _is_deployed(cli, app_name):
-    cli.delete_app(app_name)
+    return cli.delete_app(app_name)
+  else:
+    return None

@@ -6,7 +6,7 @@
 {% set api_url = 'http://$HOST:$PORT0' -%}
 {% set config = {'api': api_url, 'master': 'zk://{0}/mesos'.format(zk_str), 'zk': zk_str} -%}
 {% do config.update(kafka.get('schedulerConfiguration', {})) -%}
-{% set cmd_line = salt['kafka.format_options'](config, '\"') -%}
+{% set cmd_line = salt['kafka.format_options'](config) -%}
 
 {% set kafka_command = 'chmod u+x ./kafka-mesos.sh && ./kafka-mesos.sh scheduler {0}'.format(cmd_line) %}
 
