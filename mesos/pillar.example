@@ -1,19 +1,25 @@
 mesos:
   {% if grains['os'].lower() == 'ubuntu' -%}
   {% if grains['oscodename'].lower() == 'trusty' -%}
-  url: http://downloads.mesosphere.io/master/ubuntu/14.04/mesos_0.22.0-1.0.ubuntu1404_amd64.deb
+  url: http://downloads.mesosphere.io/master/ubuntu/14.04/mesos_0.23.0-1.0.ubuntu1404_amd64.deb
   {% elif grains['oscodename'].lower() == 'raring' -%}
-  url: http://downloads.mesosphere.io/master/ubuntu/13.04/mesos_0.22.0-1.0.ubuntu1304_amd64.deb
+  url: http://downloads.mesosphere.io/master/ubuntu/14.04/mesos_0.23.0-1.0.ubuntu1404_amd64.deb
   {% elif grains['oscodename'].lower() == 'precise' -%}
-  url: http://downloads.mesosphere.io/master/ubuntu/12.04/mesos_0.22.0-1.0.ubuntu1204_amd64.deb
+  url: http://downloads.mesosphere.io/master/ubuntu/14.04/mesos_0.23.0-1.0.ubuntu1404_amd64.deb
   {% endif -%}
   {% endif -%}
   libmesos: /usr/local/lib/libmesos.so
   master.port: 5951
   slave.port: 5952
-  resources: 'ports(*):[31000-35000,7150-7200,9000-9050,9175-9225,2900-2950]'
+  resources: 'ports(*):[31000-35000,6950-7200,9000-9050,9150-9225,2900-2950]'
 
 mesos-dns:
-  url: http://walrus.escloc58.eecloud.nsn-net.net:8773/services/Walrus/dasp
-  checksum: md5=b97fcb32e25c1c17d21cd1771f1d2d43
+  url: http://host:port/...
+  checksum: md5=898052021f930711a8b2dfdf3bedb2f8
   tarball: mesos-dns
+  configuration:
+    resolvers:
+      - 192.168.0.0
+    httpport: 8053
+    port: 53
+    domain: mesos

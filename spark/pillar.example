@@ -1,23 +1,24 @@
 spark:
-  url: http://walrus.escloc58.eecloud.nsn-net.net:8773/services/Walrus/dasp
-  checksum: md5=214ef2fa0650d149adaf16a69ea9fe75
-  tarball: spark-1.3.1-bin-dist.tgz
-  dirname: spark-1.3.1-bin-dist
-  executor.memory: 8g
+  url: http://host:port/...
+  checksum: md5=b9c3aadba13dbdbe7025d3d3d89eb14e
+  tarball: spark-1.4.1-bin-dist.tgz
+  dirname: spark-1.4.1-bin-dist
+  executor.memory: 2g
   serializer: org.apache.spark.serializer.KryoSerializer
   mesos.coarse: "false"
-  job.memory: 8g
+  job.memory: 2g
   tachyonStore.baseDir: /cache
   eventlog.dir: /spark-events
   max.dynamic.partitions: 10000
   dynamic.partition: "true"
   dynamic.partition.mode: nonstrict
+  mesos.mesosExecutor.cores: 0.1
   hive.username: hive
   hive.password: hive
   sample: 'true'
   ui.port: 2800
 
-spark-jdbc:
+sparkjdbc:
   cpus: 1
   instances: 1
   mem: 4096
@@ -31,7 +32,7 @@ spark-jdbc:
       portIndex: 0
       path: /
 
-spark-history:
+sparkhistory:
   cpus: 0.5
   instances: 1
   mem: 1024

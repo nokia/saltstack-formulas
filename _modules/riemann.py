@@ -22,8 +22,8 @@ def kafka_jmx_checks(my_host):
     return []
   kafka_meta = r.json()
   kafka_servers = map(lambda x: x['task']['hostname'], kafka_meta['brokers'])
-  jmx_port = __pillar__['kafka-mesos']['jmxPort']
-  if len(filter(lambda x: x == my_host, kafka_servers)) == 0:
+  jmx_port = __pillar__['kafka-mesos'].get('jmxPort', -1)
+  if len(filter(lambda x: x == my_host, kafka_servers)) == 0 or jmx_port == -1:
     return []
   return [{'name': 'kafka-{0}'.format(jmx_port), 'app_id': 'kafka_server', 'port': jmx_port, 'queries': jmx_queries}]
 

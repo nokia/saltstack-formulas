@@ -1,13 +1,12 @@
 zeppelin:
-  url: http://walrus.escloc58.eecloud.nsn-net.net:8773/services/Walrus/dasp
-  tarball: zeppelin-0.5.0-SNAPSHOT.tar.gz
-  dirname: zeppelin-0.5.0-SNAPSHOT
-  checksum: md5=dcbee222812a4d1da9036a21ca368adc
+  url: http://host:port/...
+  tarball: zeppelin-0.6.0-incubating-SNAPSHOT.tar.gz
+  dirname: zeppelin-0.6.0-incubating-SNAPSHOT
+  checksum: md5=4dfcb08816d6e01fea4a0a683143ef6d
   env: {"LD_LIBRARY_PATH": "/lib:/usr/local/lib:/lib:/usr/lib", "JAVA_LIBRARY_PATH":"/usr/local/lib:/lib:/usr/lib" }
   cpus: 2
   instances: 1
   port: 2901
-  ws_port: 2902
   mem: 1024
   ports: [2901, 2902]
   upgradeStrategy:

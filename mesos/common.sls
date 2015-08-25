@@ -44,6 +44,19 @@ mesos_python_config:
     - require:
       - pip: mesos_python_binding
 
+docker-repository:
+  pkgrepo.managed:
+    - humanname: Docker PPA
+    - name: deb http://get.docker.io/ubuntu docker main
+    - file: /etc/apt/sources.list.d/docker.list
+
+docker-pkgs:
+  pkg.installed:
+  - name: lxc-docker
+  - version: 1.7.1
+  - skip_verify: True
+  - require:
+    - pkgrepo: docker-repository
 
 /etc/mesos/zk:
   file.managed:
@@ -155,3 +168,28 @@ reset-slave-state:
     - watch:
       - file: /etc/mesos-slave/resources
 
+/etc/mesos-slave/containerizers:
+  file.managed:
+    - source: salt://mesos/files/value_file
+    - user: root
+    - group: root
+    - mode: 644
+    - template: jinja
+    - context:
+        value: docker,mesos
+    - require:
+      - pkg: mesos-pkg
+      - file: mesos-directories
+
+/etc/mesos-slave/executor_registration_timeout:
+  file.managed:
+    - source: salt://mesos/files/value_file
+    - user: root
+    - group: root
+    - mode: 644
+    - template: jinja
+    - context:
+        value: 5mins
+    - require:
+      - pkg: mesos-pkg
+      - file: mesos-directories

@@ -12,3 +12,4 @@ mesos-service:
         - file: /etc/mesos/zk
         - file: /etc/default/mesos
         - file: /etc/default/mesos-master
+        - file: /etc/mesos-master/cluster

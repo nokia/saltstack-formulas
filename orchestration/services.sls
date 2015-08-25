@@ -16,3 +16,25 @@ cassandra:
     - require:
       - salt: mine.update
       - salt: saltutil.sync_modules
+
+kafka:
+  salt.state:
+    - tgt: 'roles:kafka'
+    - tgt_type: grain
+    - concurrent: True
+    - sls:
+      - kafka
+    - require:
+      - salt: mine.update
+      - salt: saltutil.sync_modules
+
+elasticsearch:
+  salt.state:
+    - tgt: 'roles:elasticsearch'
+    - tgt_type: grain
+    - concurrent: True
+    - sls:
+      - kafka
+    - require:
+      - salt: mine.update
+      - salt: saltutil.sync_modules

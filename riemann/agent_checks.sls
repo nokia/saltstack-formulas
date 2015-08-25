@@ -37,5 +37,3 @@
 {% from 'riemann/checks/jmx.sls' import jmx_check with context -%}
 {{ jmx_check(my_host, server, server_port, home, interval, timeout, is_tcp) }}
 
-{% from 'riemann/checks/redis.sls' import redis_check with context -%}
-{{ redis_check(my_host, server, server_port, home, interval, timeout, is_tcp) }}

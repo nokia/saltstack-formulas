@@ -18,9 +18,15 @@
 {% set broker_instances = kafka.get('brokerInstances', 1) -%}
 {% set broker_config = kafka.get('brokerConfiguration', {}) -%}
 {% set broker_meta = {'instances': broker_instances} -%}
-{% do broker_meta.update(broker_config) -%}
 {% set tmp_dir = pillar['system']['tmp'] -%}
 
+{% if kafka['jmxPort'] is defined %}
+{% set jmx = ' -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port={0}'.format(kafka['jmxPort']) -%}
+{% set new_config = {'jvmOptions': broker_config['jvmOptions'] + jmx }%}
+{% do broker_config.update(new_config) -%}
+{% endif %}
+
+{% do broker_meta.update(broker_config) -%}
 
 broker-configuration:
   file.managed:

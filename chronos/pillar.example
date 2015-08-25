@@ -1,5 +1,5 @@
 chronos:
-  url: http://walrus.escloc57.eecloud.nsn-net.net:8773/services/Walrus/dasp
+  url: http://host:port/...
   tarball: chronos-2.3.3.jar
   checksum: md5=8e8261f6d4e8bef76ba7dd6fa5f2adef
   env: {"LD_LIBRARY_PATH": "/lib:/usr/local/lib:/lib:/usr/lib", "JAVA_LIBRARY_PATH":"/usr/local/lib:/lib:/usr/lib" }

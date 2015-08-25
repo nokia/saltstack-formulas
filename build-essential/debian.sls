@@ -6,3 +6,4 @@ dev_pkgs:
       - bison
       - build-essential
       - flex
+      - unzip

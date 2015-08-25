@@ -9,3 +9,4 @@ dev_pkgs:
       - kernel-devel
       - make
       - m4
+      - unzip

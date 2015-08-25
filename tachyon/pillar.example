@@ -1,11 +1,11 @@
 tachyon:
-  url: http://walrus.escloc58.eecloud.nsn-net.net:8773/services/Walrus/dasp
-  checksum: md5=4eaaef711bda99e82841cd33db99045f
-  tarball: tachyon-release-0.5.0-dist.tar.gz
-  dirname: tachyon-0.5.0
+  url: http://host:port/...
+  checksum: md5=f1dfeeab1df035b3ec7a917563554658
+  tarball: tachyon-0.6.4.tar.gz
+  dirname: tachyon-0.6.4
   journal: /tachyon/journal/
-  classpath: core/target/tachyon-0.5.0-jar-with-dependencies.jar
-  executor.memory: 4GB
+  classpath: core/target/tachyon-0.6.4-jar-with-dependencies.jar
+  executor.memory: 2GB
   ui.port: 8001
   mount.mode: Mount
   max.columns: 10000

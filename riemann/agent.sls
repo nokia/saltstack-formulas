@@ -42,10 +42,6 @@ lsof_pkg:
   pkg.installed:
     - name: lsof
 
-riemann-redis:
-  gem.installed:
-    - version: {{ riemann['redis.version'] }}
-
 {% if 'postgresql' in salt['grains.get']('roles') -%}
 
 postgresql-server-dev:

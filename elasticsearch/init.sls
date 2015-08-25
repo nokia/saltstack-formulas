@@ -1,18 +1,12 @@
-#{% set app_name = 'elasticsearch'%}
-#{% set elasticsearch_home = salt['system.home_dir'](app_name) -%}
-#{% set elasticsearch = pillar[app_name] -%}
+{% set app_name = 'elasticsearch-mesos'%}
+{% set elasticsearch_home = salt['system.home_dir'](app_name) -%}
+{% set elasticsearch = pillar[app_name] -%}
 
-#{% from 'system/install.sls' import install_tarball with context -%}
-#{{ install_tarball(app_name, False) }}
+{% set env = {'JAVA_OPTS': elasticsearch['java_opts']} %}
 
-#{% set env = {'ES_CLUSTER_NAME': grains['cluster_name'],
-#               'ES_SHARDS_NO': elasticsearch['shards_no'],
-#               'ES_REPLICAS_NO': elasticsearch['replicas_no'],
-#               'ES_STORE_PATH': elasticsearch_home} %}
+{% set zk_str = salt['zookeeper.ensemble_ips']() -%}
 
-#{% set es_command = 'cd {2} && launcher/configurator.py {0} {1} config/elasticsearch.yml && bin/elasticsearch'.format(app_name, elasticsearch['seed_ratio'], elasticsearch['dirname']) %}
+{% set es_command = '/tmp/start-scheduler.sh -zk zk://{0}/mesos -n {1} -ram {2} -m $PORT0'.format(zk_str, elasticsearch['worker_instances'], elasticsearch['worker_mem']) %}
 
-#{% from 'marathon/deploy.sls' import service_deploy with context -%}
-#{{ service_deploy({'id': app_name, 'cmd': es_command, 'env': env}) }}
-
-# need rework to use dedicated scheduler #
+{% from 'marathon/deploy.sls' import service_deploy with context -%}
+{{ service_deploy({'id': app_name, 'cmd': es_command, 'env': env}) }}

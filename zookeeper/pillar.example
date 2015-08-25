@@ -7,5 +7,4 @@ zookeeper:
   port: 2181
   home: /usr/lib/zookeeper
   conf: /etc/zookeeper/conf
-  # due to conflict with ubuntu pkg
   version: 3.4.5+cdh5.4.4+91-1.cdh5.4.4.p0.6~trusty-cdh5.4.4

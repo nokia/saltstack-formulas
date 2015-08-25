@@ -1,6 +1,6 @@
 riemann:
-  url: http://aphyr.com/riemann
-  checksum: md5=
+  url: http://host:port/...
+  checksum: md5=78f44060f75dca711dd50d143fb36de2
   tarball: riemann-0.2.9.tar.bz2
   dirname: riemann-0.2.9
   tools.version: 0.2.5
@@ -10,9 +10,9 @@ riemann:
   hadoop.version: 0.1.1
   postgresql.version: 0.1.1
   dash.port: 2421
-  jmx_url: http://walrus.escloc58.eecloud.nsn-net.net:8773/services/Walrus/dasp/riemann-jmx-clj-0.1.1-SNAPSHOT-standalone.jar
+  jmx_url: http://host:port/.../riemann-jmx-clj-0.1.1-SNAPSHOT-standalone.jar
   jmx_checksum: md5=3c9cbbd7c000110438fab6621d22230c
-  extra_url: http://walrus.escloc58.eecloud.nsn-net.net:8773/services/Walrus/dasp/riemann-extra-0.2.6-standalone.jar
+  extra_url: http://host:port/.../riemann-extra-0.2.6-standalone.jar
   extra_checksum: md5=d20d4beceaec3ed9fb5c56d461f5bde4
   user: riemann
   group: riemann
@@ -26,7 +26,7 @@ riemann:
 schedule:
   job-riemann-reload:
     function: state.sls
-    seconds: 900
+    seconds: 3600
     args:
       - riemann.agent_checks
     kwargs:
@@ -79,7 +79,7 @@ riemann_checks:
     spark.*:
       endpoint: /metrics/json
   jmx:
-    cassandra:
+    cassandra_server:
       - obj: "org.apache.cassandra.metrics:type=DroppedMessage,scope=READ,name=Dropped"
         attr: [ Count ]
       - obj: "org.apache.cassandra.metrics:type=DroppedMessage,scope=MUTATION,name=Dropped"
@@ -106,20 +106,20 @@ riemann_checks:
         attr: [ Count ]
       - obj: "org.apache.cassandra.metrics:type=Storage,name=Exceptions"
         attr: [ Count ]
-    kafka:
-      - obj: "\"kafka.server\":type=\"BrokerTopicMetrics\",name=\"AllTopicsBytesInPerSec\""
+    kafka_server:
+      - obj: "kafka.server:type=BrokerTopicMetrics,name=BytesInPerSec"
         attr: [ Count, OneMinuteRate, FiveMinuteRate, FifteenMinuteRate, MeanRate ]
-      - obj: "\"kafka.server\":type=\"BrokerTopicMetrics\",name=\"AllTopicsBytesOutPerSec\""
+      - obj: "kafka.server:type=BrokerTopicMetrics,name=BytesOutPerSec"
         attr: [ Count, OneMinuteRate, FiveMinuteRate, FifteenMinuteRate, MeanRate ]
-      - obj: "\"kafka.server\":type=\"BrokerTopicMetrics\",name=\"AllTopicsFailedFetchRequestsPerSec\""
+      - obj: "kafka.server:type=BrokerTopicMetrics,name=FailedFetchRequestsPerSec"
         attr: [ Count, OneMinuteRate, FiveMinuteRate, FifteenMinuteRate, MeanRate ]
-      - obj: "\"kafka.server\":type=\"BrokerTopicMetrics\",name=\"AllTopicsFailedProduceRequestsPerSec\""
+      - obj: "kafka.server:type=BrokerTopicMetrics,name=FailedProduceRequestsPerSec"
         attr: [ Count, OneMinuteRate, FiveMinuteRate, FifteenMinuteRate, MeanRate ]
-      - obj: "\"kafka.server\":type=\"BrokerTopicMetrics\",name=\"AllTopicsMessagesInPerSec\""
+      - obj: "kafka.server:type=BrokerTopicMetrics,name=MessagesInPerSec"
         attr: [ Count, OneMinuteRate, FiveMinuteRate, FifteenMinuteRate, MeanRate ]
-      - obj: "\"kafka.server\":type=\"ReplicaManager\",name=\"PartitionCount\""
+      - obj: "kafka.server:type=ReplicaManager,name=PartitionCount"
         attr: [ Value ]
-      - obj: "\"kafka.network\":type=\"RequestChannel\",name=\"RequestQueueSize\""
+      - obj: "kafka.network:type=RequestChannel,name=RequestQueueSize"
         attr: [ Value ]
-      - obj: "\"kafka.controller\":type=\"KafkaController\",name=\"ActiveControllerCount\""
+      - obj: "kafka.controller:type=KafkaController,name=ActiveControllerCount"
         attr: [ Value ]

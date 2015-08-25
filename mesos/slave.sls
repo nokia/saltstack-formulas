@@ -15,3 +15,5 @@ mesos-service:
         - file: /etc/mesos-slave/work_dir
         - file: /etc/mesos-slave/port
         - file: /etc/mesos-slave/resources
+        - file: /etc/mesos-slave/containerizers
+        - file: /etc/mesos-slave/executor_registration_timeout

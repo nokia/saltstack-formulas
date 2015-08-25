@@ -1,11 +1,11 @@
 postgresql:
-  dir: /etc/postgresql/9.1/main
+  dir: /etc/postgresql/9.3/main
   password: C1NYJV981ZG5JY9OdzUh
-  bin: /usr/lib/postgresql/9.1/bin
+  bin: /usr/lib/postgresql/9.3/bin
   config:
-    data_directory: /mnt/lib/postgresql/9.1/main
-    hba_file: /etc/postgresql/9.1/main/pg_hba.conf
-    ident_file: /etc/postgresql/9.1/main/pg_ident.conf
+    data_directory: /mnt/lib/postgresql/9.3/main
+    hba_file: /etc/postgresql/9.3/main/pg_hba.conf
+    ident_file: /etc/postgresql/9.3/main/pg_ident.conf
     listen_addresses: 0.0.0.0
     port: 5432
     max_connections: 100
