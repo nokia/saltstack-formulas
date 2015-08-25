@@ -38,3 +38,14 @@ elasticsearch:
     - require:
       - salt: mine.update
       - salt: saltutil.sync_modules
+
+ignite:
+  salt.state:
+    - tgt: 'roles:ignite'
+    - tgt_type: grain
+    - concurrent: True
+    - sls:
+      - ignite
+    - require:
+      - salt: mine.update
+      - salt: saltutil.sync_modules
