@@ -3,7 +3,7 @@ include:
   - java.openjdk
   - hdfs.configuration
 
-{% if not salt['hdfs.is_primary_namenode']() %}
+{% if salt['hdfs.is_secondary_namenode']() %}
 
 {% set my_nameservice = salt['hdfs.my_nameservice']() -%}
 {% set my_peers = salt['hdfs.my_nameservice_peers']() -%}
