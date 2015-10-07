@@ -4,6 +4,4 @@ def masters():
 
 
 def is_primary_master():
-    ms = masters()
-    my_host = __salt__['search.my_host']()
-    return my_host == ms[0]
+	return __salt__['search.is_primary_host']('roles:tachyon.master')

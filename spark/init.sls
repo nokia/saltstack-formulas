@@ -72,7 +72,7 @@ include:
     - context:
         zk_str: {{ zk_str }}
         tmp_dir: {{ tmp_dir }}
-        tachyon_master: {{ tachyon_masters | first }}
+        tachyon_masters: {{ tachyon_masters }}
         event_log_dir: hdfs://{{ nameservice_names | first }}{{ spark['eventlog.dir'] }}
         spark_home: {{ spark_home }}
     - require:

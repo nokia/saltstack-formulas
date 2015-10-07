@@ -17,8 +17,8 @@ def nameservices():
             nameservice_name = data['attributes']['nameservice']
         if nameservice_name not in res:
             res[nameservice_name] = []
-        heapq.heappush(res[nameservice_name], host)
-    return sorted([{name: hosts} for name, hosts in res.items()])
+        heapq.heappush(res[nameservice_name], (host, data.get('instance_creation_date', 0) ))
+    return sorted([{name: _leave_oldest_namenode_hosts(hosts_with_times)} for name, hosts_with_times in res.items()])
 
 
 def my_nameservice():
@@ -36,15 +36,21 @@ def is_primary_namenode():
     peers = _all_hosts_for_nameservice(my_host)
     return my_host == peers[0]
 
+
 def is_secondary_namenode():
     my_host = __salt__['search.my_host']()
     peers = _all_hosts_for_nameservice(my_host)
     return len(peers) > 1 and my_host == peers[1]
 
+
 def my_nameservice_peers():
     my_host = __salt__['search.my_host']()
     all_peers_including_me = _all_hosts_for_nameservice(my_host)
     return [peer for peer in all_peers_including_me if peer != my_host]
+
+
+def _leave_oldest_namenode_hosts(hosts_with_times):
+    return [for x[0] x in sorted(hosts_with_times, key=lambda x: (x[1], x[0]))[:2]]
 
 
 def _namenodes():
