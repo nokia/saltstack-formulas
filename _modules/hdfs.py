@@ -50,7 +50,7 @@ def my_nameservice_peers():
 
 
 def _leave_oldest_namenode_hosts(hosts_with_times):
-    return [for x[0] x in sorted(hosts_with_times, key=lambda x: (x[1], x[0]))[:2]]
+    return [x[0] for x in sorted(hosts_with_times, key=lambda x: (x[1], x[0]))[:2]]
 
 
 def _namenodes():
