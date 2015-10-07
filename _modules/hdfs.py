@@ -34,7 +34,7 @@ def nameservice_names():
 def is_primary_namenode():
     my_host = __salt__['search.my_host']()
     peers = _all_hosts_for_nameservice(my_host)
-    return my_host == peers[0]
+    return len(peers) > 0 and my_host == peers[0]
 
 
 def is_secondary_namenode():
