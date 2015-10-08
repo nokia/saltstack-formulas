@@ -27,6 +27,7 @@
 
 {% set my_ip = salt['search.resolve_ips']([salt['search.my_host']()])[0] -%}
 {% set dns_config = mesos_dns.get('configuration', {}) -%}
+{% set dns_resolvers = dns_config.get('resolvers', []) -%}
 
 {{ mesos_dns_home }}/config.json:
   file.managed:
@@ -41,7 +42,7 @@
         domain: {{ dns_config.get('domain', '') }}
         httpport: {{ dns_config.get('httpport', 8053) }}
         port: {{ dns_config.get('port', 53) }}
-        resolvers: {{ dns_config.get('resolvers', []) }}
+        resolvers: {{ dns_resolvers | length }}
     - require:
       - file: {{ mesos_dns_home }}/mesos-dns
 
