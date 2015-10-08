@@ -26,9 +26,7 @@
       - file: {{ mesos_dns_home }}/mesos-dns
 
 {% set my_ip = salt['search.resolve_ips']([salt['search.my_host']()])[0] -%}
-{% set config_map = {'zk': 'zk://{0}/mesos'.format(zk_str), 'listener': my_ip} -%}
-{% set pillar_config = mesos_dns.get('configuration', {}) -%}
-{% do config_map.update(pillar_config) -%}
+{% set dns_config = mesos_dns.get('configuration', {}) -%}
 
 {{ mesos_dns_home }}/config.json:
   file.managed:
@@ -38,7 +36,12 @@
     - mode: 755
     - template: jinja
     - context:
-        params: {{pillar_config | yaml}}
+        zk: zk://{{ zk_str }}/mesos
+        listener: {{ my_ip }}
+        domain: {{ dns_config.get('domain', '') }}
+        httpport: {{ dns_config.get('httpport', 8053) }}
+        port: {{ dns_config.get('port', 53) }}
+        resolvers: {{ dns_config.get('resolvers', []) }}
     - require:
       - file: {{ mesos_dns_home }}/mesos-dns
 

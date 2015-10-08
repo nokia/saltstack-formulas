@@ -1,1 +1,8 @@
-{{ params | json }}
+{
+	"domain": "{{ domain }}",
+	"httpport": {{ httpport }},
+	"listener": "{{ listener }}",
+	"port": {{ port }},
+	"resolvers": {{ resolvers | json }},
+	"zk": "{{ zk }}"
+}
