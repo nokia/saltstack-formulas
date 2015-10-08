@@ -38,7 +38,7 @@
     - mode: 755
     - template: jinja
     - context:
-        params: {{config_map | yaml}}
+        params: {{pillar_config | yaml}}
     - require:
       - file: {{ mesos_dns_home }}/mesos-dns
 
