@@ -39,7 +39,7 @@
     - context:
         zk: zk://{{ zk_str }}/mesos
         listener: {{ my_ip }}
-        domain: {{ dns_config.get('domain', '') }}
+        domain: {{ dns_config.get('domain', 'mesos') }}
         httpport: {{ dns_config.get('httpport', 8053) }}
         port: {{ dns_config.get('port', 53) }}
         resolvers: {{ dns_resolvers | length }}
