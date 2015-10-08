@@ -1,2 +1,2 @@
 def get():
-    return list(set(pillar['mesos-dns']['configuration'].get('resolvers', [])))
+    return list(set(__pillar__['mesos-dns']['configuration'].get('resolvers', [])))
