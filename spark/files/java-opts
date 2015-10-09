@@ -1,4 +1,7 @@
- -Dtachyon.max.columns={{ pillar['tachyon']['max.columns'] }}
+{% set tachyon = pillar['tachyon'] -%}
+{% if tachyon is defined -%}
+ -Dtachyon.max.columns={{ tachyon['max.columns'] }}
  -Dtachyon.usezookeeper=true
  -Dtachyon.zookeeper.address={{ zk_str }}
  -Dtachyon.home={{ tachyon_home }}
+{% endif -%}
