@@ -44,4 +44,4 @@ def is_primary_host(role):
     ms = [(attrs['fqdn'], attrs.get('instance_creation_date', 0)) for attrs in search_info]
     ms_sorted = sorted(ms, key=lambda x: (x[1], x[0]))
     my_host = __salt__['search.my_host']()
-    return len(ms_sorted > 0) and my_host == ms_sorted[0][0]
+    return len(ms_sorted) > 0 and my_host == ms_sorted[0][0]
