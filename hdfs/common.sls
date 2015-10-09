@@ -2,7 +2,7 @@
 {% set roles = salt['grains.get']('roles') -%}
 {% set conf_dir = hdfs['conf_dir'] -%}
 include:
-  - java.openjdk
+  - java
   - cloudera.repository
 
 hadoop-pkgs:

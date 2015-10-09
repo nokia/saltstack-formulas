@@ -5,7 +5,7 @@
 {% set tools_dir = salt['system.custom_dir']('zookeeper', 'tools') -%}
 {% set log_dir = salt['system.log_dir']('zookeeper') -%}
 include:
-  - java.openjdk
+  - java
   - cloudera.repository
   - git
 

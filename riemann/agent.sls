@@ -2,7 +2,7 @@
 {% set home = salt['system.home_dir']('riemann_client') -%}
 
 include:
-  - java.openjdk
+  - java
   - ruby
 
 rieman_group:

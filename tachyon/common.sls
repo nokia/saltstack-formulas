@@ -8,7 +8,7 @@
 {% set ramdisk = salt['system.custom_dir']('tachyon', 'ramdisk') -%}
 
 include:
-  - java.openjdk
+  - java
 
 {% from 'system/install.sls' import install_tarball with context %}
 {{ install_tarball('tachyon', False) }}

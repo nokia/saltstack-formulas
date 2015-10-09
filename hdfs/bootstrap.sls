@@ -1,6 +1,6 @@
 {% set hdfs = pillar['hdfs'] %}
 include:
-  - java.openjdk
+  - java
   - hdfs.configuration
 
 {% if salt['hdfs.is_secondary_namenode']() %}

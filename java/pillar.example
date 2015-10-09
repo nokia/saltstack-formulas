@@ -1,6 +1,7 @@
 
 java:
   version: 7
+  flavor: openjdk
   parent_home: /usr/lib/jvm
   arch: {{ '-amd64' if grains['cpuarch'] == 'x86_64' else '-i386' }}
   share_dir: /usr/share/java

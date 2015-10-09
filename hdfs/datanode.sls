@@ -1,7 +1,7 @@
 {% set conf_dir = pillar['hdfs']['conf_dir'] -%}
 
 include:
-  - java.openjdk
+  - java
   - hdfs.configuration
 
 hadoop-data-service:

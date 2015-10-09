@@ -4,7 +4,7 @@
 {% from "postgresql/map.jinja" import jdbc with context -%}
 
 include:
-  - java.openjdk
+  - java
   - postgresql.jdbc
 
 {% from 'system/install.sls' import install_tarball with context -%}

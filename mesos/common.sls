@@ -4,7 +4,7 @@
 {% set work_dir = salt['system.work_dir']('mesos') -%}
 
 include:
-  - java.openjdk
+  - java
 
 mesos-dependencies:
   pkg.installed:

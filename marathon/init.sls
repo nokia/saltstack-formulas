@@ -3,7 +3,7 @@
 {% set salt_api_port = pillar['marathon']['callback.port'] -%}
 {% set zk_str = salt['zookeeper.ensemble_address']() -%}
 include:
-  - java.openjdk
+  - java
 
 {% from 'system/install.sls' import install_tarball with context -%}
 {{ install_tarball('marathon', False) }}

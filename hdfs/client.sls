@@ -1,3 +1,3 @@
 include:
-  - java.openjdk
+  - java
   - hdfs.configuration

@@ -15,7 +15,7 @@ jblas-deps:
       - libgfortran3
 
 include:
-  - java.openjdk
+  - java
   - postgresql.jdbc
 
 {% from 'system/install.sls' import install_tarball with context -%}
