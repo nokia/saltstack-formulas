@@ -59,3 +59,10 @@ sed_etc_env:
     - repl: JAVA_HOME={{ java_home }}
     - require:
       - pkg: jdk-pkg
+
+jdk:
+  pkg.installed:
+    - name: oracle-java{{ version }}-set-default
+    - require:
+      - file: /etc/environment
+      - file: /etc/profile.d/jdk.sh
