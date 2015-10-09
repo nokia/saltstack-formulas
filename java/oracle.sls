@@ -9,7 +9,9 @@ oraclejdk_repo:
 
 java_autoaccept:
   cmd.wait:
-    - name: echo oracle-java{{ version }}-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
+    - names: 
+      - echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
+      - echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
     - watch:
       - pkgrepo: oraclejdk_repo
 
