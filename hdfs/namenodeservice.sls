@@ -7,7 +7,7 @@ hadoop-service:
         - hadoop-hdfs-zkfc
     - enable: True
     - require:
-        - file: hadoop-directories
+        - file: hadoop-namedata-directories
     - watch:
         - file: /etc/hadoop/{{ conf_dir }}/core-site.xml
         - file: /etc/hadoop/{{ conf_dir }}/hdfs-site.xml

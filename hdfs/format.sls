@@ -16,7 +16,7 @@ bootstrap_primary_namenode:
     - args: {{ grains['cluster_name'] }} {{ my_nameservice }} {{ my_peers | join(' ') }}
     - unless: ls {{ hdfs['name_data_dir'] | first }}/current/VERSION
     - require:
-      - file: hadoop-directories
+      - file: hadoop-namedata-directories
     - require_in:
       - service: hadoop-service
 

@@ -10,7 +10,7 @@ hadoop-data-service:
         - hadoop-hdfs-datanode
     - enable: True
     - require:
-        - file: hadoop-directories
+        - file: hadoop-data-directories
     - watch:
         - file: /etc/hadoop/{{ conf_dir }}/core-site.xml
         - file: /etc/hadoop/{{ conf_dir }}/hdfs-site.xml

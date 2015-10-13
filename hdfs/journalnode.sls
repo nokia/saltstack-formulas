@@ -10,7 +10,7 @@ hadoop-journal-service:
         - hadoop-hdfs-journalnode
     - enable: True
     - require:
-        - file: hadoop-directories
+        - file: hadoop-journal-directories
     - watch:
         - file: /etc/hadoop/{{ conf_dir }}/core-site.xml
         - file: /etc/hadoop/{{ conf_dir }}/hdfs-site.xml
