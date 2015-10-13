@@ -41,7 +41,8 @@ def new_deploy(app_name, app_file):
     cli = MarathonClient(marathon_addresses)
     if not _is_deployed(cli, app_name):
         m_app = models.MarathonApp.from_json(app_attr)
-        return cli.create_app(app_name, m_app)
+        created_app = cli.create_app(app_name, m_app)
+        return created_app.to_json
     else:
         return None
 
