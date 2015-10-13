@@ -13,3 +13,26 @@ chronos:
     - protocol: HTTP
       portIndex: 0
       path: /
+
+
+sample_job:
+  command: echo Hello World!
+  schedule: "R/2014-10-10T18:32:00Z/PT60M"
+  environment:
+    - name: JVMOPTS
+      value: -Xmx1000m
+    - name: JAVA_LIBRARY_PATH
+      value: /usr/local/lib
+  constraints: [
+    ["rack", "EQUALS", "rack-1"],
+    ["router", "LIKE", "router-[1-3]"]
+  ]
+  container:
+    type: DOCKER
+    image: libmesos/ubuntu
+    forcePullImage: true
+    network: BRIDGE
+    volumes:
+      - containerPath: /var/log/
+        hostPath": /logs/
+        mode: RW

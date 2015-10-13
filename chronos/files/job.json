@@ -1,0 +1,52 @@
+{
+  "name": "{{ job['name'] }}",
+  {% if job['epsilon'] is defined -%}
+  "epsilon": "{{ job['epsilon'] }}",
+  {% endif -%}
+  {% if job['retries'] is defined -%}
+  "retries": {{ job['retries'] }},
+  {% endif -%}
+  {% if job['owner'] is defined -%}
+  "owner": "{{ job['owner'] }}",
+  {% endif -%}
+  {% if job['async'] is defined -%}
+  "async": {{ job['async'] }},
+  {% endif -%}
+  {% if job['cpus'] is defined -%}
+  "cpus": {{ job['cpus'] }},
+  {% endif -%}
+  {% if job['disk'] is defined -%}
+  "disk": {{ job['disk'] }},
+  {% endif -%}
+  {% if job['mem'] is defined -%}
+  "mem": {{ job['mem'] }},
+  {% endif -%}
+  {% if job['uris'] is defined -%}
+  "uris":  {{ job['uris'] | json }},
+  {% endif -%}
+  {% if job['schedule'] is defined -%}
+  "schedule": "{{ job['schedule'] }}",
+  {% endif -%}
+  {% if job['scheduleTimeZone'] is defined -%}
+  "scheduleTimeZone": "{{ job['scheduleTimeZone'] }}",
+  {% endif -%}
+  {% if job['parents'] is defined -%}
+  "parents": {{ job['parents'] | json }},
+  {% endif -%}
+  {% if job['runAsUser'] is defined -%}
+  "runAsUser": "{{ job['runAsUser'] }}",
+  {% endif -%}
+  {% if job['container'] is defined -%}
+  "container":  {{ job['container'] | json }},
+  {% endif -%}
+  {% if job['environmentVariables'] is defined -%}
+  "environmentVariables": {{ job['environmentVariables'] | json }},
+  {% endif -%}
+  {% if job['dataJob'] is defined -%}
+  "dataJob": {{ job['dataJob'] }},
+  {% endif -%}
+  {% if job['constraints'] is defined -%}
+  "constraints": {{ job['constraints'] | json }},
+  {% endif -%}
+  "command": "{{ job['command'] }}"
+}

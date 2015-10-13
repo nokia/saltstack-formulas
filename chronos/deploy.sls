@@ -2,7 +2,7 @@
 
 {% macro job_deploy(job) -%}
 
-{% set job_name = job['id'] -%}
+{% set job_name = job['name'] -%}
 {% set job_merged = salt['chronos_client.merge'](job, pillar[job_name]) %}
 {% set tmp_dir = pillar['system']['tmp'] -%}
 {% set nameservice_names = salt['hdfs.nameservice_names']() -%}
