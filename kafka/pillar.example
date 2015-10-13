@@ -36,6 +36,6 @@ kafka-mesos:
       timeoutSeconds: 5
   instances: 1
   uris:
-    - http://host:port/../kafka-mesos-0.9.1.4.jar
-    - http://host:port/../kafka-mesos.sh
-    - http://host:port/../kafka_2.10-0.8.2.1.tgz
+    - salt://.../kafka-mesos-0.9.1.4.jar
+    - salt://.../kafka-mesos.sh
+    - salt://.../kafka_2.10-0.8.2.1.tgz

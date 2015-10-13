@@ -49,6 +49,12 @@ def my_nameservice_peers():
     return [peer for peer in all_peers_including_me if peer != my_host]
 
 
+def map_uris(uris):
+    pkgs_path = __pillar__['hdfs']['pkgs_path']
+    ns = nameservice_names()
+    return map(lambda x:  'hdfs://{0}{1}/{2}'.format(ns[0], pkgs_path, __salt__['system.basename'](x)), uris)
+
+
 def _leave_oldest_namenode_hosts(hosts_with_times):
     return [x[0] for x in sorted(hosts_with_times, key=lambda x: (x[1], x[0]))[:2]]
 

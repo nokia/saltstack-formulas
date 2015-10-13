@@ -1,3 +1,5 @@
+import ntpath
+
 
 def log_dir(name):
     return "{0}/{1}/log".format(__pillar__['system']['var'], name)
@@ -13,3 +15,8 @@ def custom_dir(name, dirname):
 
 def home_dir(name):
     return "{0}/{1}".format(__pillar__['system']['lib'], name)
+
+
+def basename(uri):
+    head, tail = ntpath.split(uri)
+    return tail or ntpath.basename(head)

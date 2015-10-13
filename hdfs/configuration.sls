@@ -82,16 +82,31 @@ hadoop-meta-directories:
     - require:
       - alternatives: hadoop-conf-set
 
-hadoop-directories:
+hadoop-data-directories:
   file.directory:
-    - names:
-      {% for data_dir in hdfs['name_data_dir'] -%}
-      - {{ data_dir }}
-      {%- endfor %}
-      - {{ journal_dir }}
-      {% for data_dir in hdfs['data_dir'] -%}
-      - {{ data_dir }}
-      {%- endfor %}
+    - names: {{ hdfs['data_dir'] | yaml }}
+    - user: hdfs
+    - group: hdfs
+    - mode: 700
+    - makedirs: True
+    - require:
+      - alternatives: hadoop-conf-set
+      - file: hadoop-meta-directories
+
+hadoop-namedata-directories:
+  file.directory:
+    - names: {{  hdfs['name_data_dir'] | yaml }}
+    - user: hdfs
+    - group: hdfs
+    - mode: 700
+    - makedirs: True
+    - require:
+      - alternatives: hadoop-conf-set
+      - file: hadoop-meta-directories
+
+hadoop-journal-directories:
+  file.directory:
+    - name: {{ journal_dir }}
     - user: hdfs
     - group: hdfs
     - mode: 700

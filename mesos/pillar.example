@@ -23,3 +23,8 @@ mesos-dns:
     httpport: 8053
     port: 53
     domain: mesos
+
+mesos-services:
+  - chronos
+  - spark.history
+  - spark.jdbc

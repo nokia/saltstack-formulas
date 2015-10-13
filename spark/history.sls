@@ -1,5 +1,5 @@
 include:
-  - hdfs.client
+  - mesos.service_common
 
 {% set spark_home = salt['system.home_dir']('spark') -%}
 {% set spark = pillar['spark'] -%}

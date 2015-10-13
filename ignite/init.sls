@@ -1,3 +1,6 @@
+include:
+  - mesos.service_common
+
 {% set app_name = 'ignite-mesos' -%}
 {% set ignite = pillar[app_name] -%}
 {% set ignite_env = ignite['environment'] -%}

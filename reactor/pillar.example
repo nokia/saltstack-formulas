@@ -1,3 +1,0 @@
-events:
-  - 'salt/netapi/hook/marathon/events':
-      - salt://reactor/sync_services.sls

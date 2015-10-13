@@ -1,3 +1,6 @@
+include:
+  - mesos.service_common
+
 {% set app_name = 'kafka-mesos'%}
 {% set kafka_home = salt['system.home_dir'](app_name) -%}
 {% set kafka = pillar[app_name] -%}

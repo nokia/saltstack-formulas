@@ -1,3 +1,6 @@
+include:
+  - mesos.service_common
+
 {% set app_name = 'elasticsearch-mesos'%}
 {% set elasticsearch_home = salt['system.home_dir'](app_name) -%}
 {% set elasticsearch = pillar[app_name] -%}

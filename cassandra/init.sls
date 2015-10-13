@@ -1,3 +1,6 @@
+include:
+  - mesos.service_common
+
 {% set app_name = 'cassandra-mesos' -%}
 {% set cassandra = pillar[app_name] -%}
 {% set cassandra_env = cassandra['environment'] -%}

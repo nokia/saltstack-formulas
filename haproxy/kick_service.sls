@@ -11,13 +11,4 @@ kick_haproxy:
     - kwarg:
         concurrent: True
 
-kick_riemann:
-  local.state.sls:
-    - tgt: '*'
-    - arg:
-      - riemann.agent_checks
-    - kwarg:
-        concurrent: True
-
 {% endif %}
-
