@@ -53,13 +53,13 @@ def undeploy(job_name):
         return None
 
 
-def _is_deployed(job_name, chronos_uri):
+def is_deployed(job_name, chronos_uri):
     job = _get_job(job_name, chronos_uri)
     log.error('Job fetched ' + job_name + ' ' + str(job))
     return not (job is None)
 
 
-def _address():
+def address():
     port = __pillar__['chronos']['ports'][0]
     hosts = __salt__['search.mine_by_host']('roles:haproxy')
     addresses = ['http://{0}:{1}'.format(host, port) for host in hosts]
@@ -72,7 +72,7 @@ def _address():
     return None
 
 
-def _get_job(job_name, chronos_uri):
+def get_job(job_name, chronos_uri):
     r = requests.get(chronos_uri + '/scheduler/jobs')
     if r.status_code == 200:
         jobs = [x for x in r.json() if x['name'] == job_name]
