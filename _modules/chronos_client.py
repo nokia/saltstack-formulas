@@ -54,7 +54,9 @@ def undeploy(job_name):
 
 
 def _is_deployed(job_name, chronos_uri):
-    return not (_get_job(job_name, chronos_uri) is None)
+    job = _get_job(job_name, chronos_uri)
+    log.info('Job fetched ' + job_name + ' ' + str(job))
+    return not (job is None)
 
 
 def _address():
