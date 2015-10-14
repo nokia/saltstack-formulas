@@ -22,8 +22,8 @@ def new_deploy(job_name, job_file):
     endpoint = _get_endpoint_name(job_attr)
     if not _is_deployed(job_name, chronos_uri):
         post_url = chronos_uri + '/scheduler/' + endpoint
-        log.error('New deploy: ' + str(post_url) + str(job_attr))
-        r = requests.post(post_url, headers={'Content-Type': 'application/json'}, data=job_attr)
+        log.warn('New deploy: ' + str(post_url) + str(job_attr))
+        r = requests.post(post_url, headers={'Content-Type': 'application/json'}, data=json.dumps(job_attr))
         return str(r.status_code) + ', ' + r.text
     else:
         return None
@@ -36,8 +36,8 @@ def re_deploy(job_name, job_file):
     chronos_uri = _address()
     if _is_deployed(job_name, chronos_uri):
         put_url = chronos_uri + '/scheduler/' + endpoint
-        log.error('Re deploy: ' + str(post_url) + str(job_attr))
-        r = requests.put(put_url, headers={'Content-Type': 'application/json'}, data=job_attr)
+        log.warn('Re deploy: ' + str(post_url) + str(job_attr))
+        r = requests.put(put_url, headers={'Content-Type': 'application/json'}, data=json.dumps(job_attr))
         return str(r.status_code) + ', ' + r.text
     else:
         return None
