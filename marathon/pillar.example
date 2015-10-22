@@ -6,3 +6,8 @@ marathon:
   http.port: 8773
   callback.port: 8080
 
+marathon-jre:
+  url: http://downloads.mesosphere.com/java
+  checksum: md5=e6e44f44b67c1a412f06694c9c30b77f
+  tarball: jre-8u60-linux-x64.tar.gz
+  dirname: jre1.8.0_60
