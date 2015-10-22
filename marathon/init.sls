@@ -1,12 +1,12 @@
 {% set marathon = pillar['marathon'] -%}
 {% set marathon_home = salt['system.home_dir']('marathon') -%}
+{% set marathon_jre_home = salt['system.home_dir']('marathon-jre') -%}
 {% set salt_api_port = pillar['marathon']['callback.port'] -%}
 {% set zk_str = salt['zookeeper.ensemble_address']() -%}
-include:
-  - java
-
 {% from 'system/install.sls' import install_tarball with context -%}
 {{ install_tarball('marathon', False) }}
+
+{{ install_tarball('marathon-jre', False) }}
 
 /etc/init/marathon.conf:
   file.managed:
@@ -17,6 +17,7 @@ include:
     - template: jinja
     - context:
         marathon_home: {{ marathon_home }}
+        java_home: {{ marathon_jre_home }}
         zk_str: {{ zk_str}}
         marathon_port: {{ marathon['http.port'] }}
         callback_url: http://{{ grains['master'] }}:{{ salt_api_port }}/hook/marathon/events
