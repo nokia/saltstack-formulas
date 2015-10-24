@@ -5,17 +5,9 @@ haproxy:
   stats.password: admin
   cert_server: salt://pkgs/server.pem
   cert_ca: salt://pkgs/ca.crt
-  {% if grains['os'].lower() == 'ubuntu' -%}
-  {% if grains['oscodename'].lower() == 'trusty' -%}
   repository: deb http://ppa.launchpad.net/vbernat/haproxy-1.5/ubuntu trusty main
   repository_src: deb-src http://ppa.launchpad.net/vbernat/haproxy-1.5/ubuntu trusty main
-  version: 1.5.8-1ppa1~trusty
-  {% elif grains['oscodename'].lower() == 'precise' -%}
-  repository: deb http://ppa.launchpad.net/vbernat/haproxy-1.5/ubuntu precise main
-  repository_src: deb-src http://ppa.launchpad.net/vbernat/haproxy-1.5/ubuntu precise main
-  version: 1.5.8-1ppa1~precise
-  {% endif %}
-  {% endif %}
+  version: 1.5.14-1ppa~trusty
 
 schedule:
   job-haproxy-reload:
