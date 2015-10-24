@@ -3,6 +3,8 @@ haproxy:
   stats.port: 2413
   stats.username: admin
   stats.password: admin
+  cert_server: salt://pkgs/server.pem
+  cert_ca: salt://pkgs/ca.crt
   {% if grains['os'].lower() == 'ubuntu' -%}
   {% if grains['oscodename'].lower() == 'trusty' -%}
   repository: deb http://ppa.launchpad.net/vbernat/haproxy-1.5/ubuntu trusty main

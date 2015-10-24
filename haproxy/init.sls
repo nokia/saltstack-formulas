@@ -54,4 +54,28 @@ haproxy-rsyslog-restart:
     - watch:
       - file: haproxy-rsyslog-config
 
+{% if haproxy['cert_server'] is defined -%}
+/etc/haproxy/server.pem:
+  file.managed:
+    - source: {{ haproxy['cert_server'] }}
+    {% if haproxy['cert_server_checksum'] is defined  -%}
+    - source_hash: {{ haproxy['cert_server_checksum'] }}
+    {% endif -%}
+    - user: root
+    - group: root
+    - mode: 644
+{% endif -%}
+
+{% if haproxy['cert_ca'] is defined -%}
+/etc/haproxy/ca.crt:
+  file.managed:
+    - source: {{ haproxy['cert_ca'] }}
+    {% if haproxy['cert_ca_checksum'] is defined  -%}
+    - source_hash: {{ haproxy['cert_ca_checksum'] }}
+    {% endif -%}
+    - user: root
+    - group: root
+    - mode: 644
+{% endif -%}
+
 {% include 'haproxy/reload_cfg.sls' %}
