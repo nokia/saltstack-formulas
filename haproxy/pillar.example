@@ -3,8 +3,8 @@ haproxy:
   stats.port: 2413
   stats.username: admin
   stats.password: admin
-  cert_server: salt://pkgs/server.pem
-  cert_ca: salt://pkgs/ca.crt
+  server_cert: salt://pkgs/server.pem
+  default_client_cert: salt://pkgs/ca.crt
   repository: deb http://ppa.launchpad.net/vbernat/haproxy-1.5/ubuntu trusty main
   repository_src: deb-src http://ppa.launchpad.net/vbernat/haproxy-1.5/ubuntu trusty main
   version: 1.5.14-1ppa~trusty
@@ -26,8 +26,11 @@ haproxy_apps:
       port: 8001
       query: roles:tachyon.master
       name: tachyon
+      server_cert_on: True
     - service_port: 2414
       port: 8773
       httpchk: HEAD /
       query: roles:marathon
       name: marathon
+      client_cert_on: True
+      client_cert: salt://pkgs/marathon.com.crt

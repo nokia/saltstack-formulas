@@ -21,7 +21,7 @@ def _services_by_roles(by_roles):
 
 
 def _services_by_marathon(haproxy_settings, apps):
-    return [{'id': str(app_id), 'services': _as_services(tasks, _get_settings(app_id, haproxy_settings))} for
+    return [{'id': str(app_id), 'services': _as_services(app_id, tasks, _get_settings(app_id, haproxy_settings))} for
             app_id, tasks in apps.iteritems()]
 
 
@@ -39,12 +39,14 @@ def _get_settings(app_id, haproxy_settings):
 # tasks = apps['cassandra']
 # app_id = 'cassandra'
 # settings = haproxy_settings.get(app_id, [])
-def _as_services(tasks, settings):
+def _as_services(app_id, tasks, settings):
     service_ports = [t.service_ports for t in tasks]
     service_ports = service_ports[0] if len(service_ports) > 0 else []
     services_settings = [_merge(service_port, setting) for service_port, setting in zip(service_ports, settings)]
     for idx, service in enumerate(services_settings):
         service['tasks'] = [{'host': str(t.host), 'port': t.ports[idx]} for t in tasks]
+        if 'client_cert' in service:
+            service['client_cert_name'] = "{0}-{1}.crt".format(app_id, idx)
     return services_settings
 
 
@@ -60,6 +62,8 @@ def _merge(service_port, settings):
 def _as_service(role_settings):
     query = role_settings['query']
     hosts = __salt__['search.mine_by_host'](query)
+    if 'client_cert' in role_settings:
+        role_settings['client_cert_name'] = "{0}.crt".format(role_settings['name'])
     service = {x: role_settings[x] for x in role_settings if not (x == 'name' or x == 'query' or x == 'port')}
     service['tasks'] = [{'host': str(h), 'port': role_settings['port']} for h in hosts]
     return service
