@@ -12,7 +12,7 @@
     - mode: 644
 {% else -%}
 /etc/haproxy/server.pem:
-  file.absent: {}
+  file.absent: []
 {% endif -%}
 
 {% if haproxy['default_client_cert'] is defined -%}
@@ -27,7 +27,7 @@
     - mode: 644
 {% else -%}
 /etc/haproxy/ca.crt:
-  file.absent: {}
+  file.absent: []
 {% endif -%}
 
 {% for app in apps %}
