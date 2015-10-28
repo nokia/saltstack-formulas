@@ -47,6 +47,8 @@
   {% endif -%}
   {% if job['runAsUser'] is defined -%}
   "runAsUser": "{{ job['runAsUser'] }}",
+  {% else -%}
+  "runAsUser": "root",
   {% endif -%}
   {% if job['container'] is defined -%}
   "container":  {{ job['container'] | json }},
@@ -65,11 +67,27 @@
   {% else -%}
   "description": "",
   {% endif -%}
+  {% if job['executor'] is defined -%}
+  "executor": "{{ job['executor'] }}",
+  {% else -%}
+  "executor": "",
+  {% endif -%}
+  {% if job['executorFlags'] is defined -%}
+  "executorFlags": "{{ job['executorFlags'] }}",
+  {% else -%}
+  "executorFlags": "",
+  {% endif -%}
+  {% if job['ownerName'] is defined -%}
+  "ownerName": "{{ job['ownerName'] }}",
+  {% else -%}
+  "ownerName": "",
+  {% endif -%}
   {% if job['highPriority'] is defined -%}
   "highPriority": {{ job['highPriority'] }},
   {% else -%}
   "highPriority": false,
   {% endif -%}
   "command": "{{ job['command'] }}",
+  "arguments": [],
   "shell": true
 }
