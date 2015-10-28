@@ -2,24 +2,36 @@
   "name": "{{ job['name'] }}",
   {% if job['epsilon'] is defined -%}
   "epsilon": "{{ job['epsilon'] }}",
+  {% else -%}
+  "epsilon": "PT60S",
   {% endif -%}
   {% if job['retries'] is defined -%}
   "retries": {{ job['retries'] }},
+  {% else -%}
+  "retries": 3,
   {% endif -%}
   {% if job['owner'] is defined -%}
   "owner": "{{ job['owner'] }}",
   {% endif -%}
   {% if job['async'] is defined -%}
   "async": {{ job['async'] }},
+  {% else -%}
+  "async": false,
   {% endif -%}
   {% if job['cpus'] is defined -%}
   "cpus": {{ job['cpus'] }},
+  {% else -%}
+  "cpus": 0.1,
   {% endif -%}
   {% if job['disk'] is defined -%}
   "disk": {{ job['disk'] }},
+  {% else -%}
+  "disk": 256.0,
   {% endif -%}
   {% if job['mem'] is defined -%}
   "mem": {{ job['mem'] }},
+  {% else -%}
+  "mem": 256.0,
   {% endif -%}
   {% if job['uris'] is defined -%}
   "uris":  {{ job['uris'] | json }},
@@ -48,5 +60,16 @@
   {% if job['constraints'] is defined -%}
   "constraints": {{ job['constraints'] | json }},
   {% endif -%}
-  "command": "{{ job['command'] }}"
+  {% if job['description'] is defined -%}
+  "description": "{{ job['description'] }}",
+  {% else -%}
+  "description": "",
+  {% endif -%}
+  {% if job['highPriority'] is defined -%}
+  "highPriority": {{ job['highPriority'] }},
+  {% else -%}
+  "highPriority": false,
+  {% endif -%}
+  "command": "{{ job['command'] }}",
+  "shell": true
 }
