@@ -15,7 +15,7 @@ def merge(job_settings, default_settings):
 
 
 def new_deploy(job_name, job_file):
-    chronos_uri = _address()    
+    chronos_uri = _address()
     with open(job_file, 'r') as content_file:
         content = content_file.read()
     job_attr = json.loads(content)
@@ -61,9 +61,8 @@ def _is_deployed(job_name, chronos_uri):
 
 
 def _address():
-    port = __pillar__['chronos']['ports'][0]
-    hosts = __salt__['search.mine_by_host']('roles:haproxy')
-    addresses = ['http://{0}:{1}'.format(host, port) for host in hosts]
+    chronoses = __salt__['marathon_client.apps']('chronos')
+    addresses = ['http://{0}:{1}'.format(app.host, app.ports[0]) for app in chronoses['chronos']]
     for t in range(0, 10):
         current_uri = addresses[random.randrange(0, len(addresses))]
         r = requests.get(url=current_uri + '/scheduler/jobs')
