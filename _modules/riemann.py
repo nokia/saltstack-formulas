@@ -12,13 +12,14 @@ def master():
 
 
 def kafka_jmx_checks(my_host):
-    haproxy_host = __salt__['search.mine_by_host']('roles:haproxy')[0]
-    framework_port = __pillar__['kafka-mesos']['ports'][0]
-    status_endpoint = 'http://' + haproxy_host + ':' + str(framework_port) + '/api/brokers/status'
+    apps = __salt__['marathon_client.wait_for_healthy_tasks']('kafka-mesos')
+    status_endpoint = ['http://{0}:{1}'.format(app.host, app.ports[0])
+                       for app in apps.get('kafka-mesos', [])][0]
+
     jmx_queries = __pillar__['riemann_checks'].get('jmx', {}).get('kafka_server', [])
     if len(jmx_queries) == 0:
         return []
-    r = requests.get(url=status_endpoint)
+    r = requests.get(url=status_endpoint + '/api/brokers/status')
     if r.status_code != 200:
         return []
     kafka_meta = r.json()
@@ -30,10 +31,10 @@ def kafka_jmx_checks(my_host):
 
 
 def cassandra_jmx_checks(my_host):
-    haproxy_host = __salt__['search.mine_by_host']('roles:haproxy')[0]
-    framework_port = __pillar__['cassandra-mesos']['ports'][0]
-    live_node_endpoint = 'http://' + haproxy_host + ':' + str(framework_port) + '/live-nodes'
-    r = requests.get(url=live_node_endpoint)
+    apps = __salt__['marathon_client.wait_for_healthy_tasks']('cassandra-mesos')
+    live_node_endpoint = ['http://{0}:{1}'.format(app.host, app.ports[0])
+                          for app in apps.get('kafka-mesos', [])][0]
+    r = requests.get(url=live_node_endpoint + '/live-nodes')
     if r.status_code != 200:
         return []
     jmx_queries = __pillar__['riemann_checks'].get('jmx', {}).get('cassandra_server', [])

@@ -61,13 +61,14 @@ def _is_deployed(job_name, chronos_uri):
 
 
 def _address():
-    chronoses = __salt__['marathon_client.apps']('chronos')
-    addresses = ['http://{0}:{1}'.format(app.host, app.ports[0]) for app in chronoses['chronos']]
-    for t in range(0, 10):
-        current_uri = addresses[random.randrange(0, len(addresses))]
-        r = requests.get(url=current_uri + '/scheduler/jobs')
-        if r.status_code == 200:
-            return current_uri
+    for t in range(0, 100):
+        apps = __salt__['marathon_client.wait_for_healthy_tasks']('chronos')
+        addresses = ['http://{0}:{1}'.format(app.host, app.ports[0]) for app in apps.get('chronos', [])]
+        if len(addresses) > 0:
+            current_uri = addresses[random.randrange(0, len(addresses))]
+            r = requests.get(url=current_uri + '/scheduler/jobs')
+            if r.status_code == 200:
+                return current_uri
         time.sleep(3)
     return None
 

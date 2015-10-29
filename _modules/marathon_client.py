@@ -68,9 +68,23 @@ def undeploy(app_name):
         return None
 
 
+def wait_for_healthy_tasks(app_id, tasks_no=1):
+    marathon_addresses = _addresses()
+    for t in range(0, 100):
+        app = _apps(marathon_addresses, app_id)
+        tasks = app.get(app_id, [])
+        healthy_tasks = filter(lambda x: x, [reduce(lambda x, y: x and y, [len(t.ports) > 0] +
+                                                    map(lambda x: x.alive, t.health_check_results)) for t in tasks])
+        if len(healthy_tasks) >= tasks_no:
+            return app
+        else:
+            time.sleep(3)
+    return {}
+
+
 def _apps(marathon_addresses, app_id):
     cli = MarathonClient(marathon_addresses)
-    for t in range(0, 5):
+    for t in range(0, 100):
         try:
             if app_id is None:
                 tasks = cli.list_tasks()
@@ -82,7 +96,7 @@ def _apps(marathon_addresses, app_id):
             return sorted_apps
         except exceptions.MarathonError as e:
             log.warn('Error in talking to marathon: ' + str(e))
-            time.sleep(6)
+            time.sleep(3)
     return {}
 
 

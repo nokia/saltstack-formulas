@@ -12,12 +12,9 @@ def format_options(options):
 
 # hosts = ['as-master', 'as-ha-1', 'as-ha-2']
 # port = 2416
-def reconfigure(config, no_of_instances, hosts, port):
+def reconfigure(config, no_of_instances):
     log.warn('Config: ' + str(config))
-    log.warn('Hosts: ' + str(hosts))
-    log.warn('Port: ' + str(port))
-    addresses = map(lambda x: '{0}:{1}'.format(x, port), hosts)
-    scheduler_addr = _wait_for_healthy_scheduler(addresses)
+    scheduler_addr = _wait_for_healthy_scheduler()
     if scheduler_addr is None:
         raise ValueError('Scheduler is not healthy')
     initial_no_of_instances = len(_get_broker_status(scheduler_addr))
@@ -54,12 +51,15 @@ def _process_broker_reconfiguration(config, address, index):
     return response
 
 
-def _wait_for_healthy_scheduler(addresses):
-    for t in range(0, 10):
-        current_host = addresses[random.randrange(0, len(addresses))]
-        r = requests.get(url='http://' + current_host + '/api/brokers/status')
-        if r.status_code == 200:
-            return 'http://' + current_host
+def _wait_for_healthy_scheduler():
+    for t in range(0, 100):
+        apps = __salt__['marathon_client.wait_for_healthy_tasks']('kafka-mesos')
+        addresses = ['http://{0}:{1}'.format(app.host, app.ports[0]) for app in apps.get('kafka-mesos', [])]
+        if len(addresses) > 0:
+            current_uri = addresses[random.randrange(0, len(addresses))]
+            r = requests.get(url=current_uri + '/api/brokers/status')
+            if r.status_code == 200:
+                return current_uri
         time.sleep(3)
     return None
 
