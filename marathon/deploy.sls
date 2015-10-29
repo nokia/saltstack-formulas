@@ -26,15 +26,14 @@ app-uri-file-{{ uri_basename }}:
 {% set filepath = "{0}/{1}".format(basepath, uri_basename) -%}
 
 app-uri-file-in-hdfs-{{ nameservice }}-{{ uri_basename }}:
-  cmd.run:
+  cmd.wait:
     - name: |
         hadoop fs -mkdir -p {{ basepath }}
         hadoop fs -chmod -R 1777 {{ basepath }}
-        hadoop fs -copyFromLocal {{ tmp_dir }}/{{ uri_basename  }} {{ filepath }}
+        hadoop fs -copyFromLocal -f {{ tmp_dir }}/{{ uri_basename  }} {{ filepath }}
         hadoop fs -chmod -R 1777 {{ filepath }}
     - user: hdfs
     - group: hdfs
-    - unless: hdfs dfsadmin -safemode wait && hdfs dfs -ls {{ filepath }}
     - timeout: 30
     - require:
       - file: app-uri-file-{{ uri_basename }}
@@ -79,6 +78,10 @@ run-service-redeploy-{{ app_name }}:
       - module: run-service-deploy-{{ app_name }}
     - watch:
       - file: app-config-file-{{ app_name }}
+      {% for uri in uris -%}
+      {% set uri_basename = salt['system.basename'](uri) -%}
+      - file: app-uri-file-{{ uri_basename }}
+      {% endfor %}
 
 {%- endmacro %}
 
