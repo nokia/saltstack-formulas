@@ -35,7 +35,7 @@ app-uri-file-in-hdfs-{{ nameservice }}-{{ uri_basename }}:
     - user: hdfs
     - group: hdfs
     - timeout: 30
-    - require:
+    - watch:
       - file: app-uri-file-{{ uri_basename }}
 
 {% endfor %}
