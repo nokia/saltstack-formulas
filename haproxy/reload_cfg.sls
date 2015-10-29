@@ -1,5 +1,7 @@
 {% set apps = salt['haproxy.services']() %}
 
+{% set haproxy = pillar['haproxy'] %}
+
 {% if haproxy['server_cert'] is defined -%}
 /etc/haproxy/server.pem:
   file.managed:
