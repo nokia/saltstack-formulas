@@ -193,3 +193,47 @@ reset-slave-state:
     - require:
       - pkg: mesos-pkg
       - file: mesos-directories
+
+/etc/mesos-slave/isolation:
+  file.managed:
+    - source: salt://mesos/files/value_file
+    - user: root
+    - group: root
+    - mode: 644
+    - template: jinja
+    - context:
+        value: {{ mesos.get('isolation', 'posix/cpu,posix/mem') }}
+    - require:
+      - pkg: mesos-pkg
+      - file: mesos-directories
+
+{% if grains['ec2'] is defined -%}
+/etc/mesos-slave/attributes:
+  file.managed:
+    - source: salt://mesos/files/value_file
+    - user: root
+    - group: root
+    - mode: 644
+    - template: jinja
+    - context:
+        value: availability_zone:{{ grains['ec2']['availability_zone'] }};region:{{ grains['ec2']['region'] }};{{ mesos.get('attributes', '') }}
+    - require:
+      - pkg: mesos-pkg
+      - file: mesos-directories
+{% elif mesos['attributes'] is defined  -%}
+/etc/mesos-slave/attributes:
+  file.managed:
+    - source: salt://mesos/files/value_file
+    - user: root
+    - group: root
+    - mode: 644
+    - template: jinja
+    - context:
+        value: {{ mesos['attributes'] }}
+    - require:
+      - pkg: mesos-pkg
+      - file: mesos-directories
+{% else -%}
+/etc/mesos-slave/attributes:
+  file.absent: []
+{% endif -%}

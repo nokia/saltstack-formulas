@@ -17,3 +17,5 @@ mesos-service:
         - file: /etc/mesos-slave/resources
         - file: /etc/mesos-slave/containerizers
         - file: /etc/mesos-slave/executor_registration_timeout
+        - file: /etc/mesos-slave/attributes
+        - file: /etc/mesos-slave/isolation
