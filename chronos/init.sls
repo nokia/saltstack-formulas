@@ -4,7 +4,7 @@ include:
 {% set chronos = pillar['chronos'] -%}
 {% set zk_str = salt['zookeeper.ensemble_address']() -%}
 
-{% smtp = chronos.get('smtp', {}) -%}
+{% set smtp = chronos.get('smtp', {}) -%}
 {% set server = ' --mail_server {0} '.format(smtp['server']) if smtp['server'] is defined else '' -%}
 {% set user = ' --mail_user {0} '.format(smtp['user']) if smtp['user'] is defined else '' -%}
 {% set pass = ' --mail_password {0} '.format(smtp['password']) if smtp['password'] is defined else '' -%}
