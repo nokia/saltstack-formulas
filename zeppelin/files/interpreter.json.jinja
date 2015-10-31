@@ -1,0 +1,267 @@
+{% set zeppelin = pillar['zeppelin'] -%}
+{% set interpreters = zeppelin.get('interpreters', {}) -%}
+{
+  "interpreterSettings": {
+    "2B5QPDGUK": {
+      "id": "2B5QPDGUK",
+      "name": "flink",
+      "group": "flink",
+      "properties": {{ interpreters.get('flink', {'ports': '6123', 'host': 'local'}) | json }},
+      "interpreterGroup": [
+        {
+          "class": "org.apache.zeppelin.flink.FlinkInterpreter",
+          "name": "flink"
+        }
+      ],
+      "option": {
+        "remote": true
+      }
+    },
+    "2B3KYST2X": {
+      "id": "2B3KYST2X",
+      "name": "angular",
+      "group": "angular",
+      "properties": {
+      },
+      "interpreterGroup": [
+        {
+          "class": "org.apache.zeppelin.angular.AngularInterpreter",
+          "name": "angular"
+        }
+      ],
+      "option": {
+        "remote": true
+      }
+    },
+    "2B576JG49": {
+      "id": "2B576JG49",
+      "name": "geode",
+      "group": "geode",
+      "properties": {{ interpreters.get('geode', {'geode.max.result': '1000', 'geode.locator.port': '10334',
+      'geode.locator.host': 'localhost'}) | json }},
+      "interpreterGroup": [
+        {
+          "class": "org.apache.zeppelin.geode.GeodeOqlInterpreter",
+          "name": "oql"
+        }
+      ],
+      "option": {
+        "remote": true
+      }
+    },
+    "2B3ZWYJGV": {
+      "id": "2B3ZWYJGV",
+      "name": "ignite",
+      "group": "ignite",
+      "properties": {{ interpreters.get('ignite', {'ignite.peerClassLoadingEnabled': 'true', 'ignite.config.url': '',
+      'ignite.jdbc.url': 'jdbc:ignite://localhost:11211/', 'ignite.clientMode': 'true',
+      'ignite.addresses': '127.0.0.1:47500..47509'}) | json }},
+      "interpreterGroup": [
+        {
+          "class": "org.apache.zeppelin.ignite.IgniteInterpreter",
+          "name": "ignite"
+        },
+        {
+          "class": "org.apache.zeppelin.ignite.IgniteSqlInterpreter",
+          "name": "ignitesql"
+        }
+      ],
+      "option": {
+        "remote": true
+      }
+    },
+    "2B25ZXU95": {
+      "id": "2B25ZXU95",
+      "name": "lens",
+      "group": "lens",
+      "properties": {{ interpreters.get('lens', {'lens.session.cluster.user': 'default', 'zeppelin.lens.maxResults': '1000',
+        'lens.query.enable.persistent.resultset': 'false', 'lens.client.dbname': 'default', 'zeppelin.lens.maxThreads': '10',
+        'lens.server.base.url': 'http://\u003chostname\u003e:\u003cport\u003e/lensapi',
+        'zeppelin.lens.run.concurrent': 'true'}) | json }},
+      "interpreterGroup": [
+        {
+          "class": "org.apache.zeppelin.lens.LensInterpreter",
+          "name": "lens"
+        }
+      ],
+      "option": {
+        "remote": true
+      }
+    },
+    "2B276HSX8": {
+      "id": "2B276HSX8",
+      "name": "psql",
+      "group": "psql",
+      "properties": {{ interpreters.get('psql', {'postgresql.driver.name': 'org.postgresql.Driver',
+      'postgresql.password': '', 'postgresql.url': 'jdbc:postgresql://localhost:5432/', 'postgresql.max.result': '1000',
+      'postgresql.user': 'pgadmin'}) | json }},
+      "interpreterGroup": [
+        {
+          "class": "org.apache.zeppelin.postgresql.PostgreSqlInterpreter",
+          "name": "sql"
+        }
+      ],
+      "option": {
+        "remote": true
+      }
+    },
+    "2B2JBDEHK": {
+      "id": "2B2JBDEHK",
+      "name": "hive",
+      "group": "hive",
+      "properties": {{ interpreters.get('hive', {'hive.hiveserver2.url': 'jdbc:hive2://localhost:10000',
+      'hive.hiveserver2.password': '', 'hive.hiveserver2.user': 'hive'}) | json }},
+      "interpreterGroup": [
+        {
+          "class": "org.apache.zeppelin.hive.HiveInterpreter",
+          "name": "hql"
+        }
+      ],
+      "option": {
+        "remote": true
+      }
+    },
+    "2B4PBWKRS": {
+      "id": "2B4PBWKRS",
+      "name": "cassandra",
+      "group": "cassandra",
+      "properties": {{ interpreters.get('cassandra', {'cassandra.query.default.consistency': 'ONE',
+      'cassandra.pooling.max.connection.per.host.local': '8', 'cassandra.load.balancing.policy': 'DEFAULT',
+      'cassandra.pooling.new.connection.threshold.local': '100', 'cassandra.credentials.password': 'none',
+      'cassandra.native.port': '9042', 'cassandra.hosts':'localhost', 'cassandra.pooling.core.connection.per.host.local':'2',
+      'cassandra.retry.policy': 'DEFAULT', 'cassandra.pooling.pool.timeout.millisecs': '5000',
+      'cassandra.protocol.version': '3', 'cassandra.pooling.new.connection.threshold.remote': '100',
+      'cassandra.pooling.core.connection.per.host.remote':'1', 'cassandra.pooling.max.request.per.connection.remote': '256',
+      'cassandra.cluster': 'Test Cluster', 'cassandra.pooling.max.request.per.connection.local': '1024',
+      'cassandra.speculative.execution.policy': 'DEFAULT', 'cassandra.compression.protocol': 'NONE',
+      'cassandra.query.default.fetchSize': '5000', 'cassandra.pooling.idle.timeout.seconds': '120',
+      'cassandra.keyspace': 'system', 'cassandra.max.schema.agreement.wait.second': '10',
+      'cassandra.socket.tcp.no_delay': 'true', 'cassandra.credentials.username': 'none',
+      'cassandra.socket.connection.timeout.millisecs': '5000', 'cassandra.interpreter.parallelism': '10',
+      'cassandra.query.default.serial.consistency': 'SERIAL', 'cassandra.pooling.max.connection.per.host.remote': '2',
+      'cassandra.pooling.heartbeat.interval.seconds': '30', 'cassandra.reconnection.policy': 'DEFAULT',
+      'cassandra.socket.read.timeout.millisecs': '12000'}) | json }},
+      "interpreterGroup": [
+        {
+          "class": "org.apache.zeppelin.cassandra.CassandraInterpreter",
+          "name": "cassandra"
+        }
+      ],
+      "option": {
+        "remote": true
+      }
+    },
+    "2B3U9NBCS": {
+      "id": "2B3U9NBCS",
+      "name": "kylin",
+      "group": "kylin",
+      "properties": {{ interpreters.get('kylin', {'kylin.api.password': 'KYLIN', 'kylin.query.limit': '5000',
+      'kylin.api.user': 'ADMIN', 'kylin.query.offset': '0', 'kylin.query.project': 'default',
+      'kylin.query.ispartial': 'true', 'kylin.api.url': 'http://\u003chost\u003e:\u003cport\u003e/kylin/api/query'}) | json }},
+      "interpreterGroup": [
+        {
+          "class": "org.apache.zeppelin.kylin.KylinInterpreter",
+          "name": "kylin"
+        }
+      ],
+      "option": {
+        "remote": true
+      }
+    },
+    "2B2H9REPZ": {
+      "id": "2B2H9REPZ",
+      "name": "spark",
+      "group": "spark",
+      "properties": {{ interpreters.get('spark', {'spark.cores.max': '', 'spark.yarn.jar': '', 'master': 'local[*]',
+      'zeppelin.spark.maxResult': '1000', 'zeppelin.dep.localrepo': 'local-repo',
+      'spark.app.name': 'Zeppelin', 'spark.executor.memory': '512m', 'zeppelin.spark.useHiveContext':'true',
+      'zeppelin.spark.concurrentSQL': 'false', 'spark.home': '', 'args': '', 'zeppelin.pyspark.python': 'python'}) | json }},
+      "interpreterGroup": [
+        {
+          "class": "org.apache.zeppelin.spark.SparkInterpreter",
+          "name": "spark"
+        },
+        {
+          "class": "org.apache.zeppelin.spark.PySparkInterpreter",
+          "name": "pyspark"
+        },
+        {
+          "class": "org.apache.zeppelin.spark.SparkSqlInterpreter",
+          "name": "sql"
+        },
+        {
+          "class": "org.apache.zeppelin.spark.DepInterpreter",
+          "name": "dep"
+        }
+      ],
+      "option": {
+        "remote": true
+      }
+    },
+    "2B38NFXFX": {
+      "id": "2B38NFXFX",
+      "name": "md",
+      "group": "md",
+      "properties": {
+      },
+      "interpreterGroup": [
+        {
+          "class": "org.apache.zeppelin.markdown.Markdown",
+          "name": "md"
+        }
+      ],
+      "option": {
+        "remote": true
+      }
+    },
+    "2B2T7ZACG": {
+      "id": "2B2T7ZACG",
+      "name": "phoenix",
+      "group": "phoenix",
+      "properties": {{ interpreters.get('phoenix', {'phoenix.user': '', 'phoenix.jdbc.url': 'jdbc:phoenix:localhost:2181:/hbase-unsecure',
+      'phoenix.password': '', 'phoenix.max.result': '1000', 'phoenix.driver.name': 'org.apache.phoenix.jdbc.PhoenixDriver'}) | json }},
+      "interpreterGroup": [
+        {
+          "class": "org.apache.zeppelin.phoenix.PhoenixInterpreter",
+          "name": "sql"
+        }
+      ],
+      "option": {
+        "remote": true
+      }
+    },
+    "2B48N9E7K": {
+      "id": "2B48N9E7K",
+      "name": "tajo",
+      "group": "tajo",
+      "properties": {{ interpreters.get('tajo', {'tajo.jdbc.uri': 'jdbc:tajo://localhost:26002/default'}) | json }},
+      "interpreterGroup": [
+        {
+          "class": "org.apache.zeppelin.tajo.TajoInterpreter",
+          "name": "tql"
+        }
+      ],
+      "option": {
+        "remote": true
+      }
+    },
+    "2B38ZVNTB": {
+      "id": "2B38ZVNTB",
+      "name": "sh",
+      "group": "sh",
+      "properties": {
+      },
+      "interpreterGroup": [
+        {
+          "class": "org.apache.zeppelin.shell.ShellInterpreter",
+          "name": "sh"
+        }
+      ],
+      "option": {
+        "remote": true
+      }
+    }
+  },
+  "interpreterBindings": {
+  }
+}

@@ -32,8 +32,6 @@ include:
     - group: root
     - mode: 755
     - template: jinja
-    - context:
-        zeppelin_server_port: {{ pillar['zeppelin']['port'] }}
     - require:
       - archive: zeppelin-pkg
       - file: zeppelin-pkg-link
@@ -43,6 +41,17 @@ zeppelin-sparksql-jdbc-jar-link:
     - name: {{ zeppelin_home }}/lib/postgresql-jdbc.jar
     - target: {{ pillar['java']['share_dir'] }}/{{ jdbc.postgresql_jdbc }}
     - force: True
+    - require:
+      - archive: zeppelin-pkg
+      - file: zeppelin-pkg-link
+
+{{ zeppelin_home }}/conf/interpreter.json:
+  file.managed:
+    - source: salt://zeppelin/files/interpreter.json.jinja
+    - user: root
+    - group: root
+    - mode: 755
+    - template: jinja
     - require:
       - archive: zeppelin-pkg
       - file: zeppelin-pkg-link

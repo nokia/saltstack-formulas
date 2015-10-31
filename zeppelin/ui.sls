@@ -24,3 +24,4 @@ zeppelin-service:
         - file: {{ zeppelin_home }}/conf/zeppelin-site.xml
         - file: {{ zeppelin_home }}/conf/zeppelin-env.sh
         - file: /etc/init/zeppelin-server.conf
+        - file: {{ zeppelin_home }}/conf/interpreter.json.jinja
