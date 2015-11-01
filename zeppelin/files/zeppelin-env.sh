@@ -61,3 +61,5 @@ export HADOOP_CONF_DIR="{{ hdfs_conf_path }}"          		# yarn-site.xml is loca
 {{ 'export ZEPPELIN_SPARK_USEHIVECONTEXT={0}'.format(zeppelin['spark_usehivecontext']) if zeppelin['spark_usehivecontext'] is defined else '# export ZEPPELIN_SPARK_USEHIVECONTEXT ' }}  # Use HiveContext instead of SQLContext if set true. true by default.
 {{ 'export ZEPPELIN_SPARK_CONCURRENTSQL={0}'.format(zeppelin['spark_concurrent_sql']) if zeppelin['spark_concurrent_sql'] is defined else '# export ZEPPELIN_SPARK_CONCURRENTSQL ' }}   # Execute multiple SQL concurrently if set true. false by default.
 {{ 'export ZEPPELIN_SPARK_MAXRESULT={0}'.format(zeppelin['spark_spark_maxresult']) if zeppelin['spark_spark_maxresult'] is defined else '# export ZEPPELIN_SPARK_MAXRESULT ' }}       # Max number of SparkSQL result to display. 1000 by default.
+
+export ZEPPELIN_PORT={{ zeppelin['server_port'] }}

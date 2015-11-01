@@ -25,12 +25,6 @@
         <description>Server address</description>
     </property>
 
-    <property>
-        <name>zeppelin.server.port</name>
-        <value>{{ zeppelin.get('ports', [8080])[0] }}</value>
-        <description>Server port.</description>
-    </property>
-
     {% if zeppelin['notebook_dir'] is defined -%}
     <property>
         <name>zeppelin.notebook.dir</name>
