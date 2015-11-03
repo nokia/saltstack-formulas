@@ -20,7 +20,7 @@
 export MASTER=mesos://zk://{{ zk_str }}/mesos                 		# Spark master url. eg. spark://master_addr:7077. Leave empty if you want to use local mode.
 export MESOS_NATIVE_LIBRARY="{{ pillar['mesos']['libmesos'] }}"
 
-{{ 'export ZEPPELIN_JAVA_OPTS="{0} -Dspark.driver.extraClassPath={1}/lib/postgresql-jdbc.jar"'.format(zeppelin['java_opts'], spark_home) if zeppelin['java_opts'] is defined else 'export ZEPPELIN_JAVA_OPTS="-Dspark.driver.extraClassPath={0}/lib/postgresql-jdbc.jar"'.format(spark_home) }} # Additional jvm options. for example, export ZEPPELIN_JAVA_OPTS="-Dspark.executor.memory=8g -Dspark.cores.max=16"
+{{ 'export ZEPPELIN_JAVA_OPTS="{0}"'.format(zeppelin['java_opts']) if zeppelin['java_opts'] is defined else '# export ZEPPELIN_JAVA_OPTS' }} # Additional jvm options. for example, export ZEPPELIN_JAVA_OPTS="-Dspark.executor.memory=8g -Dspark.cores.max=16"
 
 {{ 'export ZEPPELIN_MEM="{0}"'.format(zeppelin['jvm_mem']) if zeppelin['jvm_mem'] is defined else '# export ZEPPELIN_MEM' }}            		# Zeppelin jvm mem options Default -Xmx1024m -XX:MaxPermSize=512m
 # export ZEPPELIN_INTP_MEM       		# zeppelin interpreter process jvm mem options. Default = ZEPPELIN_MEM
@@ -43,7 +43,7 @@ export MESOS_NATIVE_LIBRARY="{{ pillar['mesos']['libmesos'] }}"
 ## defining SPARK_HOME makes Zeppelin run spark interpreter process using spark-submit
 ##
 export SPARK_HOME="{{ spark_home }}"                             # (required) When it is defined, load it instead of Zeppelin embedded Spark libraries
-{{ 'export SPARK_SUBMIT_OPTIONS="{0}"'.format(zeppelin['spark_submit_options']) if zeppelin['spark_submit_options'] is defined else '# export SPARK_SUBMIT_OPTIONS ' }}         # (optional) extra options to pass to spark submit. eg) "--driver-memory 512M --executor-memory 1G".
+{{ 'export SPARK_SUBMIT_OPTIONS="{0} --jars {1}/lib/postgresql-jdbc.jar"'.format(zeppelin['spark_submit_options'], spark_home) if zeppelin['spark_submit_options'] is defined else 'export SPARK_SUBMIT_OPTIONS="--jars {0}/lib/postgresql-jdbc.jar"'.format(spark_home) }}         # (optional) extra options to pass to spark submit. eg) "--driver-memory 512M --executor-memory 1G".
 
 ## Use embedded spark binaries ##
 ## without SPARK_HOME defined, Zeppelin still able to run spark interpreter process using embedded spark binaries.
