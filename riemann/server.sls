@@ -34,6 +34,23 @@ riemann-extra-jar:
       - file: riemann-pkg-link
 
 # create layout.json
+{% if riemann['layout_url'] is defined -%}
+/etc/riemann/layout.json:
+  file.managed:
+    - source: riemann['layout_url']
+    {% if riemann['layout_url_hash'] is defined -%}
+    - source_hash: {{ riemann['layout_url_hash'] }}
+    {% endif -%}
+    - user: riemann
+    - group: riemann
+    - mode: 755
+    - template: jinja
+    - context:
+        ws_port: {{ riemann['ws.port'] }}
+        riemann_host: {{ riemann_server }}
+    - require:
+      - file: riemann-meta-directories
+{% else -%}
 /etc/riemann/layout.json:
   file.managed:
     - source: salt://riemann/files/layout.json
@@ -46,6 +63,7 @@ riemann-extra-jar:
         riemann_host: {{ riemann_server }}
     - require:
       - file: riemann-meta-directories
+{% endif -%}
 
 /etc/riemann/riemann-dash.rb:
   file.managed:
@@ -60,7 +78,25 @@ riemann-extra-jar:
       - file: riemann-meta-directories
 
 # create riemann.config
-
+{% if riemann['config_url'] is defined -%}
+/etc/riemann/riemann.config:
+  file.managed:
+    - source: {{ riemann['config_url'] }}
+    {% if riemann['config_url_hash'] is defined -%}
+    - source_hash: {{ riemann['config_url_hash'] }}
+    {% endif -%}
+    - user: riemann
+    - group: riemann
+    - mode: 755
+    - template: jinja
+    - context:
+        log_dir: {{ salt['system.log_dir']('riemann') }}
+        server_port: {{ riemann['server.port'] }}
+        ws_port: {{ riemann['ws.port'] }}
+        repl_port: {{ riemann['repl.port'] }}
+    - require:
+      - file: riemann-meta-directories
+{% else -%}
 /etc/riemann/riemann.config:
   file.managed:
     - source: salt://riemann/files/riemann.config
@@ -75,7 +111,7 @@ riemann-extra-jar:
         repl_port: {{ riemann['repl.port'] }}
     - require:
       - file: riemann-meta-directories
-
+{% endif -%}
 # register service riemann dash
 
 /etc/init/riemann-dash.conf:
