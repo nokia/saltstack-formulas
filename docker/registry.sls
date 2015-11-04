@@ -9,5 +9,5 @@ include:
 {% set command = 'docker run -p $PORT:5000 -e SETTINGS_FLAVOR=s3 -e REGISTRY_STORAGE=s3 -e REGISTRY_STORAGE_S3_BUCKET={2} -e REGISTRY_STORAGE_S3_ROOTDIRECTORY={1} -e REGISTRY_STORAGE_S3_REGION={0} --name $MESOS_TASK_ID registry:2'.format(region, docker['base_path'], bucket) %}
 
 {% from 'marathon/deploy.sls' import service_deploy with context -%}
-{{ service_deploy({'id': app_name, 'cmd': es_command, 'env': env}) }}
+{{ service_deploy({'id': app_name, 'cmd': command}) }}
 
