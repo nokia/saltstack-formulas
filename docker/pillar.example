@@ -1,0 +1,13 @@
+dockerregistry:
+  cpus: 0.2
+  mem: 512
+  ports: [2612]
+  instances: 1
+  base_path: /docker
+  healthChecks:
+    -  gracePeriodSeconds: 120
+       intervalSeconds: 30
+       path: /v2
+       portIndex: 0
+       protocol: HTTP
+       timeoutSeconds: 5
