@@ -8,7 +8,7 @@
 
 {% macro net_check(my_host, server, server_port, home, interval, timeout, is_tcp) -%}
 
-{% set cmd = 'riemann-net --interfaces {0} --tag health'.format(grains['provider']['nic']) %}
+{% set cmd = 'riemann-net --interfaces {0} --tag health'.format(' '.join(pillar['ip_interfaces'].keys())) %}
 {% from 'riemann/checks/check.sls' import check with context -%}
 {{ check('riemann-net', cmd, server, server_port, home, interval, timeout, is_tcp, True) }}
 
@@ -25,8 +25,7 @@
 
 {% macro disks_check(my_host, server, server_port, home, interval, timeout, is_tcp) -%}
 
-{% set extra_disk = grains['provider'].get('ephemeral', {}).get('device', '') %}
-{% set cmd = 'riemann-diskstats --devices "{0} {1}" --tag health'.format(pillar['system']['root_device'], extra_disk ) %}
+{% set cmd = 'riemann-diskstats --devices "{0}" --tag health'.format(pillar['system']['root_device']) %}
 {% from 'riemann/checks/check.sls' import check with context -%}
 {{ check('riemann-diskstats', cmd, server, server_port, home, interval, timeout, is_tcp, True) }}
 
