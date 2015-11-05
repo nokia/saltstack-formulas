@@ -57,6 +57,10 @@ riemann-hadoop:
   gem.installed:
     - version: {{ riemann['hadoop.version'] }}
 
+riemann-json-http:
+  gem.installed:
+    - version: {{ riemann['json_http.version'] }}
+
 riemann-jmx-jar:
   file.managed:
     - name: {{ home }}/riemann-jmx.jar

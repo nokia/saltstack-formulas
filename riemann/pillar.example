@@ -9,6 +9,7 @@ riemann:
   redis.version: 0.2.1
   hadoop.version: 0.1.1
   postgresql.version: 0.1.1
+  json_http.version: 0.1.5
   dash.port: 2421
   jmx_url: http://host:port/.../riemann-jmx-clj-0.1.1-SNAPSHOT-standalone.jar
   jmx_checksum: md5=3c9cbbd7c000110438fab6621d22230c
