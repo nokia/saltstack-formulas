@@ -8,7 +8,7 @@
 
 {% macro net_check(my_host, server, server_port, home, interval, timeout, is_tcp) -%}
 
-{% set cmd = 'riemann-net --interfaces {0} --tag health'.format(' '.join(pillar['ip_interfaces'].keys())) %}
+{% set cmd = 'riemann-net --interfaces {0} --tag health'.format(' '.join(grains['ip_interfaces'].keys())) %}
 {% from 'riemann/checks/check.sls' import check with context -%}
 {{ check('riemann-net', cmd, server, server_port, home, interval, timeout, is_tcp, True) }}
 
