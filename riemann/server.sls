@@ -37,7 +37,7 @@ riemann-extra-jar:
 {% if riemann['layout_url'] is defined -%}
 /etc/riemann/layout.json:
   file.managed:
-    - source: riemann['layout_url']
+    - source: {{ riemann['layout_url'] }}
     {% if riemann['layout_url_hash'] is defined -%}
     - source_hash: {{ riemann['layout_url_hash'] }}
     {% endif -%}
