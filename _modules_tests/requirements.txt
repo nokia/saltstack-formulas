@@ -1,0 +1,8 @@
+Jinja2
+PyYAML
+git+https://github.com/elyast/marathon-python.git#egg=marathon
+requests>=1.0.0
+mock
+SaltTesting==2015.2.16
+httmock
+HTTPretty

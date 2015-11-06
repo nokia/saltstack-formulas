@@ -1,12 +1,16 @@
 import logging
 import json
 import requests
-import random
-import time
 log = logging.getLogger(__name__)
 
 
 def merge(job_settings, default_settings):
+    """ Merge two dicts
+
+    :param job_settings:
+    :param default_settings:
+    :return:
+    """
     settings = default_settings
     if settings is None:
         settings = {}
@@ -15,6 +19,12 @@ def merge(job_settings, default_settings):
 
 
 def new_deploy(job_name, job_file):
+    """Deploys new chronos job given file
+
+    :param job_name: job name
+    :param job_file: file to be sent as request body
+    :return:
+    """
     chronos_uri = _address()
     with open(job_file, 'r') as content_file:
         content = content_file.read()
@@ -30,6 +40,12 @@ def new_deploy(job_name, job_file):
 
 
 def re_deploy(job_name, job_file):
+    """Redeploys chronos job given file
+
+    :param job_name: job name
+    :param job_file: file to be sent as request body
+    :return:
+    """
     with open(job_file, 'r') as content_file:
         content = content_file.read()
     job_attr = json.loads(content)
@@ -44,8 +60,12 @@ def re_deploy(job_name, job_file):
         return None
 
 
-
 def undeploy(job_name):
+    """Undeploy chronos job
+
+    :param job_name: job name
+    :return:
+    """
     chronos_uri = _address()
     if _is_deployed(job_name):
         r = requests.delete(chronos_uri + '/scheduler/job/' + job_name)
@@ -61,16 +81,7 @@ def _is_deployed(job_name, chronos_uri):
 
 
 def _address():
-    for t in range(0, 100):
-        apps = __salt__['marathon_client.wait_for_healthy_tasks']('chronos')
-        addresses = ['http://{0}:{1}'.format(app.host, app.ports[0]) for app in apps.get('chronos', [])]
-        if len(addresses) > 0:
-            current_uri = addresses[random.randrange(0, len(addresses))]
-            r = requests.get(url=current_uri + '/scheduler/jobs')
-            if r.status_code == 200:
-                return current_uri
-        time.sleep(3)
-    return None
+    return __salt__['marathon_client.wait_for_healthy_api']('chronos', '/scheduler/jobs')
 
 
 def _get_job(job_name, chronos_uri):

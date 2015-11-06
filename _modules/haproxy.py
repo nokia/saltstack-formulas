@@ -9,6 +9,10 @@ import re
 
 
 def services():
+    """Returns marathon and by grain roles hosts with ports splitted by ports
+
+    :return:
+    """
     apps = __salt__['marathon_client.apps']()
     haproxy_settings = __pillar__['haproxy_apps']
     by_roles = haproxy_settings.get('roles', [])

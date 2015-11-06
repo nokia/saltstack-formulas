@@ -5,10 +5,18 @@ log = logging.getLogger(__name__)
 
 
 def journal():
+    """Give journal nodes from mine
+
+    :return:
+    """
     return __salt__['search.mine_by_host']('roles:hdfs.journalnode')
 
 
 def nameservices():
+    """Give name services from mine
+
+    :return:
+    """
     namenodes = _namenodes()
     res = {}
     for host, data in namenodes.items():
@@ -22,34 +30,58 @@ def nameservices():
 
 
 def my_nameservice():
+    """Returns nameservice if I am part of some or empty name
+
+    :return:
+    """
     my_host = __salt__['search.my_host']()
     return _my_nameservice(my_host)
 
 
 def nameservice_names():
+    """Give name services names from mine
+
+    :return:
+    """
     name_def = nameservices()
     return sorted([name.keys()[0] for name in name_def])
 
 
 def is_primary_namenode():
+    """True if host was first namenode created
+
+    :return:
+    """
     my_host = __salt__['search.my_host']()
     peers = _all_hosts_for_nameservice(my_host)
     return len(peers) > 0 and my_host == peers[0]
 
 
 def is_secondary_namenode():
+    """True if host was second namenode created
+
+    :return:
+    """
     my_host = __salt__['search.my_host']()
     peers = _all_hosts_for_nameservice(my_host)
     return len(peers) > 1 and my_host == peers[1]
 
 
 def my_nameservice_peers():
+    """Namenode peers in the same name service
+
+    :return:
+    """
     my_host = __salt__['search.my_host']()
     all_peers_including_me = _all_hosts_for_nameservice(my_host)
     return [peer for peer in all_peers_including_me if peer != my_host]
 
 
 def map_uris(uris):
+    """Map URIs from external URI to HDFS
+
+    :return:
+    """
     pkgs_path = __pillar__['hdfs']['pkgs_path']
     ns = nameservice_names()
     return map(lambda x:  'hdfs://{0}{1}/{2}'.format(ns[0], pkgs_path, __salt__['system.basename'](x)), uris)

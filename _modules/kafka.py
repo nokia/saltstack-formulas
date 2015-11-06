@@ -1,7 +1,5 @@
 import logging
 import requests
-import random
-import time
 
 log = logging.getLogger(__name__)
 
@@ -10,11 +8,15 @@ def format_options(options):
     return ' '.join(map(_format_option, options.iteritems()))
 
 
-# hosts = ['as-master', 'as-ha-1', 'as-ha-2']
-# port = 2416
 def reconfigure(config, no_of_instances):
+    """Make sure there are no_of_instances brokers with specified config applied in the cluster
+
+    :param config:
+    :param no_of_instances:
+    :return:
+    """
     log.warn('Config: ' + str(config))
-    scheduler_addr = _wait_for_healthy_scheduler()
+    scheduler_addr = __salt__['marathon_client.wait_for_healthy_api']('kafka-mesos', '/api/brokers/status')
     if scheduler_addr is None:
         raise ValueError('Scheduler is not healthy')
     initial_no_of_instances = len(_get_broker_status(scheduler_addr))
@@ -49,19 +51,6 @@ def _process_broker_reconfiguration(config, address, index):
     response['update_or_add'] = _update_or_add_broker(index, config, address)
     response['start'] = _start_broker(index, address)
     return response
-
-
-def _wait_for_healthy_scheduler():
-    for t in range(0, 100):
-        apps = __salt__['marathon_client.wait_for_healthy_tasks']('kafka-mesos')
-        addresses = ['http://{0}:{1}'.format(app.host, app.ports[0]) for app in apps.get('kafka-mesos', [])]
-        if len(addresses) > 0:
-            current_uri = addresses[random.randrange(0, len(addresses))]
-            r = requests.get(url=current_uri + '/api/brokers/status')
-            if r.status_code == 200:
-                return current_uri
-        time.sleep(3)
-    return None
 
 
 def _remove_broker(address, index):
