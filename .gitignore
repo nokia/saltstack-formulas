@@ -11,3 +11,8 @@ vendor
 .idea
 .DS_Store
 oss/
+include/
+lib/
+bin/
+.Python
+pip-selfcheck.json
