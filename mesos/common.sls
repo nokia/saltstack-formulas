@@ -53,7 +53,7 @@ docker-repository:
 docker-pkgs:
   pkg.installed:
   - name: lxc-docker
-  - version: 1.7.1
+  - version: {{ mesos['docker_version'] }}
   - skip_verify: True
   - require:
     - pkgrepo: docker-repository
