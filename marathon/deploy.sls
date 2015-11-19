@@ -78,6 +78,15 @@ run-service-redeploy-{{ app_name }}:
       - module: run-service-deploy-{{ app_name }}
     - watch:
       - file: app-config-file-{{ app_name }}
+
+run-service-restart-{{ app_name }}:
+  module.wait:
+    - name: marathon_client.restart
+    - app_name: {{ app_name }}
+    - require:
+      - module: run-service-deploy-{{ app_name }}
+      - module: run-service-redeploy-{{ app_name }}
+    - watch:
       {% for uri in uris -%}
       {% set uri_basename = salt['system.basename'](uri) -%}
       - file: app-uri-file-{{ uri_basename }}

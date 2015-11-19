@@ -7,12 +7,6 @@ import mock
 from marathon import models
 from marathon import exceptions
 import httpretty
-from httmock import urlmatch, HTTMock
-
-
-@urlmatch(netloc=r'.*')
-def all_requests(url, request):
-    return 'ok'
 
 
 class TestingMarathonClientFunctions(unittest.TestCase):
@@ -101,3 +95,40 @@ class TestingMarathonClientFunctions(unittest.TestCase):
         httpretty.register_uri(httpretty.GET, "http://localhost:19990/api/brokers/status", body='ok')
         self.assertEqual(marathon_client.wait_for_healthy_api('kafka-mesos', '/api/brokers/status'),
                          'http://localhost:19990')
+
+    @httpretty.activate
+    def test_restart_no_deployments(self):
+        httpretty.register_uri(httpretty.GET, "http://localhost:8080/v2/apps/alpha",
+                               body='''{ "app": {"id": "/alpha"}}''', content_type="application/json")
+        httpretty.register_uri(httpretty.GET, "http://localhost:8080/v2/deployments",
+                               body='''[]''', content_type="application/json")
+        httpretty.register_uri(httpretty.POST, "http://localhost:8080/v2/apps/alpha/restart?force=true",
+                               match_querystring=True, content_type="application/json")
+        self.assertEquals(marathon_client.restart('alpha'), 200)
+
+    @httpretty.activate
+    def test_restart_different_deployments(self):
+        httpretty.register_uri(httpretty.GET, "http://localhost:8080/v2/apps/alpha",
+                               body='''{ "app": {"id": "/alpha"}}''', content_type="application/json")
+        httpretty.register_uri(httpretty.GET, "http://localhost:8080/v2/deployments",
+                               body='''[{"affected_apps": ["/test1"]}]''', content_type="application/json")
+        httpretty.register_uri(httpretty.POST, "http://localhost:8080/v2/apps/alpha/restart?force=true",
+                               match_querystring=True, content_type="application/json")
+        self.assertEquals(marathon_client.restart('alpha'), 200)
+
+
+    @httpretty.activate
+    def test_restart_no_application(self):
+        httpretty.register_uri(httpretty.GET, "http://localhost:8080/v2/apps/alpha", status=404,
+                               body='''{"message":"Error 1"}''', content_type="application/json")
+        self.assertEquals(marathon_client.restart('alpha'), None)
+
+    @httpretty.activate
+    def test_restart_same_deployment(self):
+        httpretty.register_uri(httpretty.GET, "http://localhost:8080/v2/apps/alpha",
+                               body='''{ "app": {"id": "/alpha"}}''', content_type="application/json")
+        httpretty.register_uri(httpretty.GET, "http://localhost:8080/v2/deployments",
+                               body='''[{"affected_apps": ["/alpha"]}]''', content_type="application/json")
+        httpretty.register_uri(httpretty.POST, "http://localhost:8080/v2/apps/alpha/restart?force=true",
+                               match_querystring=True, content_type="application/json")
+        self.assertEquals(marathon_client.restart('alpha'), None)

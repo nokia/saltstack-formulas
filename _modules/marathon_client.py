@@ -6,6 +6,7 @@ import requests
 from marathon import MarathonClient
 from marathon import models
 from marathon import exceptions
+from itertools import chain
 
 log = logging.getLogger(__name__)
 
@@ -75,6 +76,35 @@ def re_deploy(app_name, app_file):
     cli = MarathonClient(marathon_addresses)
     if _is_deployed(cli, app_name):
         return cli.update_app(app_name, models.MarathonApp.from_json(app_attr))
+    else:
+        return None
+
+
+def restart(app_name):
+    """Calls marathon restart API to rolling restart if file artifacts changed
+
+    :param app_name:
+    :return:
+    """
+    marathon_addresses = _addresses()
+    cli = MarathonClient(marathon_addresses)
+    if _is_deployed(cli, app_name):
+        apps = __salt__['system.wait_for'](lambda x: _non_empty_deployments(cli), 3, 1)
+        deploy_name = '/' + app_name
+        if apps and deploy_name in apps:
+            return None
+        else:
+            r = requests.post(url=marathon_addresses[0] + '/v2/apps/' + app_name + '/restart?force=true')
+            return r.status_code
+    else:
+        return None
+
+
+def _non_empty_deployments(cli):
+    deployments = cli.list_deployments()
+    apps = list(chain.from_iterable([d.affected_apps for d in deployments]))
+    if len(apps) > 0:
+        return apps
     else:
         return None
 
