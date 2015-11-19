@@ -94,7 +94,8 @@ def restart(app_name):
         if apps and deploy_name in apps:
             return None
         else:
-            r = requests.post(url=marathon_addresses[0] + '/v2/apps/' + app_name + '/restart?force=true')
+            r = requests.post(url=marathon_addresses[0] + '/v2/apps/' + app_name + '/restart?force=true',
+                              headers={'Content-Type': 'application/json'})
             return r.status_code
     else:
         return None
