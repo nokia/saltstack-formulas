@@ -47,12 +47,12 @@ mesos_python_config:
 docker-repository:
   pkgrepo.managed:
     - humanname: Docker PPA
-    - name: deb http://get.docker.io/ubuntu docker main
+    - name: deb https://apt.dockerproject.org/repo ubuntu-{{ grains['oscodename'].lower() }} main
     - file: /etc/apt/sources.list.d/docker.list
 
 docker-pkgs:
   pkg.installed:
-  - name: lxc-docker
+  - name: docker-engine
   - version: {{ mesos['docker_version'] }}
   - skip_verify: True
   - require:
