@@ -86,11 +86,13 @@ run-service-restart-{{ app_name }}:
     - require:
       - module: run-service-deploy-{{ app_name }}
       - module: run-service-redeploy-{{ app_name }}
+    {% if uris|length > 0 -%}
     - watch:
       {% for uri in uris -%}
       {% set uri_basename = salt['system.basename'](uri) -%}
       - file: app-uri-file-{{ uri_basename }}
       {% endfor %}
+    {% endif -%}
 
 {%- endmacro %}
 
