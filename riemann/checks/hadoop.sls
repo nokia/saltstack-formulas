@@ -5,7 +5,13 @@
 
 {% set cmd = 'riemann-hadoop-{0} --{0}-port {1} --tag hadoop'.format(type, hadoop_port) %}
 {% from 'riemann/checks/check.sls' import check with context -%}
-{{ check('riemann-hadoop-{0}'.format(type), cmd, server, server_port, home, interval, timeout, is_tcp, 'hdfs.{0}'.format(type) in salt['grains.get']('roles')) }}
 
+{% if type == 'namenode' %}
+{% if salt['hdfs.is_secondary_namenode']() or salt['hdfs.is_primary_namenode']() %}
+{{ check('riemann-hadoop-{0}'.format(type), cmd, server, server_port, home, interval, timeout, is_tcp, 'hdfs.{0}'.format(type) in salt['grains.get']('roles')) }}
+{% endif %}
+{% else %}
+{{ check('riemann-hadoop-{0}'.format(type), cmd, server, server_port, home, interval, timeout, is_tcp, 'hdfs.{0}'.format(type) in salt['grains.get']('roles')) }}
+{% endif %}
 
 {%- endmacro %}
