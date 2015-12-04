@@ -7,9 +7,8 @@
 {% from 'riemann/checks/check.sls' import check with context -%}
 
 {% if type == 'namenode' %}
-{% if salt['hdfs.is_secondary_namenode']() or salt['hdfs.is_primary_namenode']() %}
-{{ check('riemann-hadoop-{0}'.format(type), cmd, server, server_port, home, interval, timeout, is_tcp, 'hdfs.{0}'.format(type) in salt['grains.get']('roles')) }}
-{% endif %}
+{{ check('riemann-hadoop-{0}'.format(type), cmd, server, server_port, home, interval, timeout, is_tcp, 'hdfs.{0}'.format(type) in salt['grains.get']('roles')
+    and (salt['hdfs.is_secondary_namenode']() or salt['hdfs.is_primary_namenode']()) ) }}
 {% else %}
 {{ check('riemann-hadoop-{0}'.format(type), cmd, server, server_port, home, interval, timeout, is_tcp, 'hdfs.{0}'.format(type) in salt['grains.get']('roles')) }}
 {% endif %}
