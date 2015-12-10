@@ -75,6 +75,7 @@ include:
         tachyon_masters: {{ tachyon_masters }}
         event_log_dir: hdfs://{{ nameservice_names | first }}{{ spark['eventlog.dir'] }}
         spark_home: {{ spark_home }}
+        spark_extra_classpath: {{ salt['system.eval_path_patterns'](spark.get('extra_classpath', []))|join(':') }}
     - require:
       - archive: spark-pkg
       - file: spark-pkg-link

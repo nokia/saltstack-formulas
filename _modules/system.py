@@ -2,6 +2,7 @@ import ntpath
 import sys
 import time
 import logging
+import glob
 
 log = logging.getLogger(__name__)
 
@@ -73,3 +74,13 @@ def wait_for(func, no_of_times=10, sleep_interval=5):
             log.warn('Exception occured at step: ' + str(t) + ' ' + str(sys.exc_info()))
             time.sleep(sleep_interval)
     return None
+
+
+def eval_path_patterns(path_patterns):
+    """Evaluates list of path patterns to list all matching files
+
+    :param path_patterns: path patterns to evaluate
+    :return:
+    """
+    matching_files = [glob.glob(path_pattern) for path_pattern in path_patterns]
+    return [item for sublist in matching_files for item in sublist]
