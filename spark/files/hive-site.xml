@@ -53,12 +53,12 @@
 
     <property>
       <name>javax.jdo.option.ConnectionUserName</name>
-      <value>{{ spark['hive.username'] }}</value>
+      <value>{{ spark.get('hive.username', 'hive') }}</value>
     </property>
 
     <property>
       <name>javax.jdo.option.ConnectionPassword</name>
-      <value>{{ spark['hive.password'] }}</value>
+      <value>{{ spark.get('hive.password', 'hive') }}</value>
     </property>
 
     <property>
@@ -69,17 +69,17 @@
 
     <property>
       <name>hive.exec.max.dynamic.partitions</name>
-      <value>{{ spark['max.dynamic.partitions'] }}</value>
+      <value>{{ spark.get('max.dynamic.partitions', '10000') }}</value>
     </property>
 
     <property>
       <name>hive.exec.dynamic.partition</name>
-      <value>{{ spark['dynamic.partition'] }}</value>
+      <value>{{ spark.get('dynamic.partition', 'true') }}</value>
     </property>
 
     <property>
       <name>hive.exec.dynamic.partition.mode</name>
-      <value>{{ spark['dynamic.partition.mode'] }}</value>
+      <value>{{ spark.get('dynamic.partition.mode', 'nonstrict') }}</value>
     </property>
 
     <property>
