@@ -237,3 +237,25 @@ reset-slave-state:
 /etc/mesos-slave/attributes:
   file.absent: []
 {% endif -%}
+
+{{ log_dir }}/clean_logs.sh:
+  file.managed:
+    - source: salt://mesos/files/clean_logs.sh
+    - user: root
+    - group: root
+    - mode: 644
+    - template: jinja
+    - context:
+        max_files: {{ mesos.get('max_logs_no', 1) }}
+    - require:
+      - pkg: mesos-pkg
+      - file: mesos-directories
+
+mesos_clean_logs:
+  cron.present:
+    - name: {{ log_dir }}/clean_logs.sh
+    - user: root
+    - minute: 0
+    - hour: 0
+    - require:
+      - file: {{ log_dir }}/clean_logs.sh

@@ -12,6 +12,7 @@ mesos:
   master.port: 5951
   slave.port: 5952
   resources: 'ports(*):[31000-35000,6950-7200,9000-9050,9150-9225,2900-2950]'
+  max_logs_no: 5
 
 mesos-dns:
   url: http://host:port/...
