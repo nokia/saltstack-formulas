@@ -243,7 +243,7 @@ reset-slave-state:
     - source: salt://mesos/files/clean_logs.sh
     - user: root
     - group: root
-    - mode: 644
+    - mode: 755
     - template: jinja
     - context:
         max_files: {{ mesos.get('max_logs_no', 1) }}
