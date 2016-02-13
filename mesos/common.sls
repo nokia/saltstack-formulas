@@ -247,6 +247,7 @@ reset-slave-state:
     - template: jinja
     - context:
         max_files: {{ mesos.get('max_logs_no', 1) }}
+        log_dir: {{ log_dir }}
     - require:
       - pkg: mesos-pkg
       - file: mesos-directories
