@@ -33,3 +33,8 @@
 * Service Discovery (Haproxy, Mesos DNS)
 
 Please refer to individual readme how to use specific states
+
+
+## License
+
+This project is licensed under the Apache-2.0 license - see the [LICENSE](https://github.com/nokia/saltstack-formulas/blob/master/LICENSE).
